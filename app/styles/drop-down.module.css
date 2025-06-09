@@ -1,0 +1,13 @@
+.list::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+.list::-webkit-scrollbar-track {
+  border-radius: 0 0.5rem 0.5rem 0;
+  background-color: var(--background);
+}
+
+.list::-webkit-scrollbar-thumb {
+  border-radius: 0.5rem;
+  background-color: var(--foreground);
+}

@@ -1,0 +1,85 @@
+@import "tailwindcss";
+:root {
+  --background: #e3e3e3;
+  --foreground: #adb5bd;
+  --myDark: #212529;
+  --mdDark: #495057;
+  --myLight: #f8f9fa;
+  --secLight: #e9ecef;
+  --myHover: #f1f1f1;
+  --myOpacity: #f1f1f1b2;
+}
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-myLight: var(--myLight);
+  --color-anotherLight: var(--background);
+  --color-secLight: #e9ecef;
+  --color-myDark: var(--myDark);
+  --color-mdDark: var(--mdDark);
+  --color-anotherDark: var(--foreground);
+  --color-secDark: #343a40;
+  --color-myHover: var(--myHover);
+  --color-mdLight: #ced4da;
+  --spacing-mainxs: 8px;
+  --spacing-mainxl: 14px;
+  --spacing-mainxxl: 30px;
+}
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: var(--myHover);
+  border-radius: 0 0.75rem 0.75rem 0;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--foreground);
+  border-radius: 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #e3e3e3;
+    --foreground: #adb5bd;
+    --myDark: #212529;
+    --mdDark: #495057;
+    --myLight: #f8f9fa;
+    --secLight: #e9ecef;
+    --myHover: #f1f1f1;
+  }
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.MuiSnackbarContent-root {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+@media print {
+  .print-button {
+    display: none !important;
+  }
+  body * {
+    visibility: hidden;
+  }
+  .print-content,
+  .print-content * {
+    visibility: visible;
+  }
+  .print-content {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+    width: 100%;
+  }
+}
