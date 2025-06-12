@@ -7,6 +7,7 @@ import { CalcsInterface } from "./utils/types/interfaces";
 import AllGraphs from "./components/home/graph";
 
 export default function Home() {
+  // 
   const router = useRouter();
   const [data, setData] = useState<CalcsInterface>();
   const fetchData = async () => {
