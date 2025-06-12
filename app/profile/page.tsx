@@ -17,7 +17,7 @@ export default function Profile() {
           dir="rtl"
           className="w-[600px] bg-myHover border border-mdLight text-white rounded-lg p-6 shadow-lg"
         >
-          <h2 onClick={PushInailData} className="text-lg font-semibold mb-4 text-myDark">
+          <h2 className="text-lg font-semibold mb-4 text-myDark">
             المعلومات الشخصية
           </h2>
           <div className="flex items-center space-x-4 mb-6">
