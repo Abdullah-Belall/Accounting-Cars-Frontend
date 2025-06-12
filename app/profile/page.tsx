@@ -1,15 +1,15 @@
 "use client";
 import ChangePassword from "../components/forms & alerts/change-password";
 import { useUser } from "../utils/contexts/UserContext";
-import { CLIENT_COLLECTOR_REQ, INITIAL_DATA_REQ } from "../utils/requests/client-side.requests";
+// import { CLIENT_COLLECTOR_REQ, INITIAL_DATA_REQ } from "../utils/requests/client-side.requests";
 
 export default function Profile() {
   const { user } = useUser();
 
   const endRole = user?.role === "admin" ? "موظف" : user?.role === "owner" ? "مالك" : "ست الحبايب";
-  const PushInailData = async () => {
-    await CLIENT_COLLECTOR_REQ(INITIAL_DATA_REQ);
-  };
+  // const PushInailData = async () => {
+  //   await CLIENT_COLLECTOR_REQ(INITIAL_DATA_REQ);
+  // };
   return (
     <>
       <div dir="rtl" className="flex flex-col px-mainxs gap-mainxs w-fit mx-auto">
