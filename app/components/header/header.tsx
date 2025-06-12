@@ -10,7 +10,6 @@ import {
 import { useUser } from "@/app/utils/contexts/UserContext";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
-import logo from "@/public/logo.png";
 import Link from "next/link";
 import { getTenantsStyle } from "@/app/utils/tenants-styles";
 
