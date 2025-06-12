@@ -2,7 +2,6 @@
 import "./globals.css";
 import { cairo } from "./utils/fonts/main.font";
 import SideBar from "./components/side-bar/side-bar";
-import Header from "./components/header/header";
 import { usePathname } from "next/navigation";
 import { PopupProvider } from "./utils/contexts/popup-contexts";
 import CustomSnackbar from "./components/common/custom-snakebar";
@@ -12,7 +11,12 @@ import { ReturnsProvider } from "./utils/contexts/returns-contexts";
 import { BillesProvider } from "./utils/contexts/bills-contexts";
 import ReturnsItemsPopupCus from "./components/popup-return-layout/return-cus-popup";
 import { SearchProvider } from "./utils/contexts/search-results-contexts";
+import dynamic from "next/dynamic";
+import { getTenantsStyle } from "./utils/tenants-styles";
 
+const HeaderClient = dynamic(() => import("./components/header/header"), {
+  ssr: false,
+});
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -21,7 +25,7 @@ export default function RootLayout({
   const pathname = usePathname();
   const isLoginRoute = pathname === "/log-in";
   useEffect(() => {
-    document.title = "AL MANAR";
+    document.title = getTenantsStyle(window.location.hostname)?.common?.title || "";
 
     const link = document.createElement("link");
     link.rel = "icon";
@@ -48,7 +52,7 @@ export default function RootLayout({
                   <BillesProvider>
                     <CustomSnackbar />
                     {!isLoginRoute && <SideBar />}
-                    {!isLoginRoute && <Header />}
+                    {!isLoginRoute && <HeaderClient />}
                     {children}
                     <ReturnsItemsPopupCus />
                   </BillesProvider>

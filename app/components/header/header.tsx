@@ -10,8 +10,9 @@ import {
 import { useUser } from "@/app/utils/contexts/UserContext";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
-import logo from "@/public/Logo.jpg";
+import logo from "@/public/logo.png";
 import Link from "next/link";
+import { getTenantsStyle } from "@/app/utils/tenants-styles";
 
 export default function Header() {
   const router = useRouter();
@@ -46,7 +47,12 @@ export default function Header() {
         </>
       )}
       <Link href={"/"} className="font-bold mr-mainxxl">
-        <Image width={70} height={70} src={logo} alt={"لوجو"} />
+        <Image
+          width={70}
+          height={70}
+          src={getTenantsStyle(window.location.hostname)?.common?.logoURL || ""}
+          alt={"لوجو"}
+        />
       </Link>
       <div
         onClick={() => setList(!list)}

@@ -13,9 +13,16 @@ import {
 const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL + "/api";
 const LOGIN_REQ = async (data: LoginInterface) => {
   try {
-    const response: any = await axios.post(`${BASE_URL}/workers/sign-in`, data, {
-      withCredentials: true,
-    });
+    const response: any = await axios.post(
+      `${BASE_URL}/workers/sign-in`,
+      {
+        ...data,
+        tenant_domain: data.tenant_domain === "localhost" ? "localhost.com" : data.tenant_domain,
+      },
+      {
+        withCredentials: true,
+      }
+    );
     if (response?.data?.done) {
       setCookie("access_token", response?.data?.access_token);
       return { done: true };
@@ -997,6 +1004,100 @@ const GET_GRAPH_DATA_REQ = async ({ type }: { type: "years" | "months" | "days" 
     };
   }
 };
+//! BOSS REQS
+const CREATE_NEW_TENANT_REQ = async (data: { tenant_domain: string; phone?: string }) => {
+  try {
+    const response: any = await axios.post(`${BASE_URL}/tenants`, data, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const UPDATE_TENANT_REQ = async ({ data, id }: { id: string; data: { tenant_domain: string } }) => {
+  try {
+    const response: any = await axios.patch(`${BASE_URL}/tenants/${id}`, data, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const GET_ALL_TENANTS_REQ = async () => {
+  try {
+    const response: any = await axios.get(`${BASE_URL}/tenants`, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    return response?.data.tenants
+      ? { done: true, data: response?.data }
+      : { done: false, message: unCountedMessage, status: response.status };
+  } catch (error: any) {
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const SIGN_FUSER_REQ = async (data: {
+  tenant_domain: string;
+  user_name: string;
+  password: string;
+}) => {
+  try {
+    const response: any = await axios.post(`${BASE_URL}/workers/sign-fuser`, data, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
 //* MAIN FUNCTION (USED FOR ALL REQUESTS THAT NEED ACCESS_TOKEN)
 const CLIENT_COLLECTOR_REQ = async (varFunction: any, dataBody?: any) => {
   const access_token = getCookie("access_token");
@@ -1065,4 +1166,8 @@ export {
   SEARCH_REQ,
   GET_CALCS_REQ,
   GET_GRAPH_DATA_REQ,
+  CREATE_NEW_TENANT_REQ,
+  UPDATE_TENANT_REQ,
+  GET_ALL_TENANTS_REQ,
+  SIGN_FUSER_REQ,
 };

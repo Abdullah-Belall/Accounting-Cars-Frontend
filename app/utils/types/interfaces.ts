@@ -3,6 +3,7 @@ import { ReactElement } from "react";
 export interface LoginInterface {
   user_name: string;
   password: string;
+  tenant_domain: string;
 }
 export interface AddCategoryInterface {
   name: string;
