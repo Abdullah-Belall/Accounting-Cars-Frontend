@@ -1,6 +1,7 @@
 import { DropDownsInterface, PaidStatusEnum, PaymentMethodsEnum } from "./types/interfaces";
 
 export const BaseWebsiteUrl = process.env.NEXT_PUBLIC_BASE_WEBSITE_URL || "http://localhost:3000";
+export const BaseLogosUrl = `https://res.cloudinary.com/doy0la086/image/upload/`;
 export const unCountedMessage = "هناك مشكلة ما, الرجاء المحاولة في وقت لاحق.";
 export const formatDate = (inputDate: Date) => {
   const date = new Date(inputDate);

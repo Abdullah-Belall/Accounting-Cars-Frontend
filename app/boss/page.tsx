@@ -25,6 +25,8 @@ export default function Boss() {
       phone: "",
       user_name: "",
       password: "",
+      title: "",
+      logo: "",
     },
   });
   const { openPopup } = usePopup();
@@ -61,11 +63,15 @@ export default function Boss() {
     const response = await CLIENT_COLLECTOR_REQ(CREATE_NEW_TENANT_REQ, {
       tenant_domain: base.tenant_domain,
       phone: base.phone,
+      logo: base.logo,
+      title: base.title,
     });
     console.log(response);
     if (response.done) {
       const mioObj: any = addTenant.payload;
       delete mioObj.phone;
+      delete mioObj.title;
+      delete mioObj.logo;
       const fuserResponse = await CLIENT_COLLECTOR_REQ(SIGN_FUSER_REQ, mioObj);
       console.log(fuserResponse);
       if (fuserResponse.done) {
@@ -97,7 +103,7 @@ export default function Boss() {
         {data?.map((row: any, index) => (
           <tr key={index}>
             <td className="px-4 py-2 text-center">{formatDate(row?.created_at)}</td>
-            <td className={`px-4 py-2 text-center`}>{row?.phone ?? "لا يوجد"}</td>
+            <td className={`px-4 py-2 text-center`}>{row?.phone?.trim() ?? "لا يوجد"}</td>
             <td className={`px-4 py-2 text-center`}>{row?.domain}</td>
             <td className={`px-4 py-2 text-center`}>{row?.tenant_id}</td>
             <td className={`px-4 py-2 text-center`}>{index + 1}</td>
@@ -152,6 +158,26 @@ export default function Boss() {
                   sx={sameTextField}
                   value={addTenant.payload.password}
                   onChange={(e) => handleAddTenant(true, "password", e.target.value)}
+                />
+                <TextField
+                  id="Glu"
+                  dir="rtl"
+                  label="عنوان الشركة"
+                  variant="filled"
+                  className="w-full"
+                  sx={sameTextField}
+                  value={addTenant.payload.title}
+                  onChange={(e) => handleAddTenant(true, "title", e.target.value)}
+                />
+                <TextField
+                  id="Glu"
+                  dir="rtl"
+                  label="اللوجو"
+                  variant="filled"
+                  className="w-full"
+                  sx={sameTextField}
+                  value={addTenant.payload.logo}
+                  onChange={(e) => handleAddTenant(true, "logo", e.target.value)}
                 />
                 <Button
                   onClick={handleSend}

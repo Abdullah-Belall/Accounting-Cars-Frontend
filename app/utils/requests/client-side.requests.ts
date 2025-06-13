@@ -1098,6 +1098,33 @@ const SIGN_FUSER_REQ = async (data: {
     };
   }
 };
+const GET_TENANT_VARS_REQ = async ({ tenant_domain }: { tenant_domain: string }) => {
+  try {
+    const response: any = await axios.post(
+      `${BASE_URL}/workers/tenant-details`,
+      {
+        tenant_domain,
+      },
+      {
+        headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+      }
+    );
+    console.log(response);
+    return response?.data?.company_title
+      ? { done: true, data: response?.data }
+      : { done: false, message: unCountedMessage, status: response.status };
+  } catch (error: any) {
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
 //* MAIN FUNCTION (USED FOR ALL REQUESTS THAT NEED ACCESS_TOKEN)
 const CLIENT_COLLECTOR_REQ = async (varFunction: any, dataBody?: any) => {
   const access_token = getCookie("access_token");
@@ -1170,4 +1197,5 @@ export {
   UPDATE_TENANT_REQ,
   GET_ALL_TENANTS_REQ,
   SIGN_FUSER_REQ,
+  GET_TENANT_VARS_REQ,
 };

@@ -11,9 +11,9 @@ import { useUser } from "@/app/utils/contexts/UserContext";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { getTenantsStyle } from "@/app/utils/tenants-styles";
+import { BaseLogosUrl } from "@/app/utils/base";
 
-export default function Header() {
+export default function Header({ logo }: { logo: string }) {
   const router = useRouter();
   const [list, setList] = useState(false);
   const { user, setUser } = useUser();
@@ -46,12 +46,7 @@ export default function Header() {
         </>
       )}
       <Link href={"/"} className="font-bold mr-mainxxl">
-        <Image
-          width={70}
-          height={70}
-          src={getTenantsStyle(window.location.hostname)?.common?.logoURL || ""}
-          alt={"لوجو"}
-        />
+        <Image width={70} height={70} src={`${BaseLogosUrl}${logo}`} alt={"لوجو"} />
       </Link>
       <div
         onClick={() => setList(!list)}
