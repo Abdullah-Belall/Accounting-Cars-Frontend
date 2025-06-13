@@ -1,6 +1,7 @@
 "use client";
 import { formatDate } from "@/app/utils/base";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
+import { useUser } from "@/app/utils/contexts/UserContext";
 import { Radio } from "@mui/material";
 import Link from "next/link";
 
@@ -29,6 +30,7 @@ export default function UsersTableRows({
   isForOrder?: boolean;
 }) {
   const { popupState, openPopup } = usePopup();
+  const { user } = useUser();
   const HandleUi = () => {
     if (popupState.makeOrderPopup.data.client?.id === id) {
       return (
@@ -68,7 +70,10 @@ export default function UsersTableRows({
           </td>
         )}
         <td className="px-4 py-2 text-center">
-          <Link className="w-fit hover:underline" href={`/${type}s/${id}`}>
+          <Link
+            className="w-fit hover:underline"
+            href={user?.id === id ? `/profile` : `/${type}s/${id}`}
+          >
             {name}
           </Link>
         </td>

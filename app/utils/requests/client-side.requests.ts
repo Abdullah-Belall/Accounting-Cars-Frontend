@@ -1028,7 +1028,7 @@ const CREATE_NEW_TENANT_REQ = async (data: { tenant_domain: string; phone?: stri
     };
   }
 };
-const UPDATE_TENANT_REQ = async ({ data, id }: { id: string; data: { tenant_domain: string } }) => {
+const UPDATE_TENANT_REQ = async ({ data, id }: { id: string; data: any }) => {
   try {
     const response: any = await axios.patch(`${BASE_URL}/tenants/${id}`, data, {
       headers: { Authorization: `Bearer ${getCookie("access_token")}` },

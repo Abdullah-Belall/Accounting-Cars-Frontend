@@ -85,7 +85,7 @@ export default function Worker() {
             </Button>
           )}
         </div>
-        <div className="w-full mt-5">
+        <div dir="ltr" className="w-full mt-5">
           <PhonesTable
             type={"الموظف"}
             data={data?.contacts as PhoneInterface[]}
