@@ -29,23 +29,23 @@ export default function RootLayout({
   useEffect(() => {
     const fetchData = async () => {
       const response = await GET_TENANT_VARS_REQ({ tenant_domain: window.location.hostname });
-      console.log(response);
       if (response.done) {
         setTenantsVars(response.data);
       }
     };
     fetchData();
-    document.title = tenantsVars?.company_title || "";
-
+  }, []);
+  useEffect(() => {
+    if (!tenantsVars) return;
+    document.title = tenantsVars.company_title;
     const link = document.createElement("link");
     link.rel = "icon";
-    link.href = `${BaseLogosUrl}${tenantsVars?.copmany_logo}`;
+    link.href = `${BaseLogosUrl}${tenantsVars.copmany_logo}`;
     document.head.appendChild(link);
-
     return () => {
       document.head.removeChild(link);
     };
-  }, []);
+  }, [tenantsVars]);
 
   return (
     <html lang="en">
