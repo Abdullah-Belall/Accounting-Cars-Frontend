@@ -27,6 +27,7 @@ export default function Boss() {
       password: "",
       title: "",
       logo: "",
+      telegram_chat_id: "",
     },
   });
   const { openPopup } = usePopup();
@@ -158,6 +159,16 @@ export default function Boss() {
                   sx={sameTextField}
                   value={addTenant.payload.password}
                   onChange={(e) => handleAddTenant(true, "password", e.target.value)}
+                />
+                <TextField
+                  id="Glu"
+                  dir="rtl"
+                  label="كود تليجرام"
+                  variant="filled"
+                  className="w-full"
+                  sx={sameTextField}
+                  value={addTenant.payload.telegram_chat_id}
+                  onChange={(e) => handleAddTenant(true, "telegram_chat_id", e.target.value)}
                 />
                 <TextField
                   id="Glu"
