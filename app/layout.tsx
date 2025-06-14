@@ -14,6 +14,8 @@ import { SearchProvider } from "./utils/contexts/search-results-contexts";
 import { GET_TENANT_VARS_REQ } from "./utils/requests/client-side.requests";
 import Header from "./components/header/header";
 import { BaseLogosUrl } from "./utils/base";
+import { PiListBold } from "react-icons/pi";
+import BlackLayer from "./components/common/black-layer";
 
 export default function RootLayout({
   children,
@@ -21,6 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const pathname = usePathname();
+  const [openSidebar, setOpenSidebar] = useState(false);
   const [tenantsVars, setTenantsVars] = useState<{
     company_title: string;
     copmany_logo: string;
@@ -55,13 +58,23 @@ export default function RootLayout({
         }`}
       >
         <>
+          <div
+            onClick={() => setOpenSidebar(false)}
+            className={`${!openSidebar && "hidden"} w-full h-full fixed left-0 top-0 bg-transparent z-30`}
+          ></div>
+          <div
+            onClick={() => setOpenSidebar(!openSidebar)}
+            className={`${openSidebar ? "right-[240px]" : "right-0"} z-30 duration-[.3s] absolute md:hidden z-10 top-[25%] text-lg cursor-pointer rounded-l-md bg-myLight p-2 text-myDark shadow-lg`}
+          >
+            <PiListBold />
+          </div>
           <PopupProvider>
             <SearchProvider>
               <UserProvider>
                 <ReturnsProvider>
                   <BillesProvider>
                     <CustomSnackbar />
-                    {!isLoginRoute && <SideBar />}
+                    {!isLoginRoute && <SideBar open={openSidebar} />}
                     {!isLoginRoute && <Header logo={tenantsVars?.copmany_logo as string} />}
                     {children}
                     <ReturnsItemsPopupCus />

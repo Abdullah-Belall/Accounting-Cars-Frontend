@@ -12,7 +12,7 @@ import { FiCodesandbox } from "react-icons/fi";
 import Link from "next/link";
 import { RiBillLine } from "react-icons/ri";
 
-export default function SideBar() {
+export default function SideBar({ open }: { open: boolean }) {
   const path = usePathname();
   const dataItems = useMemo(
     () =>
@@ -28,7 +28,9 @@ export default function SideBar() {
   );
 
   return (
-    <aside className="overflow-y-scroll flex flex-col gap-2 px-mainxs pb-[20px] pt-[80px] fixed right-[-240px] md:right-[0] top-0 w-[240px] h-dvh bg-myLight border-l-3 border-[#eee]">
+    <aside
+      className={`${open ? "right-0" : "right-[-250px]"} duration-[.3s] z-30 md:z-[1] md:right-0 overflow-y-scroll flex flex-col gap-2 px-mainxs pb-[20px] pt-[80px] fixed top-0 w-[240px] h-dvh bg-myLight border-l-3 border-[#eee]`}
+    >
       <Link className="w-full" href={"/"}>
         <Button
           className={`${
