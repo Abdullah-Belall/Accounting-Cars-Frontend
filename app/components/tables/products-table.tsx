@@ -117,7 +117,7 @@ export default function ProductsTable({
             }}
           />
           <PopupHolder>
-            <div className="relative rounded-xl shadow-md min-w-[520px] bg-myLight p-mainxl">
+            <div className="relative rounded-xl shadow-md w-full min-[400px]:w-[400px] sm:w-[624px] bg-myLight p-mainxl">
               <SortsTable
                 title={popupState.sortsPopup.data.name}
                 id={popupState.sortsPopup.data.id}

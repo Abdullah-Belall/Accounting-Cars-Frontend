@@ -27,11 +27,11 @@ export default function AddProductForm({
   };
 }) {
   const [data, setData] = useState({
-    name: isForEdit ? isForEdit.title ?? "" : "",
-    desc: isForEdit ? isForEdit.desc ?? "" : "",
+    name: isForEdit ? (isForEdit.title ?? "") : "",
+    desc: isForEdit ? (isForEdit.desc ?? "") : "",
     category: "الفئة",
-    material: isForEdit ? isForEdit.material ?? "" : "",
-    note: isForEdit ? isForEdit.note ?? "" : "",
+    material: isForEdit ? (isForEdit.material ?? "") : "",
+    note: isForEdit ? (isForEdit.note ?? "") : "",
   });
   const [dropDown, setDropDown] = useState(false);
   const { openPopup, closePopup } = usePopup();
@@ -124,7 +124,7 @@ export default function AddProductForm({
     }
   };
   return (
-    <div className="rounded-md shadow-md min-w-md bg-myLight p-mainxl">
+    <div className="rounded-md shadow-md w-full min-[400px]:min-w-sm bg-myLight p-mainxl">
       <h2 className="text-lg text-center font-semibold mb-4">
         {isForEdit ? "تعديل منتج" : "اضافة منتج جديد"}
       </h2>

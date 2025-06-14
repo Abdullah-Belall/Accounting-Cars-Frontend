@@ -11,7 +11,7 @@ export default function AddWorker() {
     router.push("/workers");
   };
   return (
-    <div className="flex justify-center items-center w-full h-[calc(100dvh-80px)]">
+    <div className="flex justify-center items-center w-full h-[calc(100dvh-80px)] px-mainxs">
       <AddUserForm type="worker" title={"اضافة موظف جديد"} onDone={handleOnDone} />
     </div>
   );

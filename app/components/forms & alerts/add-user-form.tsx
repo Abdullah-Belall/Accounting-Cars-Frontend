@@ -105,7 +105,7 @@ export default function AddUserForm({
     }
   };
   return (
-    <div className="rounded-md shadow-md w-[420px] bg-myHover p-mainxl">
+    <div className="rounded-md shadow-md w-full min-[400px]:w-[384px] bg-myHover p-mainxl">
       <h2 className="text-lg text-center font-semibold mb-4">{title}</h2>
       <div className="space-y-4 flex flex-col gap-[15px]">
         <TextField

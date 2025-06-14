@@ -28,7 +28,7 @@ export default function SideBar() {
   );
 
   return (
-    <aside className="overflow-y-scroll flex flex-col gap-2 px-mainxs pb-[20px] pt-[80px] fixed right-0 top-0 w-[240px] h-dvh bg-myLight border-l-3 border-[#eee]">
+    <aside className="overflow-y-scroll flex flex-col gap-2 px-mainxs pb-[20px] pt-[80px] fixed right-[-240px] md:right-[0] top-0 w-[240px] h-dvh bg-myLight border-l-3 border-[#eee]">
       <Link className="w-full" href={"/"}>
         <Button
           className={`${

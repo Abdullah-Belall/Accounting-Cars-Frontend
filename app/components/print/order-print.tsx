@@ -29,14 +29,16 @@ export default function OrderPrint() {
         <h2>تاريخ طباعة الفاتورة: {formatDate(new Date())}</h2>
         <Button
           sx={{ fontFamily: "cairo" }}
-          className="print-button !bg-mdDark !absolute !left-0 !top-[45px]"
+          className="print-button !bg-mdDark !absolute !left-[10px] !top-[45px]"
           variant="contained"
           onClick={handlePrint}
         >
           طباعة
         </Button>
       </div>
-      <OrderBillsTable data={bills?.data} />
+      <div className="max-w-[100%]">
+        <OrderBillsTable data={bills?.data} />
+      </div>
     </div>
   );
 }

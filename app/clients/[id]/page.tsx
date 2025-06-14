@@ -46,7 +46,7 @@ export default function Client() {
       <div className="flex flex-col items-center px-mainxs gap-mainxs w-full ml-auto !gap-[40px]">
         <div
           dir="rtl"
-          className="flex flex-col w-[50%] bg-myHover border border-mdLight text-white rounded-lg p-6 shadow-lg"
+          className="w-full max-w-[600px] flex flex-col bg-myHover border border-mdLight text-white rounded-lg p-6 shadow-lg"
         >
           <h2 className="text-lg font-semibold mb-4 text-myDark">المعلومات الشخصية للعميل</h2>
           <div className="relative w-full flex items-center space-x-4 mb-6">

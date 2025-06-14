@@ -58,12 +58,9 @@ export default function AllSortsTableRows({
         <td className="px-4 py-2 text-center">{name}</td>
         <td className="px-4 py-2 text-center">{product?.name}</td>
         <td className="px-4 py-2 text-center max-w-[69px]">
-          <TextField
-            id="Glu"
-            dir="rtl"
-            label="الكمية"
-            variant="filled"
-            sx={sameTextField}
+          <input
+            placeholder="الكمية"
+            className="rounded-md placeholder:text-[12px] outline-0 border border-myDark max-w-[45px] h-[35] mr-2 text-center"
             value={inputValue?.qty ?? ""}
             onChange={(e) =>
               +e.target.value > +qty

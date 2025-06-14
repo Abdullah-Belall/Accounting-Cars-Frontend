@@ -118,7 +118,7 @@ export default function AddSortForm({
     }
   };
   return (
-    <div className="rounded-md shadow-md min-w-md bg-myLight p-mainxl">
+    <div className="rounded-md shadow-md  w-full min-[400px]:min-w-sm bg-myLight p-mainxl">
       <h2 className="text-lg text-center font-semibold mb-4">
         {isForEdit ? `تعديل بيانات صنف ${isForEdit.name}` : "اضافة صنف جديد"}
       </h2>

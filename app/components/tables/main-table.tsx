@@ -1,4 +1,7 @@
+"use client";
+import { useRef } from "react";
 import SearchInput from "../filtaraion/search-input/search-input";
+import styles from "@/app/styles/drop-down.module.css";
 
 export default function MainTable({
   title,
@@ -16,7 +19,30 @@ export default function MainTable({
       {e}
     </th>
   ));
-
+  const containerRef: any = useRef(null);
+  let isDragging = false;
+  let startX: any;
+  let scrollLeft: any;
+  const handleMouseDown = (e: any) => {
+    console.log("hello");
+    containerRef.current.classList.remove("cursor-normal");
+    containerRef.current.classList.add("cursor-grabbing");
+    isDragging = true;
+    startX = e.pageX - containerRef.current.offsetLeft;
+    scrollLeft = containerRef.current.scrollLeft;
+  };
+  const handleMouseMove = (e: any) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - containerRef.current.offsetLeft;
+    const walk = (x - startX) * 1;
+    containerRef.current.scrollLeft = scrollLeft - walk;
+  };
+  const handleMouseUpOrLeave = () => {
+    containerRef.current.classList.add("cursor-normal");
+    containerRef.current.classList.remove("cursor-grabbing");
+    isDragging = false;
+  };
   return (
     <div>
       <div className="relative">
@@ -34,9 +60,16 @@ export default function MainTable({
         {/* <div className="absolute left-[20px] bottom-[-8px] w-[200px] h-[40px] bg-[red] rounded-t-md"></div> */}
       </div>
       <div className="overflow-x-auto">
-        <div className="custom-scrollbar max-h-[calc(100dvh-170px)] overflow-y-auto rounded-xl border border-mdLight">
+        <div
+          ref={containerRef}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUpOrLeave}
+          onMouseLeave={handleMouseUpOrLeave}
+          className={`${styles.list} custom-scrollbar max-h-[calc(100dvh-170px)] overflow-y-auto rounded-xl border border-mdLight`}
+        >
           <table className="w-full text-right border-collapse bg-myHover text-secDark">
-            <thead>
+            <thead className="select-none">
               <tr className="text-sm">{header}</tr>
             </thead>
             <tbody className="text-sm divide-y divide-mdLight">{children}</tbody>

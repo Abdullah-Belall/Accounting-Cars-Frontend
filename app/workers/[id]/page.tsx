@@ -39,7 +39,10 @@ export default function Worker() {
   const handleBanConfirm = async () => {
     if (loading) return;
     setLoading(true);
-    const response = await CLIENT_COLLECTOR_REQ(BAN_USER_REQ, { id, banned_reason: "he is gay." });
+    const response = await CLIENT_COLLECTOR_REQ(BAN_USER_REQ, {
+      id,
+      banned_reason: "he such an asshole.",
+    });
     setLoading(false);
     if (response.done) {
       openPopup("snakeBarPopup", { message: "تم حظر الموظف بنجاح.", type: "success" });
@@ -52,10 +55,10 @@ export default function Worker() {
   const endRole = data?.role === "admin" ? "موظف" : data?.role === "owner" ? "مالك" : "المراقب";
   return (
     <>
-      <div dir="rtl" className="flex flex-col px-mainxs gap-mainxs w-fit mx-auto">
+      <div dir="rtl" className="flex flex-col px-mainxs gap-mainxs w-full mx-auto">
         <div
           dir="rtl"
-          className="w-[600px] bg-myHover border border-mdLight text-white rounded-lg p-6 shadow-lg"
+          className="w-full max-w-[600px] mx-auto bg-myHover border border-mdLight text-white rounded-lg p-6 shadow-lg"
         >
           <h2 className="text-lg font-semibold mb-4 text-myDark"> المعلومات الشخصية للموظف</h2>
           <div className="flex justify-between items-center">
@@ -85,7 +88,7 @@ export default function Worker() {
             </Button>
           )}
         </div>
-        <div dir="ltr" className="w-full mt-5">
+        <div dir="ltr" className="w-full max-w-[600px] mx-auto mt-5">
           <PhonesTable
             type={"الموظف"}
             data={data?.contacts as PhoneInterface[]}

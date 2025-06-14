@@ -52,8 +52,8 @@ export default function LogIn() {
     }
   };
   return (
-    <div className="bg-mdDark w-full h-dvh flex justify-center items-center">
-      <div className="rounded-md shadow-lg min-w-[320px] bg-myLight p-mainxl flex flex-col justify-center items-center gap-[20px]">
+    <div className="bg-mdDark w-full h-dvh flex justify-center items-center px-mainxs">
+      <div className="rounded-md shadow-lg w-full min-[400px]:max-w-sm bg-myLight p-mainxl flex flex-col justify-center items-center gap-[20px]">
         <h1 className="font-semibold text-[25px]">تسجيل الدخول</h1>
         <div className="w-full flex flex-col gap-[15px]">
           <TextField

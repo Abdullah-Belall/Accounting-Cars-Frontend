@@ -54,9 +54,13 @@ export default function AllGraphs() {
   }, [data.months]);
   return (
     <div className="w-full flex flex-col gap-10">
-      <div className="w-full h-[300px] flex gap-4">
-        <GraphTemplet data={editedMonths} title={`تحاليل أشهر السنة الحالية`} />
-        <GraphTemplet data={data.days} title={`تحاليل أيام الشهر الحالي`} />
+      <div className="w-full flex flex-col gap-12 lg:gap-3 lg:flex-row">
+        <div className="w-full h-[300px]">
+          <GraphTemplet data={editedMonths} title={`تحاليل أشهر السنة الحالية`} />
+        </div>
+        <div className="w-full h-[300px]">
+          <GraphTemplet data={data.days} title={`تحاليل أيام الشهر الحالي`} />
+        </div>
       </div>
       <div className="w-full h-[300px]">
         <GraphTemplet data={data.years} title={`تحاليل السنوات`} />

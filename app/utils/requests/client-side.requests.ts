@@ -13,16 +13,9 @@ import {
 const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL + "/api";
 const LOGIN_REQ = async (data: LoginInterface) => {
   try {
-    const response: any = await axios.post(
-      `${BASE_URL}/workers/sign-in`,
-      {
-        ...data,
-        tenant_domain: data.tenant_domain === "localhost" ? "localhost.com" : data.tenant_domain,
-      },
-      {
-        withCredentials: true,
-      }
-    );
+    const response: any = await axios.post(`${BASE_URL}/workers/sign-in`, data, {
+      withCredentials: true,
+    });
     if (response?.data?.done) {
       setCookie("access_token", response?.data?.access_token);
       return { done: true };

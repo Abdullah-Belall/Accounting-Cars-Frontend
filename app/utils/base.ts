@@ -3,17 +3,43 @@ import { DropDownsInterface, PaidStatusEnum, PaymentMethodsEnum } from "./types/
 export const BaseWebsiteUrl = process.env.NEXT_PUBLIC_BASE_WEBSITE_URL || "http://localhost:3000";
 export const BaseLogosUrl = `https://res.cloudinary.com/doy0la086/image/upload/`;
 export const unCountedMessage = "هناك مشكلة ما, الرجاء المحاولة في وقت لاحق.";
-export const formatDate = (inputDate: Date) => {
-  const date = new Date(inputDate);
+export const formatDate = (input: string | Date) => {
+  let date: Date;
 
-  const hours = date.getHours().toString().padStart(2, "0");
-  const minutes = date.getMinutes().toString().padStart(2, "0");
-  const day = date.getDate().toString().padStart(2, "0");
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const year = date.getFullYear();
+  if (typeof input === "string") {
+    // نحذف الميكروثواني ونحول التاريخ لصيغة متوافقة مع JS
+    const fixedString = input.replace(" ", "T").split(".")[0];
+    date = new Date(fixedString);
+  } else {
+    date = new Date(input);
+  }
+
+  if (isNaN(date.getTime())) {
+    return "تاريخ غير صالح";
+  }
+
+  const formatter = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Africa/Cairo",
+    hour: "2-digit",
+    minute: "2-digit",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour12: false,
+  });
+
+  const parts = formatter.formatToParts(date);
+  const getPart = (type: string) => parts.find((p) => p.type === type)?.value || "";
+
+  const hours = getPart("hour");
+  const minutes = getPart("minute");
+  const day = getPart("day");
+  const month = getPart("month");
+  const year = getPart("year");
 
   return `${hours}:${minutes} ${day}-${month}-${year}`;
 };
+
 export const getSlug = (arr: any, value: string) => {
   return arr.find((e: any) => e.value === value)?.label;
 };

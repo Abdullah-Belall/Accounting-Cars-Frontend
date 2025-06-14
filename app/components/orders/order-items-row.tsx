@@ -66,14 +66,11 @@ export default function OrderItemsTableRow({
             {product.name}
           </p>
         </td>
-        <td className="px-4 py-2 text-center max-w-[80px]">
+        <td className="text-center">
           {returns?.isActive ? (
-            <TextField
-              id="Glu"
-              dir="rtl"
-              label="الكمية"
-              variant="filled"
-              sx={sameTextField}
+            <input
+              placeholder="الكمية"
+              className="rounded-md placeholder:text-[10px] outline-0 border border-myDark max-w-[40px] h-[30] mr-2 text-center"
               value={val}
               onChange={(e) =>
                 +e.target.value > +qty

@@ -51,7 +51,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${cairo.className} antialiased bg-myLight !text-secDark ${
-          !isLoginRoute ? "mr-[240px] mt-[80px]" : ""
+          !isLoginRoute ? "mr-[0] md:mr-[240px] mt-[80px]" : ""
         }`}
       >
         <>

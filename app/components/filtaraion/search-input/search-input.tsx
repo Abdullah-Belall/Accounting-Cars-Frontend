@@ -86,7 +86,7 @@ export default function SearchInput({
     return columns?.find((e) => e.name === current.get("column"))?.slug;
   };
   return (
-    <div dir="rtl" className="min-w-xs">
+    <div dir="rtl" className="w-[250px]">
       <div className="relative">
         <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
           <IoSearchOutline />

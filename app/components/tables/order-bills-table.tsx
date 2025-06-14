@@ -30,7 +30,7 @@ export default function OrderBillsTable({ data }: { data: any }) {
             color={row?.color === "" || !row?.color ? null : row?.color}
             size={row?.size}
             qty={row?.qty}
-            unit_price={row?.unit_price}
+            unit_price={row?.unit_price || row?.price}
             created_at={row?.created_at}
             note={row?.note as string}
             product={row?.product}
