@@ -15,7 +15,6 @@ import { GET_TENANT_VARS_REQ } from "./utils/requests/client-side.requests";
 import Header from "./components/header/header";
 import { BaseLogosUrl } from "./utils/base";
 import { PiListBold } from "react-icons/pi";
-import BlackLayer from "./components/common/black-layer";
 
 export default function RootLayout({
   children,
