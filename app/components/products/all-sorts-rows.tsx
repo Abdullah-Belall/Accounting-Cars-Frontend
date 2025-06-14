@@ -1,9 +1,8 @@
 "use client";
 
-import { formatDate, sameTextField } from "@/app/utils/base";
+import { formatDate } from "@/app/utils/base";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import { SortInterface } from "@/app/utils/types/interfaces";
-import { TextField } from "@mui/material";
 import Link from "next/link";
 
 export default function AllSortsTableRows({
