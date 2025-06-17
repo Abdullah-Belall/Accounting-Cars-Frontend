@@ -13,9 +13,17 @@ import {
 const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL + "/api";
 const LOGIN_REQ = async (data: LoginInterface) => {
   try {
-    const response: any = await axios.post(`${BASE_URL}/workers/sign-in`, data, {
-      withCredentials: true,
-    });
+    const response: any = await axios.post(
+      `${BASE_URL}/workers/sign-in`,
+      {
+        ...data,
+        tenant_domain:
+          process.env.NODE_ENV === "development" ? "localhost.com" : data.tenant_domain,
+      },
+      {
+        withCredentials: true,
+      }
+    );
     if (response?.data?.done) {
       setCookie("access_token", response?.data?.access_token);
       return { done: true };
@@ -997,6 +1005,29 @@ const GET_GRAPH_DATA_REQ = async ({ type }: { type: "years" | "months" | "days" 
     };
   }
 };
+const DELETE_PRODUCT_REQ = async ({ id }: { id: string }) => {
+  try {
+    const response: any = await axios.delete(`${BASE_URL}/products/${id}`, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
 //! BOSS REQS
 const CREATE_NEW_TENANT_REQ = async (data: { tenant_domain: string; phone?: string }) => {
   try {
@@ -1191,4 +1222,5 @@ export {
   GET_ALL_TENANTS_REQ,
   SIGN_FUSER_REQ,
   GET_TENANT_VARS_REQ,
+  DELETE_PRODUCT_REQ,
 };

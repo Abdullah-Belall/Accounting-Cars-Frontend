@@ -20,9 +20,7 @@ export default function SelectList({
     <button onBlur={onBlur} className="w-full relative mb-0">
       <div
         onClick={dropDown ? onBlur : onClick}
-        className={`${
-          dropDown ? "border-myDark bg-anotherLight" : "bg-transparent border-mdDark"
-        } w-full rounded-t-sm border-b cursor-pointer flex flex-row-reverse justify-between items-center px-mainxs py-mainxl`}
+        className={`bg-[#0000000f] hover:bg-[#00000017] w-full rounded-t-sm border-b cursor-pointer flex flex-row-reverse justify-between items-center px-mainxs py-mainxl`}
       >
         <p>{select ?? placeHolder}</p>
         {dropDown ? <FaChevronUp /> : <FaChevronDown />}

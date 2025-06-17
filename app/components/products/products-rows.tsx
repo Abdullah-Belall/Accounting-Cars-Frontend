@@ -5,6 +5,7 @@ import { ProductInterface } from "@/app/utils/types/interfaces";
 import Link from "next/link";
 import { useState } from "react";
 import { CiEdit } from "react-icons/ci";
+import { MdDeleteOutline } from "react-icons/md";
 
 export default function ProductsTableRows({
   id,
@@ -19,7 +20,17 @@ export default function ProductsTableRows({
   created_at,
 }: ProductInterface) {
   const { openPopup } = usePopup();
+  const openSnakeBar = (message: string) => {
+    openPopup("snakeBarPopup", { message });
+  };
   const [openDesc, setOpenDesc] = useState(false);
+  const onWantToDelete = () => {
+    if (sorts_count !== 0) {
+      openSnakeBar("لا يمكن حذف منتج يحتوي علي اصناف.");
+      return;
+    }
+    openPopup("deleteAlertPopup", { id, name });
+  };
   return (
     <>
       <tr>
@@ -32,6 +43,12 @@ export default function ProductsTableRows({
               className="w-fit text-xl hover:text-red-600 cursor-pointer text-anotherDark"
             >
               <CiEdit />
+            </p>
+            <p
+              onClick={onWantToDelete}
+              className="w-fit text-xl ml-auto hover:text-orange-700 cursor-pointer text-anotherDark"
+            >
+              <MdDeleteOutline />
             </p>
           </div>
         </td>

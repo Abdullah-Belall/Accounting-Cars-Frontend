@@ -57,11 +57,11 @@ export default function AddProductForm({
       fetchData();
     }
   }, [isForEdit]);
-  const dropDownOpthions = categories.map((e) => (
+  const dropDownOpthions = categories.map((e, i, arr) => (
     <li
       key={e.id}
       onClick={() => handleData("category", e.name + `###` + e.id)}
-      className="p-mainxs text-center border-b border-myLight cursor-pointer"
+      className={`${i !== arr.length - 1 && "border-b"} p-mainxs text-center border-myLight cursor-pointer`}
     >
       {e.name}
     </li>
@@ -176,7 +176,7 @@ export default function AddProductForm({
                 <ul
                   className={
                     styles.list +
-                    " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
+                    ` w-full shadow-md max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs`
                   }
                 >
                   {dropDownOpthions}

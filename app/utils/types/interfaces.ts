@@ -46,6 +46,7 @@ export interface ProductItemInterface {
   orders_count: number;
   created_at: Date;
   updated_at?: Date;
+  latest_cost_unit_price: number;
 }
 
 export interface AddSortInterface {

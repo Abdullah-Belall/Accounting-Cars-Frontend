@@ -9,9 +9,14 @@ import { useState } from "react";
 import AddSortForm from "../forms & alerts/add-sort-form";
 import { ProductInterface } from "@/app/utils/types/interfaces";
 import EditQtyPopup from "../forms & alerts/edit-qty";
-import { CLIENT_COLLECTOR_REQ, UPDATE_SORT_REQ } from "@/app/utils/requests/client-side.requests";
+import {
+  CLIENT_COLLECTOR_REQ,
+  DELETE_PRODUCT_REQ,
+  UPDATE_SORT_REQ,
+} from "@/app/utils/requests/client-side.requests";
 import AddProductForm from "../forms & alerts/add-product-form";
 import NoData from "../common/no-data";
+import DeleteAlert from "../forms & alerts/delete-alert";
 
 export default function ProductsTable({
   title,
@@ -88,6 +93,23 @@ export default function ProductsTable({
     { name: "product.note", slug: "الملاحظات" },
   ];
   console.log(data);
+  const handleDeleteProduct = async () => {
+    const id = popupState.deleteAlertPopup.data.id;
+    const response = await CLIENT_COLLECTOR_REQ(DELETE_PRODUCT_REQ, { id });
+    console.log(response);
+    if (response.done) {
+      openPopup("snakeBarPopup", {
+        message: "تم حذف المنتج بنجاح.",
+        type: "success",
+      });
+      closePopup("deleteAlertPopup");
+      refetch();
+    } else {
+      openPopup("snakeBarPopup", {
+        message: response.message,
+      });
+    }
+  };
   return (
     <>
       <MainTable title={title} headers={headers} filter={[!isForCategory, "products", columns]}>
@@ -158,7 +180,10 @@ export default function ProductsTable({
         <>
           <BlackLayer onClick={() => closePopup("editQtyPopup")} />
           <PopupHolder>
-            <EditQtyPopup OnConfirm={onQtyConfirm} title={editQtyData.title} />
+            <EditQtyPopup
+              latest_cost_unit_price={popupState.editQtyPopup.data.latest_cost_unit_price as number}
+              OnConfirm={onQtyConfirm}
+            />
           </PopupHolder>
         </>
       )}
@@ -177,6 +202,18 @@ export default function ProductsTable({
                   });
                 },
               }}
+            />
+          </PopupHolder>
+        </>
+      )}
+      {popupState.deleteAlertPopup.isOpen && (
+        <>
+          <BlackLayer onClick={() => closePopup("deleteAlertPopup")} />
+          <PopupHolder>
+            <DeleteAlert
+              action={"حذف"}
+              name={`المنتج ${popupState.deleteAlertPopup.data.name}`}
+              onConfirm={handleDeleteProduct}
             />
           </PopupHolder>
         </>

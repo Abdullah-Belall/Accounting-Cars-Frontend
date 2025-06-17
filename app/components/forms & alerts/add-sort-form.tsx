@@ -118,7 +118,10 @@ export default function AddSortForm({
     }
   };
   return (
-    <div className="rounded-md shadow-md  w-full min-[400px]:min-w-sm bg-myLight p-mainxl">
+    <div
+      dir="rtl"
+      className="rounded-md shadow-md  w-full min-[400px]:min-w-sm bg-myLight p-mainxl"
+    >
       <h2 className="text-lg text-center font-semibold mb-4">
         {isForEdit ? `تعديل بيانات صنف ${isForEdit.name}` : "اضافة صنف جديد"}
       </h2>
@@ -137,16 +140,6 @@ export default function AddSortForm({
           <TextField
             id="Glu"
             dir="rtl"
-            label="اللون"
-            className="w-full"
-            variant="filled"
-            sx={sameTextField}
-            value={data.color ?? ""}
-            onChange={(e) => handleData("color", e.target.value)}
-          />
-          <TextField
-            id="Glu"
-            dir="rtl"
             label="المقاس"
             variant="filled"
             sx={sameTextField}
@@ -154,30 +147,20 @@ export default function AddSortForm({
             value={data.size ?? ""}
             onChange={(e) => handleData("size", e.target.value)}
           />
-        </div>
-        <div className="flex justify-center items-center gap-mainxs mb-0">
           <TextField
             id="Glu"
             dir="rtl"
-            label="سعر البيع للوحدة"
+            label="اللون"
             className="w-full"
             variant="filled"
             sx={sameTextField}
-            value={data.unit_price ?? ""}
-            onChange={(e) => handleData("unit_price", e.target.value.replace(/[^0-9.]/g, ""))}
+            value={data.color ?? ""}
+            onChange={(e) => handleData("color", e.target.value)}
           />
+        </div>
+        <div className="flex justify-center items-center gap-mainxs mb-0">
           {!isForEdit && (
             <>
-              <TextField
-                id="Glu"
-                dir="rtl"
-                label="التكلفة للوحدة"
-                variant="filled"
-                sx={sameTextField}
-                className="w-full"
-                value={data.cost ?? ""}
-                onChange={(e) => handleData("cost", e.target.value.replace(/[^0-9.]/g, ""))}
-              />
               <TextField
                 id="Glu"
                 dir="rtl"
@@ -188,8 +171,29 @@ export default function AddSortForm({
                 value={data.qty ?? ""}
                 onChange={(e) => handleData("qty", e.target.value.replace(/[^0-9.]/g, ""))}
               />
+              <TextField
+                id="Glu"
+                dir="rtl"
+                label="التكلفة للوحدة"
+                variant="filled"
+                sx={sameTextField}
+                className="w-full"
+                value={data.cost ?? ""}
+                onChange={(e) => handleData("cost", e.target.value.replace(/[^0-9.]/g, ""))}
+              />
             </>
           )}
+
+          <TextField
+            id="Glu"
+            dir="rtl"
+            label="سعر البيع للوحدة"
+            className="w-full"
+            variant="filled"
+            sx={sameTextField}
+            value={data.unit_price ?? ""}
+            onChange={(e) => handleData("unit_price", e.target.value.replace(/[^0-9.]/g, ""))}
+          />
         </div>
         <TextField
           id="Glu"

@@ -12,7 +12,7 @@ export default function OrderPrint() {
   };
   console.log(bills);
   return (
-    <div className="print-content relative mx-auto flex flex-col items-center max-w-xl justify-center w-full px-mainxs">
+    <div className="print-content relative mx-auto flex flex-col items-center max-w-[637px] justify-center w-full px-mainxs">
       <h1 className="font-bold">
         فاتورة {bills?.type === "order" ? "مبيعات" : "مرتجعات"} {bills?.bill_id?.slice(4)}
       </h1>

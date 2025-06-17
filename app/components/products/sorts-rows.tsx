@@ -22,6 +22,7 @@ export default function SortsTableRows({
   note,
   created_at,
   refetchOnEdit,
+  latest_cost_unit_price,
 }: ProductItemFetchedInterface) {
   const { openPopup } = usePopup();
 
@@ -62,6 +63,7 @@ export default function SortsTableRows({
               currQty: qty,
               title: name,
               refetchOnEdit,
+              latest_cost_unit_price,
             })
           }
           className={`${styles.mioQty} px-4 py-2 text-center relative cursor-pointer`}

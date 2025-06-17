@@ -4,7 +4,13 @@ import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import { Button, TextField } from "@mui/material";
 import { useState } from "react";
 
-export default function EditQtyPopup({ OnConfirm }: { OnConfirm: any; title: string }) {
+export default function EditQtyPopup({
+  OnConfirm,
+  latest_cost_unit_price,
+}: {
+  OnConfirm: any;
+  latest_cost_unit_price: number;
+}) {
   const [loading, setLoading] = useState(false);
   const { popupState, openPopup } = usePopup();
   const openSnakeBar = (message: string) => {
@@ -62,7 +68,7 @@ export default function EditQtyPopup({ OnConfirm }: { OnConfirm: any; title: str
           onChange={(e) => handleData("oldQty", e.target.value)}
           disabled
         />
-        <div dir="rtl" className="flex gap-2">
+        <div className="flex gap-2 w-full m-0">
           <TextField
             id="Glu"
             dir="rtl"
@@ -89,6 +95,16 @@ export default function EditQtyPopup({ OnConfirm }: { OnConfirm: any; title: str
             onChange={(e) => handleData("costPrice", e.target.value.replace(/[^0-9.]/g, ""))}
           />
         </div>
+        <TextField
+          id="Glu"
+          dir="rtl"
+          label="اخر تكلفة لهذا الصنف"
+          variant="filled"
+          className="w-full"
+          sx={sameTextField}
+          value={latest_cost_unit_price.toString()}
+          disabled
+        />
 
         <Button
           onClick={handleDone}

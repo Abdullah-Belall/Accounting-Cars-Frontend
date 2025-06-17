@@ -36,7 +36,7 @@ export default function OrdersTable({
     "*",
   ];
   if (tableFor === "client") {
-    headers.splice(5, 1);
+    headers.splice(9, 1);
   }
   const columns = [
     { name: "order.short_id", slug: "رقم الفاتورة" },

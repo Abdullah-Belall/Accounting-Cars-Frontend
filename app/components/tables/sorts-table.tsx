@@ -9,8 +9,10 @@ import {
 import { ProductItemInterface } from "@/app/utils/types/interfaces";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import NoData from "../common/no-data";
+import { useRouter } from "next/navigation";
 
 export default function SortsTable({ title, id }: { id: string; title: string }) {
+  const router = useRouter();
   const [data, setData] = useState<ProductItemInterface[] | []>([]);
   const { openPopup } = usePopup();
   const fetchData = async () => {
@@ -18,7 +20,7 @@ export default function SortsTable({ title, id }: { id: string; title: string })
     if (response.done) {
       setData(response.data.sorts);
     } else {
-      // router.replace("/log-in");
+      router.replace("/log-in");
     }
   };
   useEffect(() => {
@@ -56,6 +58,7 @@ export default function SortsTable({ title, id }: { id: string; title: string })
             orders_count={row.orders_count}
             created_at={row.created_at}
             refetchOnEdit={fetchData}
+            latest_cost_unit_price={row?.latest_cost_unit_price}
           />
         ))}
       </MainTable>
