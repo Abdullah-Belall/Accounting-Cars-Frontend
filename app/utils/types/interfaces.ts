@@ -264,6 +264,6 @@ export interface GraphDataInterface {
   totalEarning: number;
   netProfit: number;
   year: number;
-  month?: number;
+  month?: string;
   day?: number;
 }

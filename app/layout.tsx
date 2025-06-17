@@ -30,7 +30,10 @@ export default function RootLayout({
   const isLoginRoute = pathname === "/log-in";
   useEffect(() => {
     const fetchData = async () => {
-      const response = await GET_TENANT_VARS_REQ({ tenant_domain: window.location.hostname });
+      const response = await GET_TENANT_VARS_REQ({
+        tenant_domain:
+          process.env.NODE_ENV === "development" ? "localhost.com" : window.location.hostname,
+      });
       if (response.done) {
         setTenantsVars(response.data);
       }

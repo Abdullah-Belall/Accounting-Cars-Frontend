@@ -120,7 +120,7 @@ export default function OrderItemsTable({
             product={row?.sort?.product}
             name={row?.sort.name}
             size={row?.sort.size}
-            color={row?.sort.color === "" || !row.color ? null : "لا يوجد"}
+            color={row?.sort.color !== "" ? row?.sort.color : null}
             qty={row.qty}
             unit_price={+row.unit_price}
           />

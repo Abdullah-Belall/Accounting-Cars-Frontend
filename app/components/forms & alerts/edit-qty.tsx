@@ -72,6 +72,16 @@ export default function EditQtyPopup({
           <TextField
             id="Glu"
             dir="rtl"
+            label="التكلفة للوحدة"
+            variant="filled"
+            className="w-full"
+            sx={sameTextField}
+            value={data.costPrice ?? ""}
+            onChange={(e) => handleData("costPrice", e.target.value.replace(/[^0-9.]/g, ""))}
+          />
+          <TextField
+            id="Glu"
+            dir="rtl"
             label="الكمية الجديدة"
             variant="filled"
             className="w-full"
@@ -83,16 +93,6 @@ export default function EditQtyPopup({
                 handleData("newQty", value);
               }
             }}
-          />
-          <TextField
-            id="Glu"
-            dir="rtl"
-            label="التكلفة للوحدة"
-            variant="filled"
-            className="w-full"
-            sx={sameTextField}
-            value={data.costPrice ?? ""}
-            onChange={(e) => handleData("costPrice", e.target.value.replace(/[^0-9.]/g, ""))}
           />
         </div>
         <TextField
