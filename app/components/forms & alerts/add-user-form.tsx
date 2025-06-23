@@ -161,6 +161,12 @@ export default function AddUserForm({
                       موظف
                     </li>
                     <li
+                      onClick={() => handleData("role", "reader")}
+                      className="p-mainxs text-center cursor-pointer"
+                    >
+                      مراقب
+                    </li>
+                    <li
                       onClick={() => handleData("role", "owner")}
                       className="p-mainxs text-center cursor-pointer"
                     >

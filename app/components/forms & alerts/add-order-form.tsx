@@ -22,7 +22,6 @@ export default function AddOrderForm() {
   const openSnakeBar = (message: string) => {
     openPopup("snakeBarPopup", { message });
   };
-  //* =================
   const [formData, setFormData] = useState<{
     payment_method: string;
     paid_status: string;
@@ -63,7 +62,6 @@ export default function AddOrderForm() {
     ));
   };
 
-  //* =================
   const fetchData = async () => {
     const response = await CLIENT_COLLECTOR_REQ(GET_ALL_CLIENTS_REQ);
     if (response.done) {
@@ -177,9 +175,9 @@ export default function AddOrderForm() {
     }
   };
   return (
-    <div className="relative rounded-xl shadow-md min-w-[620px] bg-myLight p-mainxl flex flex-col items-center">
+    <div className="relative rounded-xl shadow-md max-w-[420px] sm:max-w-full bg-myLight p-mainxl flex flex-col items-center">
       <h2 className="text-lg text-center font-semibold mb-4">انشاء طلب جديد</h2>
-      <div className={styles2.list + " max-h-[250px] overflow-y-scroll"}>
+      <div className={" w-full"}>
         <UsersTable type="client" forOrder={true} data={data} />
       </div>
       <div className="w-full flex gap-2 items-center mt-5">
