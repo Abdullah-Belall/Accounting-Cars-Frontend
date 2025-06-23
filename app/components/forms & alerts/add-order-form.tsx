@@ -13,6 +13,7 @@ import {
 import { getSlug, methodsArray, paidStatusArray, sameTextField, taxArray } from "@/app/utils/base";
 import { useRouter } from "next/navigation";
 import { useBills } from "@/app/utils/contexts/bills-contexts";
+import styles2 from "@/app/styles/drop-down.module.css";
 
 export default function AddOrderForm() {
   const router = useRouter();
@@ -176,7 +177,7 @@ export default function AddOrderForm() {
   return (
     <div className="relative rounded-xl shadow-md max-w-[420px] sm:max-w-full bg-myLight p-mainxl flex flex-col items-center">
       <h2 className="text-lg text-center font-semibold mb-4">انشاء طلب جديد</h2>
-      <div className={" w-full"}>
+      <div className={styles2.list + " w-full max-h-[220px] overflow-y-scroll"}>
         <UsersTable type="client" forOrder={true} data={data} />
       </div>
       <div className="w-full flex gap-2 items-center mt-5">
