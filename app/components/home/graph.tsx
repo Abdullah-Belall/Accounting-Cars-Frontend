@@ -23,6 +23,7 @@ const monthsArr = [
 ];
 
 export default function AllGraphs() {
+  const [isForTrail, setIsForTrail] = useState(false);
   const [data, setData] = useState({
     years: [],
     months: [],
@@ -103,13 +104,11 @@ export default function AllGraphs() {
     { totalEarning: 25500, netProfit: 11000, year: 2024 },
     { totalEarning: 20500, netProfit: 7000, year: 2025 },
   ];
-  const [isForTrail, setIsForTrail] = useState(false);
   useEffect(() => {
     console.log(window.location.hostname);
-    const allowed = ["localhost", "wolf-jet.vercel.app"];
-    if (allowed.includes(window.location.hostname)) {
-      setIsForTrail(true);
-    }
+    const cond = ["localhost", "wolf-jet.vercel.app"].includes(window.location.hostname);
+    console.log(cond);
+    setIsForTrail(cond);
   }, []);
   return (
     <div className="w-full flex flex-col gap-10">

@@ -7,10 +7,9 @@ export default function GeneralInfo({ data }: { data: CalcsInterface }) {
   const [isForTrail, setIsForTrail] = useState(false);
   useEffect(() => {
     console.log(window.location.hostname);
-    const allowed = ["localhost", "wolf-jet.vercel.app"];
-    if (allowed.includes(window.location.hostname)) {
-      setIsForTrail(true);
-    }
+    const cond = ["localhost", "wolf-jet.vercel.app"].includes(window.location.hostname);
+    console.log(cond);
+    setIsForTrail(cond);
   }, []);
   return (
     <section className="w-full flex flex-col items-end">
