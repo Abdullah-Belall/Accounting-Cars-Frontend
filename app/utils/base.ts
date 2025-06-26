@@ -104,3 +104,9 @@ export const paidStatusArray: DropDownsInterface[] = [
   { value: PaidStatusEnum.PAID, label: "دفع الأن" },
   { value: PaidStatusEnum.PENDING, label: "لم يدفع بعد" },
 ];
+export const rolesArray = [
+  { value: "boss", label: "نبض تك" },
+  { value: "owner", label: "مالك" },
+  { value: "reader", label: "مراقب" },
+  { value: "admin", label: "موظف" },
+];

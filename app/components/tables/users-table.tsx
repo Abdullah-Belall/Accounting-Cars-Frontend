@@ -2,6 +2,7 @@ import { ClientInterface } from "@/app/utils/types/interfaces";
 import UsersTableRows from "../users/users-table-rows";
 import MainTable from "./main-table";
 import NoData from "../common/no-data";
+import { getSlug, rolesArray } from "@/app/utils/base";
 
 export default function UsersTable({
   type,
@@ -53,7 +54,7 @@ export default function UsersTable({
             addresses_count={row.addresses_count as number}
             phone_count={row.contacts_count as number}
             type={type}
-            role={row?.role === "owner" ? "مالك" : row?.role === "admin" ? "موظف" : "مراقب"}
+            role={getSlug(rolesArray, row?.role as string)}
           />
         ))}
       </MainTable>
