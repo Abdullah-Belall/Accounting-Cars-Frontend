@@ -2,14 +2,14 @@
 import ChangePassword from "../components/forms & alerts/change-password";
 import { getSlug, rolesArray } from "../utils/base";
 import { useUser } from "../utils/contexts/UserContext";
-import { CLIENT_COLLECTOR_REQ, INITIAL_DATA_REQ } from "../utils/requests/client-side.requests";
+// import { CLIENT_COLLECTOR_REQ, INITIAL_DATA_REQ } from "../utils/requests/client-side.requests";
 
 export default function Profile() {
   const { user } = useUser();
 
-  const PushInailData = async () => {
-    await CLIENT_COLLECTOR_REQ(INITIAL_DATA_REQ);
-  };
+  // const PushInailData = async () => {
+  //   await CLIENT_COLLECTOR_REQ(INITIAL_DATA_REQ);
+  // };
   return (
     <>
       <div dir="rtl" className="flex flex-col px-mainxs gap-mainxs w-full sm:max-w-[600px] mx-auto">
