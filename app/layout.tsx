@@ -66,7 +66,7 @@ export default function RootLayout({
           ></div>
           <div
             onClick={() => setOpenSidebar(!openSidebar)}
-            className={`${openSidebar ? "right-[240px]" : "right-0"} z-30 duration-[.3s] absolute md:hidden z-10 top-[25%] text-lg cursor-pointer rounded-l-md bg-myLight p-2 text-myDark shadow-lg`}
+            className={`${openSidebar ? "right-[240px]" : "right-0"} z-30 duration-[.3s] fixed md:hidden z-10 top-[25%] text-lg cursor-pointer rounded-l-md bg-myLight p-2 text-myDark shadow-lg`}
           >
             <PiListBold />
           </div>
