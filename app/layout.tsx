@@ -15,6 +15,7 @@ import { GET_TENANT_VARS_REQ } from "./utils/requests/client-side.requests";
 import Header from "./components/header/header";
 import { BaseLogosUrl } from "./utils/base";
 import { PiListBold } from "react-icons/pi";
+import { StockChecksProvider } from "./utils/contexts/stock-checks-contexts";
 
 export default function RootLayout({
   children,
@@ -75,11 +76,13 @@ export default function RootLayout({
               <UserProvider>
                 <ReturnsProvider>
                   <BillesProvider>
-                    <CustomSnackbar />
-                    {!isLoginRoute && <SideBar open={openSidebar} />}
-                    {!isLoginRoute && <Header logo={tenantsVars?.copmany_logo as string} />}
-                    {children}
-                    <ReturnsItemsPopupCus />
+                    <StockChecksProvider>
+                      <CustomSnackbar />
+                      {!isLoginRoute && <SideBar open={openSidebar} />}
+                      {!isLoginRoute && <Header logo={tenantsVars?.copmany_logo as string} />}
+                      {children}
+                      <ReturnsItemsPopupCus />
+                    </StockChecksProvider>
                   </BillesProvider>
                 </ReturnsProvider>
               </UserProvider>

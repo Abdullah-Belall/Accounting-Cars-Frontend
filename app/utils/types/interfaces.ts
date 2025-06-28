@@ -194,6 +194,31 @@ export interface CostsInterface {
   created_at: Date;
   updated_at?: Date;
 }
+export interface ExpensesInterface {
+  id: string;
+  index: number;
+  name: string;
+  amount: number;
+  note?: string;
+  created_at: Date;
+  updated_at?: Date;
+  forEdit: (data: any) => void;
+}
+export interface StockChecksInterface {
+  id: string;
+  index: number;
+  note?: string;
+  created_at: Date;
+}
+export interface StockChecksItemsInterface {
+  id: string;
+  index: number;
+  sort: SortInterface;
+  recorded_quantity: number;
+  actual_quantity: number;
+  difference: number;
+  created_at: Date;
+}
 interface AffiliateLink {
   title: string;
   link: string;
@@ -258,6 +283,8 @@ export interface CalcsInterface {
   countPaidOrders: number;
   notPaidOrders: number;
   countNotPaidOrders: number;
+  period: string;
+  balance: number;
 }
 
 export interface GraphDataInterface {

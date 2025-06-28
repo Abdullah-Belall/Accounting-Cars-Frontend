@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 import SideBarList from "./side-bar-list";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
-import { FaPerson } from "react-icons/fa6";
+import { FaClipboardCheck, FaPerson } from "react-icons/fa6";
 import { FaIdCardAlt } from "react-icons/fa";
 import { BiCategory } from "react-icons/bi";
 import { FiCodesandbox } from "react-icons/fi";
@@ -67,6 +67,10 @@ const sideBarItems = [
     icon: <RiBillLine className={sameClass} />,
     affiliateLinks: [
       {
+        title: "فواتير المصاريف",
+        link: "/expenses?searchin=expenses",
+      },
+      {
         title: "فواتير التكاليف",
         link: "/products/costs?searchin=costs",
       },
@@ -85,6 +89,20 @@ const sideBarItems = [
     ],
   },
   {
+    title: "الجرود",
+    icon: <FaClipboardCheck className={sameClass} />,
+    affiliateLinks: [
+      {
+        title: "كل الجرود",
+        link: "/stock-checks?searchin=stock-checks",
+      },
+      {
+        title: "انشاء جرد",
+        link: "/stock-checks/add",
+      },
+    ],
+  },
+  {
     title: "المنتجات",
     icon: <FiCodesandbox className={sameClass} />,
     affiliateLinks: [
@@ -98,6 +116,7 @@ const sideBarItems = [
       },
     ],
   },
+
   {
     title: "العملاء",
     icon: <FaPerson className={sameClass} />,

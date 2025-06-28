@@ -1149,6 +1149,187 @@ const GET_TENANT_VARS_REQ = async ({ tenant_domain }: { tenant_domain: string })
     };
   }
 };
+const CREATE_EXPENSE_REQ = async (data: { name: string; amount: number; note?: string }) => {
+  try {
+    const response: any = await axios.post(`${BASE_URL}/expenses`, data, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const UPDATE_EXPENSE_REQ = async ({
+  id,
+  data,
+}: {
+  id: string;
+  data: { name?: string; amount?: number; note?: string };
+}) => {
+  try {
+    const response: any = await axios.patch(`${BASE_URL}/expenses/${id}`, data, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const DELETE_EXPENSE_REQ = async ({ id }: { id: string }) => {
+  try {
+    const response: any = await axios.delete(`${BASE_URL}/expenses/${id}`, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const GET_ALL_EXPENSES_REQ = async () => {
+  try {
+    const response: any = await axios.get(`${BASE_URL}/expenses`, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    return response?.data.expenses
+      ? { done: true, data: response?.data }
+      : { done: false, message: unCountedMessage, status: response.status };
+  } catch (error: any) {
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const CREATE_STOCK_CHECKS_REQ = async (data: { note?: string; data: any }) => {
+  try {
+    const response: any = await axios.post(`${BASE_URL}/stock-checks`, data, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const GET_ALL_STOCK_CHECKS_REQ = async () => {
+  try {
+    const response: any = await axios.get(`${BASE_URL}/stock-checks`, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    return response?.data.stockChecks
+      ? { done: true, data: response?.data }
+      : { done: false, message: unCountedMessage, status: response.status };
+  } catch (error: any) {
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const GET_STOCK_CHECKS_ITEMS_REQ = async ({ id }: { id: string }) => {
+  try {
+    const response: any = await axios.get(`${BASE_URL}/stock-checks/${id}`, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    return response?.data.id
+      ? { done: true, data: response?.data }
+      : { done: false, message: unCountedMessage, status: response.status };
+  } catch (error: any) {
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const UPDATE_BALANCE_REQ = async ({ data }: { data: { balance: number; period: string } }) => {
+  try {
+    const response: any = await axios.patch(`${BASE_URL}/tenants/balance`, data, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
 //* MAIN FUNCTION (USED FOR ALL REQUESTS THAT NEED ACCESS_TOKEN)
 const CLIENT_COLLECTOR_REQ = async (varFunction: any, dataBody?: any) => {
   const access_token = getCookie("access_token");
@@ -1223,4 +1404,12 @@ export {
   SIGN_FUSER_REQ,
   GET_TENANT_VARS_REQ,
   DELETE_PRODUCT_REQ,
+  CREATE_EXPENSE_REQ,
+  UPDATE_EXPENSE_REQ,
+  DELETE_EXPENSE_REQ,
+  GET_ALL_EXPENSES_REQ,
+  GET_STOCK_CHECKS_ITEMS_REQ,
+  GET_ALL_STOCK_CHECKS_REQ,
+  CREATE_STOCK_CHECKS_REQ,
+  UPDATE_BALANCE_REQ,
 };

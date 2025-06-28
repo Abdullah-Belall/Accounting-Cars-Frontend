@@ -110,3 +110,9 @@ export const rolesArray = [
   { value: "reader", label: "مراقب" },
   { value: "admin", label: "موظف" },
 ];
+export const periodsArray = [
+  { value: "month", label: "شهري" },
+  { value: "quarter", label: "ربع سنوي" },
+  { value: "halfyear", label: "نصف سنوي" },
+  { value: "year", label: "سنوي" },
+];
