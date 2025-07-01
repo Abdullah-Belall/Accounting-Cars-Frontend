@@ -2,7 +2,6 @@ import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import OrdersTableRow from "../orders/orders-table-row";
 import MainTable from "./main-table";
 import BlackLayer from "../common/black-layer";
-import PopupHolder from "../common/popup-holder";
 import OrderItemsPopUp from "../orders/order-items-popup";
 import { OrderInterface } from "@/app/utils/types/interfaces";
 import EditOrderPopup from "../forms & alerts/edit-order";

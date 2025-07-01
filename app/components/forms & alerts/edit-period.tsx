@@ -13,7 +13,7 @@ import {
 export default function EditPeriodPopup({ OnConfirm }: { OnConfirm: any }) {
   const [loading, setLoading] = useState(false);
   const [dropDown, setDropDown] = useState(false);
-  const { popupState, openPopup } = usePopup();
+  const { openPopup } = usePopup();
   const openSnakeBar = (message: string) => {
     openPopup("snakeBarPopup", { message });
   };
@@ -63,51 +63,53 @@ export default function EditPeriodPopup({ OnConfirm }: { OnConfirm: any }) {
     </li>
   ));
   return (
-    <div className="rounded-md shadow-md min-w-[320px] bg-myLight p-mainxl">
-      <h2 className="text-lg text-center font-semibold mb-4">
-        تعديل كمية صنف {popupState.editQtyPopup.data?.title}
-      </h2>
+    <div className="w-full min-[400px]:w-[400px] px-mainxs">
+      <div className="rounded-md shadow-md w-full bg-myLight p-mainxl">
+        <h2 className="text-lg text-center font-semibold mb-4">
+          اضافة رصيد بداية الفترة المحاسبية
+        </h2>
 
-      <div className="space-y-4 flex flex-col gap-[15px]">
-        <TextField
-          id="Glu"
-          dir="rtl"
-          label="الرصيد"
-          variant="filled"
-          className="w-full"
-          sx={sameTextField}
-          value={data.balance}
-          onChange={(e) => handleData("balance", e.target.value.replace(/[^0-9.]/g, ""))}
-        />
-        <SelectList
-          placeHolder="الفترة المحاسبية"
-          select={data.period !== "" ? getSlug(periodsArray, data.period) : null}
-          onClick={() => setDropDown(true)}
-          onBlur={() => setDropDown(false)}
-          dropDown={dropDown}
-        >
-          {dropDown && (
-            <>
-              <ul
-                className={
-                  styles.list +
-                  ` w-full shadow-md max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs`
-                }
-              >
-                {dropDownOpthions}
-              </ul>
-            </>
-          )}
-        </SelectList>
+        <div className="space-y-4 flex flex-col gap-[15px]">
+          <TextField
+            id="Glu"
+            dir="rtl"
+            label="الرصيد"
+            variant="filled"
+            className="w-full"
+            sx={sameTextField}
+            value={data.balance}
+            onChange={(e) => handleData("balance", e.target.value.replace(/[^0-9.]/g, ""))}
+          />
+          <SelectList
+            placeHolder="الفترة المحاسبية"
+            select={data.period !== "" ? getSlug(periodsArray, data.period) : null}
+            onClick={() => setDropDown(true)}
+            onBlur={() => setDropDown(false)}
+            dropDown={dropDown}
+          >
+            {dropDown && (
+              <>
+                <ul
+                  className={
+                    styles.list +
+                    ` w-full shadow-md max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs`
+                  }
+                >
+                  {dropDownOpthions}
+                </ul>
+              </>
+            )}
+          </SelectList>
 
-        <Button
-          onClick={handleDone}
-          sx={{ fontFamily: "cairo" }}
-          className="!bg-mdDark"
-          variant="contained"
-        >
-          تأكيد
-        </Button>
+          <Button
+            onClick={handleDone}
+            sx={{ fontFamily: "cairo" }}
+            className="!bg-mdDark"
+            variant="contained"
+          >
+            تأكيد
+          </Button>
+        </div>
       </div>
     </div>
   );

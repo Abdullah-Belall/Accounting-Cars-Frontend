@@ -1,6 +1,5 @@
 "use client";
 import BlackLayer from "@/app/components/common/black-layer";
-import PopupHolder from "@/app/components/common/popup-holder";
 import AddUserForm from "@/app/components/forms & alerts/add-user-form";
 import OrdersTable from "@/app/components/tables/orders-table";
 import PhonesTable from "@/app/components/tables/phones.table";

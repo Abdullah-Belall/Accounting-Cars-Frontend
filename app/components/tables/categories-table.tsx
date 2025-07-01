@@ -4,7 +4,6 @@ import CategoriesTableRow from "../categories/categories-rows";
 import MainTable from "./main-table";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import BlackLayer from "../common/black-layer";
-import PopupHolder from "../common/popup-holder";
 import AddCategoryForm from "../forms & alerts/add-category-form";
 import DeleteAlert from "../forms & alerts/delete-alert";
 import {

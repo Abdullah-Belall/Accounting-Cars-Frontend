@@ -1,6 +1,5 @@
 "use client";
 import BlackLayer from "@/app/components/common/black-layer";
-import PopupHolder from "@/app/components/common/popup-holder";
 import AllSortsTable from "@/app/components/tables/all-sorts-table";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import { Button } from "@mui/material";

@@ -1,6 +1,5 @@
 "use client";
 import BlackLayer from "@/app/components/common/black-layer";
-import PopupHolder from "@/app/components/common/popup-holder";
 import DeleteAlert from "@/app/components/forms & alerts/delete-alert";
 import PhonesTable from "@/app/components/tables/phones.table";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";

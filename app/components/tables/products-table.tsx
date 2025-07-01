@@ -2,7 +2,6 @@ import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import ProductsTableRows from "../products/products-rows";
 import MainTable from "./main-table";
 import BlackLayer from "../common/black-layer";
-import PopupHolder from "../common/popup-holder";
 import SortsTable from "./sorts-table";
 import { Button } from "@mui/material";
 import { useState } from "react";

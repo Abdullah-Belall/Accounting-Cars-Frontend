@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { getSlug, periodsArray } from "@/app/utils/base";
 import { Button } from "@mui/material";
 import BlackLayer from "../common/black-layer";
-import PopupHolder from "../common/popup-holder";
 import EditPeriodPopup from "../forms & alerts/edit-period";
 
 export default function GeneralInfo({ data }: { data: CalcsInterface }) {
@@ -53,15 +52,14 @@ export default function GeneralInfo({ data }: { data: CalcsInterface }) {
       </section>
       {editBalance && (
         <>
-          <BlackLayer onClick={() => setEditBalance(false)} />
-          <PopupHolder>
+          <BlackLayer onClick={() => setEditBalance(false)}>
             <EditPeriodPopup
               OnConfirm={() => {
                 setEditBalance(false);
                 window.location.reload();
               }}
             />
-          </PopupHolder>
+          </BlackLayer>
         </>
       )}
     </>
