@@ -118,101 +118,100 @@ export default function AddSortForm({
     }
   };
   return (
-    <div
-      dir="rtl"
-      className="rounded-md shadow-md  w-full min-[400px]:min-w-sm bg-myLight p-mainxl"
-    >
-      <h2 className="text-lg text-center font-semibold mb-4">
-        {isForEdit ? `تعديل بيانات صنف ${isForEdit.name}` : "اضافة صنف جديد"}
-      </h2>
-      <div className="space-y-4 flex flex-col gap-[15px]">
-        <TextField
-          id="Glu"
-          dir="rtl"
-          label="اسم الصنف"
-          variant="filled"
-          sx={sameTextField}
-          className="w-full"
-          value={data.name ?? ""}
-          onChange={(e) => handleData("name", e.target.value)}
-        />
-        <div className="flex justify-between items-center gap-mainxs mb-0">
+    <div className="w-full min-[540px]:w-[540px] px-mainxs">
+      <div className="rounded-md shadow-md bg-myLight p-mainxl">
+        <h2 className="text-lg text-center font-semibold mb-4">
+          {isForEdit ? `تعديل بيانات صنف ${isForEdit.name}` : "اضافة صنف جديد"}
+        </h2>
+        <div className="space-y-4 flex flex-col gap-[15px]">
           <TextField
             id="Glu"
             dir="rtl"
-            label="المقاس"
+            label="اسم الصنف"
             variant="filled"
             sx={sameTextField}
             className="w-full"
-            value={data.size ?? ""}
-            onChange={(e) => handleData("size", e.target.value)}
+            value={data.name ?? ""}
+            onChange={(e) => handleData("name", e.target.value)}
           />
-          <TextField
-            id="Glu"
-            dir="rtl"
-            label="اللون"
-            className="w-full"
-            variant="filled"
-            sx={sameTextField}
-            value={data.color ?? ""}
-            onChange={(e) => handleData("color", e.target.value)}
-          />
-        </div>
-        <div className="flex justify-center items-center gap-mainxs mb-0">
-          {!isForEdit && (
-            <>
-              <TextField
-                id="Glu"
-                dir="rtl"
-                label="الكمية"
-                variant="filled"
-                sx={sameTextField}
-                className="w-full"
-                value={data.qty ?? ""}
-                onChange={(e) => handleData("qty", e.target.value.replace(/[^0-9.]/g, ""))}
-              />
-              <TextField
-                id="Glu"
-                dir="rtl"
-                label="التكلفة للوحدة"
-                variant="filled"
-                sx={sameTextField}
-                className="w-full"
-                value={data.cost ?? ""}
-                onChange={(e) => handleData("cost", e.target.value.replace(/[^0-9.]/g, ""))}
-              />
-            </>
-          )}
+          <div className="flex justify-between items-center gap-mainxs mb-0">
+            <TextField
+              id="Glu"
+              dir="rtl"
+              label="المقاس"
+              variant="filled"
+              sx={sameTextField}
+              className="w-full"
+              value={data.size ?? ""}
+              onChange={(e) => handleData("size", e.target.value)}
+            />
+            <TextField
+              id="Glu"
+              dir="rtl"
+              label="اللون"
+              className="w-full"
+              variant="filled"
+              sx={sameTextField}
+              value={data.color ?? ""}
+              onChange={(e) => handleData("color", e.target.value)}
+            />
+          </div>
+          <div className="flex justify-center items-center gap-mainxs mb-0">
+            {!isForEdit && (
+              <>
+                <TextField
+                  id="Glu"
+                  dir="rtl"
+                  label="الكمية"
+                  variant="filled"
+                  sx={sameTextField}
+                  className="w-full"
+                  value={data.qty ?? ""}
+                  onChange={(e) => handleData("qty", e.target.value.replace(/[^0-9.]/g, ""))}
+                />
+                <TextField
+                  id="Glu"
+                  dir="rtl"
+                  label="التكلفة للوحدة"
+                  variant="filled"
+                  sx={sameTextField}
+                  className="w-full"
+                  value={data.cost ?? ""}
+                  onChange={(e) => handleData("cost", e.target.value.replace(/[^0-9.]/g, ""))}
+                />
+              </>
+            )}
 
+            <TextField
+              id="Glu"
+              dir="rtl"
+              label="سعر البيع للوحدة"
+              className="w-full"
+              variant="filled"
+              sx={sameTextField}
+              value={data.unit_price ?? ""}
+              onChange={(e) => handleData("unit_price", e.target.value.replace(/[^0-9.]/g, ""))}
+            />
+          </div>
           <TextField
             id="Glu"
             dir="rtl"
-            label="سعر البيع للوحدة"
-            className="w-full"
+            label="ملحوظة اضافية"
             variant="filled"
+            className="w-full"
             sx={sameTextField}
-            value={data.unit_price ?? ""}
-            onChange={(e) => handleData("unit_price", e.target.value.replace(/[^0-9.]/g, ""))}
+            value={data.note ?? ""}
+            onChange={(e) => handleData("note", e.target.value)}
           />
+          <Button
+            onClick={handleDone}
+            sx={{ fontFamily: "cairo" }}
+            className={"!bg-mdDark"}
+            variant="contained"
+          >
+            اضافة
+          </Button>
         </div>
-        <TextField
-          id="Glu"
-          dir="rtl"
-          label="ملحوظة اضافية"
-          variant="filled"
-          className="w-full"
-          sx={sameTextField}
-          value={data.note ?? ""}
-          onChange={(e) => handleData("note", e.target.value)}
-        />
-        <Button
-          onClick={handleDone}
-          sx={{ fontFamily: "cairo" }}
-          className={"!bg-mdDark"}
-          variant="contained"
-        >
-          اضافة
-        </Button>
       </div>
     </div>
   );

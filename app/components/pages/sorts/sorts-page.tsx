@@ -36,6 +36,19 @@ export default function SortsPage() {
         <AllSortsTable data={getSearch("sorts")?.results} />
         {popupState.makeOrderPopup.isOpen && (
           <div className="!absolute left-[12px] top-[-5px] flex gap-2 items-center">
+            <p
+              onClick={() => closeOrderPopup("makeOrderPopup")}
+              className="opacity-50 hover:opacity-100 text-lg text-red-700 cursor-pointer duration-[.1s]"
+            >
+              <ImCancelCircle />
+            </p>
+            <div
+              dir="rtl"
+              className="font-semibold bg-transparent text-mdDark border-2 border-mdDark text-md px-3 rounded-md"
+            >
+              {popupState.makeOrderPopup.data.product_sorts.length}{" "}
+              {popupState.makeOrderPopup.data.product_sorts.length > 2 ? "اصناف" : "صنف"}
+            </div>
             <Button
               onClick={() => setOpenOrder(true)}
               sx={{ fontFamily: "cairo" }}
@@ -44,28 +57,14 @@ export default function SortsPage() {
             >
               انشاء طلب
             </Button>
-            <div
-              dir="rtl"
-              className="font-semibold bg-transparent text-mdDark border-2 border-mdDark text-md px-3 rounded-md"
-            >
-              {popupState.makeOrderPopup.data.product_sorts.length}{" "}
-              {popupState.makeOrderPopup.data.product_sorts.length > 2 ? "اصناف" : "صنف"}
-            </div>
-            <p
-              onClick={() => closeOrderPopup("makeOrderPopup")}
-              className="opacity-50 hover:opacity-100 text-lg text-red-700 cursor-pointer duration-[.1s]"
-            >
-              <ImCancelCircle />
-            </p>
           </div>
         )}
       </div>
       {openOrder && (
         <>
-          <BlackLayer onClick={() => setOpenOrder(false)} />
-          <PopupHolder>
+          <BlackLayer onClick={() => setOpenOrder(false)}>
             <AddOrderForm />
-          </PopupHolder>
+          </BlackLayer>
         </>
       )}
     </>

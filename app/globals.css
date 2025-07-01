@@ -40,7 +40,7 @@
   background-color: var(--foreground);
   border-radius: 8px;
 }
-
+/* 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #e3e3e3;
@@ -50,8 +50,10 @@
     --myLight: #f8f9fa;
     --secLight: #e9ecef;
     --myHover: #f1f1f1;
+    --transLink: rgba(25, 118, 210, 0.5);
+    --link: #1976d2;
   }
-}
+} */
 
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {

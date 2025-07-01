@@ -22,8 +22,8 @@ export default function SelectList({
         onClick={dropDown ? onBlur : onClick}
         className={`bg-[#0000000f] hover:bg-[#00000017] w-full rounded-t-sm border-b cursor-pointer flex flex-row-reverse justify-between items-center px-mainxs py-mainxl`}
       >
-        <p>{select ?? placeHolder}</p>
         {dropDown ? <FaChevronUp /> : <FaChevronDown />}
+        <p>{select ?? placeHolder}</p>
       </div>
       {children}
     </button>

@@ -95,7 +95,7 @@ export default function Boss() {
                   ]);
                   setTenantId(row?.tenant_id);
                 }}
-                className="w-fit mx-auto text-xl hover:text-red-600 cursor-pointer text-anotherDark"
+                className="w-fit mx-auto text-xl hover:text-orange-600 cursor-pointer text-anotherDark"
               >
                 <CiEdit />
               </p>

@@ -9,7 +9,6 @@ import {
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import CategoriesTable from "../../tables/categories-table";
 import BlackLayer from "../../common/black-layer";
-import PopupHolder from "../../common/popup-holder";
 import AddCategoryForm from "../../forms & alerts/add-category-form";
 import { useSearch } from "@/app/utils/contexts/search-results-contexts";
 
@@ -46,8 +45,7 @@ export default function CategoriesPage() {
       </div>
       {addCat && (
         <>
-          <BlackLayer onClick={() => setCat(false)} />
-          <PopupHolder>
+          <BlackLayer onClick={() => setCat(false)}>
             <AddCategoryForm
               onCategoryAdded={() => {
                 openPopup("snakeBarPopup", {
@@ -57,7 +55,7 @@ export default function CategoriesPage() {
                 fetchData();
               }}
             />
-          </PopupHolder>
+          </BlackLayer>
         </>
       )}
     </>

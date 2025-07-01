@@ -72,6 +72,7 @@ export interface OrderInterface {
   payment: PaymentInterface;
   tax: string;
   discount: number;
+  additional_fees?: number;
   order_items?: OrderItemInterface[];
   client: {
     id: string;
@@ -228,6 +229,7 @@ export interface SidebarItemInterface {
   title: string;
   icon: ReactElement;
   affiliateLinks: AffiliateLink[];
+  onClose: () => void;
 }
 
 export interface ReturnDataInterface {

@@ -124,96 +124,98 @@ export default function AddProductForm({
     }
   };
   return (
-    <div className="rounded-md shadow-md w-full min-[400px]:min-w-sm bg-myLight p-mainxl">
-      <h2 className="text-lg text-center font-semibold mb-4">
-        {isForEdit ? "تعديل منتج" : "اضافة منتج جديد"}
-      </h2>
-      <div className="space-y-4 flex flex-col gap-[15px]">
-        <TextField
-          id="Glu"
-          dir="rtl"
-          label="اسم المنتج"
-          variant="filled"
-          className="w-full"
-          sx={sameTextField}
-          value={data.name}
-          onChange={(e) => handleData("name", e.target.value)}
-        />
-        <TextField
-          id="Glu"
-          dir="rtl"
-          label="وصف المنتج"
-          variant="filled"
-          sx={{
-            ...sameTextField,
-            "& .MuiFilledInput-root": {
-              fontFamily: "cairo",
-              height: "120px !important",
-              "&:before": {
-                borderBottomColor: "#495057",
+    <div className="w-full min-[400px]:w-[400px] px-mainxs">
+      <div className="rounded-md shadow-md w-full bg-myLight p-mainxl">
+        <h2 className="text-lg text-center font-semibold mb-4">
+          {isForEdit ? "تعديل منتج" : "اضافة منتج جديد"}
+        </h2>
+        <div className="space-y-4 flex flex-col gap-[15px]">
+          <TextField
+            id="Glu"
+            dir="rtl"
+            label="اسم المنتج"
+            variant="filled"
+            className="w-full"
+            sx={sameTextField}
+            value={data.name}
+            onChange={(e) => handleData("name", e.target.value)}
+          />
+          <TextField
+            id="Glu"
+            dir="rtl"
+            label="وصف المنتج"
+            variant="filled"
+            sx={{
+              ...sameTextField,
+              "& .MuiFilledInput-root": {
+                fontFamily: "cairo",
+                height: "120px !important",
+                "&:before": {
+                  borderBottomColor: "#495057",
+                },
+                "&:hover:not(.Mui-disabled):before": {
+                  borderBottomColor: "#495057",
+                },
+                "&:after": {
+                  borderBottomColor: "#495057",
+                },
               },
-              "&:hover:not(.Mui-disabled):before": {
-                borderBottomColor: "#495057",
-              },
-              "&:after": {
-                borderBottomColor: "#495057",
-              },
-            },
-          }}
-          value={data.desc}
-          onChange={(e) => handleData("desc", e.target.value)}
-        />
-        {!isForEdit && (
-          <SelectList
-            placeHolder="الفئة"
-            select={data.category?.split("###")[0] as string}
-            onClick={() => setDropDown(true)}
-            onBlur={() => setDropDown(false)}
-            dropDown={dropDown}
-          >
-            {dropDown && (
-              <>
-                <ul
-                  className={
-                    styles.list +
-                    ` w-full shadow-md max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs`
-                  }
-                >
-                  {dropDownOpthions}
-                </ul>
-              </>
-            )}
-          </SelectList>
-        )}
+            }}
+            value={data.desc}
+            onChange={(e) => handleData("desc", e.target.value)}
+          />
+          {!isForEdit && (
+            <SelectList
+              placeHolder="الفئة"
+              select={data.category?.split("###")[0] as string}
+              onClick={() => setDropDown(true)}
+              onBlur={() => setDropDown(false)}
+              dropDown={dropDown}
+            >
+              {dropDown && (
+                <>
+                  <ul
+                    className={
+                      styles.list +
+                      ` w-full shadow-md max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs`
+                    }
+                  >
+                    {dropDownOpthions}
+                  </ul>
+                </>
+              )}
+            </SelectList>
+          )}
 
-        <TextField
-          id="Glu"
-          dir="rtl"
-          label="الخامة"
-          variant="filled"
-          className="w-full"
-          sx={sameTextField}
-          value={data.material}
-          onChange={(e) => handleData("material", e.target.value)}
-        />
-        <TextField
-          id="Glu"
-          dir="rtl"
-          label="ملحوظة اضافية"
-          variant="filled"
-          className="w-full"
-          sx={sameTextField}
-          value={data.note}
-          onChange={(e) => handleData("note", e.target.value)}
-        />
-        <Button
-          onClick={handleDone}
-          sx={{ fontFamily: "cairo" }}
-          className={"!bg-mdDark"}
-          variant="contained"
-        >
-          اضافة
-        </Button>
+          <TextField
+            id="Glu"
+            dir="rtl"
+            label="الخامة"
+            variant="filled"
+            className="w-full"
+            sx={sameTextField}
+            value={data.material}
+            onChange={(e) => handleData("material", e.target.value)}
+          />
+          <TextField
+            id="Glu"
+            dir="rtl"
+            label="ملحوظة اضافية"
+            variant="filled"
+            className="w-full"
+            sx={sameTextField}
+            value={data.note}
+            onChange={(e) => handleData("note", e.target.value)}
+          />
+          <Button
+            onClick={handleDone}
+            sx={{ fontFamily: "cairo" }}
+            className={"!bg-mdDark"}
+            variant="contained"
+          >
+            اضافة
+          </Button>
+        </div>
       </div>
     </div>
   );

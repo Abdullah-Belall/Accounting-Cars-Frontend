@@ -78,7 +78,7 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
       (data.tax !== "" && data.tax !== "0%" ? Number(data.tax.slice(0, 2)) / 100 + 1 : 1) -
     (data.discount !== "" ? Number(data.discount) : 0);
   return (
-    <div className="rounded-md shadow-md w-full min-[400px]:min-w-sm bg-myLight p-mainxl">
+    <div className="rounded-md shadow-md w-full min-[400px]:w-[384px] mx-mainxs bg-myLight p-mainxl">
       <h2 className="text-lg text-center font-semibold mb-4">
         تعديل الطلب رقم {deliveryData.index}
       </h2>

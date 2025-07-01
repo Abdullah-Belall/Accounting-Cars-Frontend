@@ -19,12 +19,9 @@ export default function GeneralInfo({ data }: { data: CalcsInterface }) {
   }, []);
   return (
     <>
-      <section className="w-full flex flex-col items-end">
+      <section className="w-full flex flex-col">
         <h1 className="font-bold mb-[15px]">التحاليل العامة</h1>
-        <div
-          dir="rtl"
-          className="w-full flex flex-col md:flex-row gap-[10px] justify-center items-center"
-        >
+        <div className="w-full flex flex-col md:flex-row gap-[10px] justify-center items-center">
           <InfoField
             title={"اجمالي تكاليف بضاعة المخزون الحالية"}
             total={isForTrail ? 125500 : data?.totalCostsPrice}

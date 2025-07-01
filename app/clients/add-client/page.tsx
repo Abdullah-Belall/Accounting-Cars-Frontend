@@ -11,7 +11,7 @@ export default function AddClient() {
     router.push("/clients");
   };
   return (
-    <div className="flex justify-center items-center w-full h-[calc(100dvh-80px)] px-mainxs">
+    <div className="flex justify-center items-center w-full h-[calc(100dvh-80px)]">
       <AddUserForm type="client" title={"اضافة عميل جديد"} onDone={handleOnDone} />
     </div>
   );

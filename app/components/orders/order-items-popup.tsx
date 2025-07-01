@@ -11,8 +11,14 @@ export default function OrderItemsPopUp({
   refetchOrders: any;
 }) {
   return (
-    <div className="relative rounded-md shadow-md w-full min-[400px]:max-w-[384px] sm:min-w-[600px] bg-myLight p-mainxl">
-      <OrderItemsTable title={`منتجات الطلب رقم ${index}`} id={id} refetchOrders={refetchOrders} />
+    <div className="px-mainxs w-full md:w-[752px]">
+      <div className="relative rounded-md shadow-md bg-myLight p-mainxl">
+        <OrderItemsTable
+          title={`منتجات الطلب رقم ${index}`}
+          id={id}
+          refetchOrders={refetchOrders}
+        />
+      </div>
     </div>
   );
 }

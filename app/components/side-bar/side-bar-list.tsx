@@ -11,7 +11,12 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { SidebarItemInterface } from "@/app/utils/types/interfaces";
 
-export default function SideBarList({ title, icon, affiliateLinks }: SidebarItemInterface) {
+export default function SideBarList({
+  title,
+  icon,
+  affiliateLinks,
+  onClose,
+}: SidebarItemInterface) {
   const path = usePathname();
   const [open, setOpen] = useState(false);
   const handleClick = () => {
@@ -21,12 +26,12 @@ export default function SideBarList({ title, icon, affiliateLinks }: SidebarItem
   return (
     <List className="w-full !py-0" component="nav" aria-labelledby="nested-list-subheader">
       <ListItemButton
-        className="group flex-row-reverse !justify-between hover:bg-[red]! !rounded-md !px-mainxs !text-secDark !text-[16px] !font-[500] !py-1 hover:bg-myHover!"
+        className="group !justify-between hover:bg-[red]! !rounded-md !px-mainxs !text-secDark !text-[16px] !font-[500] !py-1 hover:bg-myHover!"
         onClick={handleClick}
       >
         <div className="flex !items-center gap-[5px] py-1">
-          {title}
           {icon}
+          {title}
         </div>
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
@@ -34,11 +39,11 @@ export default function SideBarList({ title, icon, affiliateLinks }: SidebarItem
       <Collapse className="mt-mainxs" in={open} timeout="auto" unmountOnExit>
         <List className="w-full flex flex-col gap-mainxs" component="div" disablePadding>
           {affiliateLinks.map((e) => (
-            <Link key={e.title} className="w-full" href={e.link}>
+            <Link key={e.title} className="w-full" onClick={onClose} href={e.link}>
               <Button
                 className={`${
                   path === e.link.split("?")[0] ? "!bg-[#f1f1f1]" : ""
-                } w-full group !rounded-md !justify-end !pe-[32px] !text-secDark !text-[16px] !font-[500] !py-1 hover:bg-myHover!`}
+                } w-full group !rounded-md !justify-start !pe-[32px] !text-secDark !text-[16px] !font-[500] !py-1 hover:bg-myHover!`}
                 variant="text"
                 sx={{ fontFamily: cairo.style.fontFamily }}
               >

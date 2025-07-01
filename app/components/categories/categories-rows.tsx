@@ -32,40 +32,39 @@ export default function CategoriesTableRow({
     openPopup("deleteAlertPopup", { id, title });
   };
   return (
-    <>
-      <tr>
-        <td className="px-4 py-2 text-center">
-          <div dir="rtl" className="w-fit ml-auto flex items-center gap-2 mx-auto">
-            <p
-              onClick={() =>
-                openPopup("editCategoryPopup", {
-                  id,
-                  title,
-                  desc: desc === "لا يوجد" ? null : desc,
-                })
-              }
-              className="w-fit text-xl hover:text-red-600 cursor-pointer text-anotherDark"
-            >
-              <CiEdit />
-            </p>
-            <p
-              onClick={onWantToDelete}
-              className="w-fit text-xl ml-auto hover:text-orange-700 cursor-pointer text-anotherDark"
-            >
-              <MdDeleteOutline />
-            </p>
-          </div>
-        </td>
-        <td className="px-4 py-2 text-center">{formatDate(date)}</td>
-        <td className="px-4 py-2 text-center">{product_count}</td>
-        <td className="px-4 py-2 text-center">{desc}</td>
-        <td className="px-4 py-2">
-          <p className="cursor-pointer hover:underline w-fit mx-auto">
-            <Link href={`/categories/${id}`}>{title}</Link>
+    <tr>
+      <td className="px-4 py-2 text-center">{index}</td>
+      <td className="px-4 py-2">
+        <p className="cursor-pointer font-semibold hover:no-underline underline w-fit mx-auto">
+          <Link href={`/categories/${id}`}>{title}</Link>
+        </p>
+      </td>
+
+      <td className="px-4 py-2 text-center">{desc}</td>
+      <td className="px-4 py-2 text-center">{product_count}</td>
+      <td className="px-4 py-2 text-center">{formatDate(date)}</td>
+      <td className="px-4 py-2 text-center">
+        <div dir="rtl" className="w-fit ml-auto flex items-center gap-2 mx-auto">
+          <p
+            onClick={() =>
+              openPopup("editCategoryPopup", {
+                id,
+                title,
+                desc: desc === "لا يوجد" ? null : desc,
+              })
+            }
+            className="w-fit text-xl hover:text-orange-600 cursor-pointer text-anotherDark"
+          >
+            <CiEdit />
           </p>
-        </td>
-        <td className="px-4 py-2 text-center">{index}</td>
-      </tr>
-    </>
+          <p
+            onClick={onWantToDelete}
+            className="w-fit text-xl ml-auto hover:text-red-700 cursor-pointer text-anotherDark"
+          >
+            <MdDeleteOutline />
+          </p>
+        </div>
+      </td>
+    </tr>
   );
 }

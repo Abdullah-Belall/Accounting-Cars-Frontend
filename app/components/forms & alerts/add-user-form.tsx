@@ -105,88 +105,90 @@ export default function AddUserForm({
     }
   };
   return (
-    <div className="rounded-md shadow-md w-full min-[400px]:w-[384px] bg-myHover p-mainxl">
-      <h2 className="text-lg text-center font-semibold mb-4">{title}</h2>
-      <div className="space-y-4 flex flex-col gap-[15px]">
-        <TextField
-          id="Glu"
-          dir="rtl"
-          label="اسم المستخدم"
-          type="text"
-          variant="filled"
-          className="w-full"
-          sx={sameTextField}
-          value={data.user_name ?? ""}
-          onChange={(e) => handleData("user_name", e.target.value)}
-        />
-        {type === "client" && (
+    <div className="w-full min-[380px]:w-[380px] px-mainxs">
+      <div className="rounded-md shadow-md w-full bg-myHover p-mainxl">
+        <h2 className="text-lg text-center font-semibold mb-4">{title}</h2>
+        <div className="space-y-4 flex flex-col gap-[15px]">
           <TextField
             id="Glu"
             dir="rtl"
-            label="الرقم الضريبي"
+            label="اسم المستخدم"
             type="text"
             variant="filled"
             className="w-full"
             sx={sameTextField}
-            value={data.tax_num ?? ""}
-            onChange={(e) => handleData("tax_num", e.target.value)}
+            value={data.user_name ?? ""}
+            onChange={(e) => handleData("user_name", e.target.value)}
           />
-        )}
-        {type === "worker" && (
-          <>
+          {type === "client" && (
             <TextField
               id="Glu"
               dir="rtl"
-              label="كلمة السر"
+              label="الرقم الضريبي"
+              type="text"
               variant="filled"
               className="w-full"
-              type="password"
               sx={sameTextField}
-              onChange={(e) => handleData("password", e.target.value)}
+              value={data.tax_num ?? ""}
+              onChange={(e) => handleData("tax_num", e.target.value)}
             />
-            <SelectList
-              placeHolder="الدور"
-              select={dropDownSlug}
-              onBlur={() => setDropDown(false)}
-              onClick={() => setDropDown(true)}
-              dropDown={dropDown}
-            >
-              {dropDown && (
-                <>
-                  <ul className="w-full z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs">
-                    <li
-                      onClick={() => handleData("role", "admin")}
-                      className="p-mainxs text-center border-b border-myLight cursor-pointer"
-                    >
-                      موظف
-                    </li>
-                    <li
-                      onClick={() => handleData("role", "reader")}
-                      className="p-mainxs text-center cursor-pointer"
-                    >
-                      مراقب
-                    </li>
-                    <li
-                      onClick={() => handleData("role", "owner")}
-                      className="p-mainxs text-center cursor-pointer"
-                    >
-                      مالك
-                    </li>
-                  </ul>
-                </>
-              )}
-            </SelectList>
-          </>
-        )}
+          )}
+          {type === "worker" && (
+            <>
+              <TextField
+                id="Glu"
+                dir="rtl"
+                label="كلمة السر"
+                variant="filled"
+                className="w-full"
+                type="password"
+                sx={sameTextField}
+                onChange={(e) => handleData("password", e.target.value)}
+              />
+              <SelectList
+                placeHolder="الدور"
+                select={dropDownSlug}
+                onBlur={() => setDropDown(false)}
+                onClick={() => setDropDown(true)}
+                dropDown={dropDown}
+              >
+                {dropDown && (
+                  <>
+                    <ul className="w-full z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs">
+                      <li
+                        onClick={() => handleData("role", "admin")}
+                        className="p-mainxs text-center border-b border-myLight cursor-pointer"
+                      >
+                        موظف
+                      </li>
+                      <li
+                        onClick={() => handleData("role", "reader")}
+                        className="p-mainxs text-center cursor-pointer"
+                      >
+                        مراقب
+                      </li>
+                      <li
+                        onClick={() => handleData("role", "owner")}
+                        className="p-mainxs text-center cursor-pointer"
+                      >
+                        مالك
+                      </li>
+                    </ul>
+                  </>
+                )}
+              </SelectList>
+            </>
+          )}
 
-        <Button
-          onClick={handleDone}
-          sx={{ fontFamily: "cairo" }}
-          className="!bg-mdDark"
-          variant="contained"
-        >
-          {isForEdit ? "تعديل" : "اضافة"}
-        </Button>
+          <Button
+            onClick={handleDone}
+            sx={{ fontFamily: "cairo" }}
+            className="!bg-mdDark"
+            variant="contained"
+          >
+            {isForEdit ? "تعديل" : "اضافة"}
+          </Button>
+        </div>
       </div>
     </div>
   );

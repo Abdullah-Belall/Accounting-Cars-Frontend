@@ -32,7 +32,7 @@ export default function PhonesTable({
   const openSnakeBar = (message: string) => {
     openPopup("snakeBarPopup", { message });
   };
-  const headers = ["العمليات", "تاريخ الاضافة", "ملاحظات", "رقم الهاتف", "*"];
+  const headers = ["*", "رقم الهاتف", "ملاحظات", "تاريخ الاضافة", "العمليات"];
   if (type === "الموظف") {
     headers.splice(0, 2);
   }
@@ -80,8 +80,7 @@ export default function PhonesTable({
       </section>
       {popupState.editPhonePopup.isOpen && (
         <>
-          <BlackLayer onClick={closeEditPhonePopUp} />
-          <PopupHolder>
+          <BlackLayer onClick={closeEditPhonePopUp}>
             <AddPhoneForm
               user_id={userId}
               onDone={() => {
@@ -99,25 +98,23 @@ export default function PhonesTable({
                 id: popupState.editPhonePopup.data?.id,
               }}
             />
-          </PopupHolder>
+          </BlackLayer>
         </>
       )}
       {popupState.deleteAlertPopup.isOpen && (
         <>
-          <BlackLayer onClick={() => closePopup("deleteAlertPopup")} />
-          <PopupHolder>
+          <BlackLayer onClick={() => closePopup("deleteAlertPopup")}>
             <DeleteAlert
               action={"حذف"}
               name={`الهاتف رقم ${popupState.deleteAlertPopup.data.index}`}
               onConfirm={handleConfirmDelete}
             />
-          </PopupHolder>
+          </BlackLayer>
         </>
       )}
       {openAddPhonePopup && (
         <>
-          <BlackLayer onClick={() => setOpenAddPhonePopup(false)} />
-          <PopupHolder>
+          <BlackLayer onClick={() => setOpenAddPhonePopup(false)}>
             <AddPhoneForm
               user_id={userId}
               onDone={() => {
@@ -130,7 +127,7 @@ export default function PhonesTable({
               }}
               type={type === "العميل" ? "client" : "worker"}
             />
-          </PopupHolder>
+          </BlackLayer>
         </>
       )}
     </>

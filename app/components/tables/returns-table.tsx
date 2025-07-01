@@ -37,27 +37,29 @@ export default function ReturnsTable({
           ],
         ]}
         headers={[
-          "التاريخ",
-          "فاتورة المرتجع بالضريبة",
-          "عمليات المرتجع",
-          "رقم المبيعات",
-          "العميل",
-          "عناصر المرتجع",
           "*",
+          "عناصر المرتجع",
+          "العميل",
+          "رقم المبيعات",
+          "عمليات المرتجع",
+          "فاتورة المرتجع بالضريبة",
+          "التاريخ",
         ]}
       >
-        {data?.map((row: any, index) => (
-          <ReturnsTableRows
-            key={index}
-            id={row?.id}
-            order={row?.order}
-            totalPrice={calcTotalPrice()}
-            returns_items_count={row?.returns_items_count}
-            created_at={row?.created_at}
-            updated_at={row?.updated_at}
-            short_id={row.short_id}
-          />
-        ))}
+        {data?.map((row: any, index) => {
+          return (
+            <ReturnsTableRows
+              key={index}
+              id={row?.id}
+              order={row?.order}
+              totalPrice={calcTotalPrice()}
+              returns_items_count={row?.returns_items_count}
+              created_at={row?.created_at}
+              updated_at={row?.updated_at}
+              short_id={row.short_id}
+            />
+          );
+        })}
       </MainTable>
       {data?.length === 0 && <NoData />}
     </>

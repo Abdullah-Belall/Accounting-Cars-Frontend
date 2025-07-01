@@ -3,7 +3,6 @@
 import { formatDate } from "@/app/utils/base";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import { SortInterface } from "@/app/utils/types/interfaces";
-import Link from "next/link";
 
 export default function AllSortsTableRows({
   id,
@@ -37,25 +36,9 @@ export default function AllSortsTableRows({
   const inputValue = popupState.makeOrderPopup.data.product_sorts.find(
     (e: { product_id: string; qty: number }) => e.product_id === id
   );
-  //! remove product name if it takes to
   return (
     <>
       <tr>
-        <td className="px-4 py-2 text-center">{formatDate(created_at)}</td>
-        <td className="px-4 py-2 text-center">
-          <Link className="hover:underline" href={`/categories/${product?.category?.id}`}>
-            {product?.category?.name}
-          </Link>
-        </td>
-        <td className="px-4 py-2 text-center">
-          {Number(Number(unit_price).toFixed(2)).toLocaleString()} ج.م
-        </td>
-        <td className="px-4 py-2 text-center">{qty}</td>
-        <td className="px-4 py-2 text-center">{size}</td>
-        <td className="px-4 py-2 text-center">{product?.material}</td>
-        <td className="px-4 py-2 text-center">{color ?? "لا يوجد"}</td>
-        <td className="px-4 py-2 text-center">{name}</td>
-        <td className="px-4 py-2 text-center">{product?.name}</td>
         <td className="px-4 py-2 text-center max-w-[69px]">
           <input
             placeholder="الكمية"
@@ -69,6 +52,17 @@ export default function AllSortsTableRows({
             disabled={qty == 0}
           />
         </td>
+        <td className="px-4 py-2 text-center">{product?.name}</td>
+        <td className="px-4 py-2 text-center">{name}</td>
+        <td className="px-4 py-2 text-center">{color ?? "لا يوجد"}</td>
+        <td className="px-4 py-2 text-center">{product?.material}</td>
+        <td className="px-4 py-2 text-center">{size}</td>
+        <td className="px-4 py-2 text-center">{qty}</td>
+        <td className="px-4 py-2 text-center">
+          {Number(Number(unit_price).toFixed(2)).toLocaleString()} ج.م
+        </td>
+
+        <td className="px-4 py-2 text-center">{formatDate(created_at)}</td>
       </tr>
     </>
   );

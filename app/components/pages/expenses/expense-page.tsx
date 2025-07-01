@@ -9,7 +9,6 @@ import { useRouter } from "next/navigation";
 import { useSearch } from "@/app/utils/contexts/search-results-contexts";
 import ExpensesTable from "../../tables/expenses-table";
 import { Button } from "@mui/material";
-import PopupHolder from "../../common/popup-holder";
 import ExpenseForm from "../../forms & alerts/add-expense";
 import BlackLayer from "../../common/black-layer";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
@@ -77,44 +76,38 @@ export default function ExpensesPage() {
         </Button>
       </div>
       {openExpense && (
-        <>
-          <BlackLayer
-            onClick={() => {
+        <BlackLayer
+          onClick={() => {
+            setOpenExpense(false);
+            setEditExpense(undefined);
+          }}
+        >
+          <ExpenseForm
+            title={editExpense?.title ?? "انشاء مصروف جديد"}
+            onDone={() => {
+              fetchData();
               setOpenExpense(false);
               setEditExpense(undefined);
             }}
+            isForEdit={
+              editExpense?.isForEdit
+                ? {
+                    ...editExpense.isForEdit,
+                    amount: editExpense.isForEdit.amount.toString(),
+                  }
+                : undefined
+            }
           />
-          <PopupHolder>
-            <ExpenseForm
-              title={editExpense?.title ?? "انشاء مصروف جديد"}
-              onDone={() => {
-                fetchData();
-                setOpenExpense(false);
-                setEditExpense(undefined);
-              }}
-              isForEdit={
-                editExpense?.isForEdit
-                  ? {
-                      ...editExpense.isForEdit,
-                      amount: editExpense.isForEdit.amount.toString(),
-                    }
-                  : undefined
-              }
-            />
-          </PopupHolder>
-        </>
+        </BlackLayer>
       )}
       {popupState.deleteAlertPopup.isOpen && (
-        <>
-          <BlackLayer onClick={() => closePopup("deleteAlertPopup")} />
-          <PopupHolder>
-            <DeleteAlert
-              action={"حذف"}
-              name={`مصروف ${popupState?.deleteAlertPopup?.data?.name}`}
-              onConfirm={deleteExpense}
-            />
-          </PopupHolder>
-        </>
+        <BlackLayer onClick={() => closePopup("deleteAlertPopup")}>
+          <DeleteAlert
+            action={"حذف"}
+            name={`مصروف ${popupState?.deleteAlertPopup?.data?.name}`}
+            onConfirm={deleteExpense}
+          />
+        </BlackLayer>
       )}
     </>
   );

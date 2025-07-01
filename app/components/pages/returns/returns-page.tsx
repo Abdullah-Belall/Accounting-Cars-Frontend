@@ -7,10 +7,14 @@ import {
 import { useRouter } from "next/navigation";
 import ReturnsTable from "@/app/components/tables/returns-table";
 import { useSearch } from "@/app/utils/contexts/search-results-contexts";
+import { usePopup } from "@/app/utils/contexts/popup-contexts";
+import BlackLayer from "../../common/black-layer";
+import ReturnsItemsPopup from "../../orders/returns-items-popup";
 
 export default function ReturnsPage() {
   const router = useRouter();
   const { fillSearch, getSearch } = useSearch();
+  const { popupState, closePopup } = usePopup();
   const fetchData = async () => {
     const response = await CLIENT_COLLECTOR_REQ(GET_ALL_RETURNS_REQ);
     console.log(response);
@@ -32,6 +36,13 @@ export default function ReturnsPage() {
           data={getSearch("returns").results}
         />
       </div>
+      {popupState?.returnsItemsPopup.isOpen && (
+        <>
+          <BlackLayer onClick={() => closePopup("returnsItemsPopup")}>
+            <ReturnsItemsPopup returnId={popupState.returnsItemsPopup.data?.returnId} />
+          </BlackLayer>
+        </>
+      )}
     </>
   );
 }

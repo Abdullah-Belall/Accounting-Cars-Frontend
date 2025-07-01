@@ -59,25 +59,24 @@ export default function UsersTableRows({
   return (
     <>
       <tr>
-        <td className="px-4 py-2 text-center">{formatDate(date)}</td>
-        {/* {type === "client" && <td className="px-4 py-2 text-center">{addresses_count}</td>} */}
-        {type === "worker" && <td className="px-4 py-2 text-center">{role}</td>}
-        <td className="px-4 py-2 text-center">{phone_count}</td>
-        {type === "client" && <td className="px-4 py-2 text-center">{completed_orders}</td>}
-        {type === "client" && (
-          <td className="px-4 py-2 text-center">
-            {!tax_num || tax_num === "" ? "لا يوجد" : tax_num}
-          </td>
-        )}
+        <td className="px-4 py-2 text-center">{isForOrder ? <HandleUi /> : index}</td>
         <td className="px-4 py-2 text-center">
           <Link
-            className="w-fit hover:underline"
+            className="w-fit font-semibold hover:no-underline underline cursor-pointer"
             href={user?.id === id ? `/profile` : `/${type}s/${id}`}
           >
             {name}
           </Link>
         </td>
-        <td className="px-4 py-2 text-center">{isForOrder ? <HandleUi /> : index}</td>
+        {type === "client" && (
+          <td className="px-4 py-2 text-center">
+            {!tax_num || tax_num === "" ? "لا يوجد" : tax_num}
+          </td>
+        )}
+        {type === "client" && <td className="px-4 py-2 text-center">{completed_orders}</td>}
+        {type === "worker" && <td className="px-4 py-2 text-center">{role}</td>}
+        <td className="px-4 py-2 text-center">{phone_count}</td>
+        <td className="px-4 py-2 text-center">{formatDate(date)}</td>
       </tr>
     </>
   );

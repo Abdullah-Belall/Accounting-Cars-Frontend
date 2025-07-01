@@ -27,11 +27,13 @@ export default function AddOrderForm() {
     paid_status: string;
     tax: string | null;
     discount: string;
+    additional_fees: string | null;
   }>({
     payment_method: "",
     paid_status: "",
     tax: null,
     discount: "",
+    additional_fees: "",
   });
   const handleFormData = (key: keyof typeof formData, value: string) => {
     setFormData({ ...formData, [key]: value });
@@ -51,7 +53,12 @@ export default function AddOrderForm() {
         key={e.value}
         onClick={() => {
           handleFormData(formDataKeyName, e.value);
-          if (formDataKeyName !== "discount") {
+          if (
+            formDataKeyName !== "discount" &&
+            (formDataKeyName === "payment_method" ||
+              formDataKeyName === "paid_status" ||
+              formDataKeyName === "tax")
+          ) {
             handleOpenDropDown(formDataKeyName, false);
           }
         }}
@@ -79,7 +86,8 @@ export default function AddOrderForm() {
   const totalPriceAfter =
     totalPrice *
       (formData.tax && formData.tax !== "" ? Number(formData.tax.slice(0, 2)) / 100 + 1 : 1) -
-    (formData.discount === "" ? 0 : Number(formData.discount));
+    (formData.discount === "" ? 0 : Number(formData.discount)) +
+    (formData.additional_fees === "" ? 0 : Number(formData.additional_fees));
 
   const validation = () => {
     if (!popupState.makeOrderPopup.data.client) {
@@ -125,6 +133,11 @@ export default function AddOrderForm() {
       finalObj.tax = finalObj.tax.slice(0, 2);
     } else {
       delete finalObj.tax;
+    }
+    if (finalObj?.additional_fees && finalObj?.additional_fees !== "") {
+      finalObj.additional_fees = +finalObj.additional_fees;
+    } else {
+      delete finalObj.additional_fees;
     }
     const response = await CLIENT_COLLECTOR_REQ(ADD_ORDER_REQ, {
       client_id: popupState.makeOrderPopup.data.client?.id,
@@ -175,123 +188,139 @@ export default function AddOrderForm() {
     }
   };
   return (
-    <div className="relative rounded-xl shadow-md max-w-[420px] sm:max-w-full bg-myLight p-mainxl flex flex-col items-center">
-      <h2 className="text-lg text-center font-semibold mb-4">انشاء طلب جديد</h2>
-      <div className={styles2.list + " w-full max-h-[220px] overflow-y-scroll"}>
-        <UsersTable type="client" forOrder={true} data={data} />
-      </div>
-      <div className="w-full flex gap-2 items-center mt-5">
-        <SelectList
-          placeHolder="حالة الدفع"
-          select={
-            formData.paid_status !== ""
-              ? getSlug(paidStatusArray, formData.paid_status)
-              : "حالة الدفع"
-          }
-          onClick={() => handleOpenDropDown("paid_status", true)}
-          onBlur={() => handleOpenDropDown("paid_status", false)}
-          dropDown={openDropDown.paid_status}
+    <div className="w-full sm:w-[640px] px-mainxs">
+      <div className="relative rounded-xl shadow-md bg-myLight p-mainxl flex flex-col items-center">
+        <h2 className="text-lg text-center font-semibold mb-4">انشاء طلب جديد</h2>
+        <div className={styles2.list + " w-full max-h-[220px] overflow-y-scroll"}>
+          <UsersTable type="client" forOrder={true} data={data} />
+        </div>
+        <div className="w-full flex gap-2 items-center mt-5">
+          <SelectList
+            placeHolder="وسيلة الدفع"
+            select={
+              formData.payment_method !== ""
+                ? getSlug(methodsArray, formData.payment_method)
+                : "وسيلة الدفع"
+            }
+            onClick={() => handleOpenDropDown("payment_method", true)}
+            onBlur={() => handleOpenDropDown("payment_method", false)}
+            dropDown={openDropDown.payment_method}
+          >
+            {openDropDown.payment_method && (
+              <>
+                <ul
+                  className={
+                    styles.list +
+                    " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
+                  }
+                >
+                  {DropDownOptions(methodsArray, "payment_method")}
+                </ul>
+              </>
+            )}
+          </SelectList>
+          <SelectList
+            placeHolder="حالة الدفع"
+            select={
+              formData.paid_status !== ""
+                ? getSlug(paidStatusArray, formData.paid_status)
+                : "حالة الدفع"
+            }
+            onClick={() => handleOpenDropDown("paid_status", true)}
+            onBlur={() => handleOpenDropDown("paid_status", false)}
+            dropDown={openDropDown.paid_status}
+          >
+            {openDropDown.paid_status && (
+              <>
+                <ul
+                  className={
+                    styles.list +
+                    " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
+                  }
+                >
+                  {DropDownOptions(paidStatusArray, "paid_status")}
+                </ul>
+              </>
+            )}
+          </SelectList>
+        </div>
+        <div className="w-full flex flex-col sm:flex-row gap-2 items-center mt-2.5">
+          <SelectList
+            placeHolder="ضريبة القيمة المضافة"
+            select={getSlug(taxArray, formData.tax as string) ?? "ضريبة القيمة المضافة"}
+            onClick={() => handleOpenDropDown("tax", true)}
+            onBlur={() => handleOpenDropDown("tax", false)}
+            dropDown={openDropDown.tax}
+          >
+            {openDropDown.tax && (
+              <>
+                <ul
+                  className={
+                    styles.list +
+                    " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
+                  }
+                >
+                  {DropDownOptions(taxArray, "tax")}
+                </ul>
+              </>
+            )}
+          </SelectList>
+          <div className="w-full flex gap-2 items-center">
+            <TextField
+              id="Glu"
+              dir="rtl"
+              label="الخصم بالجنية"
+              variant="filled"
+              sx={sameTextField}
+              value={formData.discount}
+              onChange={(e) => handleFormData("discount", e.target.value.replace(/[^0-9.]/g, ""))}
+              className="w-full"
+            />
+            <TextField
+              id="Glu"
+              dir="rtl"
+              label="مصاريف اضافية"
+              variant="filled"
+              sx={sameTextField}
+              value={formData.additional_fees}
+              onChange={(e) =>
+                handleFormData("additional_fees", e.target.value.replace(/[^0-9.]/g, ""))
+              }
+              className="w-full"
+            />
+          </div>
+        </div>
+        <div className="w-full flex gap-2 items-center mt-5">
+          <TextField
+            id="Glu"
+            dir="rtl"
+            label="اجمالي السعر"
+            variant="filled"
+            sx={sameTextField}
+            value={Number(totalPrice.toFixed(2)).toLocaleString()}
+            className="w-full"
+            disabled
+          />
+          <TextField
+            id="Glu"
+            dir="rtl"
+            label="اجمالي السعر بعد الضريبة والخصم"
+            variant="filled"
+            sx={sameTextField}
+            value={Number(totalPriceAfter.toFixed(2)).toLocaleString()}
+            className="w-full"
+            disabled
+          />
+        </div>
+        <Button
+          onClick={handleDone}
+          sx={{ fontFamily: "cairo" }}
+          className="!bg-mdDark !mt-3 w-fit"
+          variant="contained"
         >
-          {openDropDown.paid_status && (
-            <>
-              <ul
-                className={
-                  styles.list +
-                  " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
-                }
-              >
-                {DropDownOptions(paidStatusArray, "paid_status")}
-              </ul>
-            </>
-          )}
-        </SelectList>
-        <SelectList
-          placeHolder="وسيلة الدفع"
-          select={
-            formData.payment_method !== ""
-              ? getSlug(methodsArray, formData.payment_method)
-              : "وسيلة الدفع"
-          }
-          onClick={() => handleOpenDropDown("payment_method", true)}
-          onBlur={() => handleOpenDropDown("payment_method", false)}
-          dropDown={openDropDown.payment_method}
-        >
-          {openDropDown.payment_method && (
-            <>
-              <ul
-                className={
-                  styles.list +
-                  " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
-                }
-              >
-                {DropDownOptions(methodsArray, "payment_method")}
-              </ul>
-            </>
-          )}
-        </SelectList>
+          تأكيد الطلب
+        </Button>
       </div>
-      <div className="w-full flex gap-2 items-center mt-5">
-        <TextField
-          id="Glu"
-          dir="rtl"
-          label="الخصم بالجنية"
-          variant="filled"
-          sx={sameTextField}
-          value={formData.discount}
-          onChange={(e) => handleFormData("discount", e.target.value.replace(/[^0-9.]/g, ""))}
-          className="w-full"
-        />
-        <SelectList
-          placeHolder="ضريبة القيمة المضافة"
-          select={getSlug(taxArray, formData.tax as string) ?? "ضريبة القيمة المضافة"}
-          onClick={() => handleOpenDropDown("tax", true)}
-          onBlur={() => handleOpenDropDown("tax", false)}
-          dropDown={openDropDown.tax}
-        >
-          {openDropDown.tax && (
-            <>
-              <ul
-                className={
-                  styles.list +
-                  " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
-                }
-              >
-                {DropDownOptions(taxArray, "tax")}
-              </ul>
-            </>
-          )}
-        </SelectList>
-      </div>
-      <div className="w-full flex gap-2 items-center mt-5">
-        <TextField
-          id="Glu"
-          dir="rtl"
-          label="اجمالي السعر بعد الضريبة والخصم"
-          variant="filled"
-          sx={sameTextField}
-          value={Number(totalPriceAfter.toFixed(2)).toLocaleString()}
-          className="w-full"
-          disabled
-        />
-        <TextField
-          id="Glu"
-          dir="rtl"
-          label="اجمالي السعر"
-          variant="filled"
-          sx={sameTextField}
-          value={Number(totalPrice.toFixed(2)).toLocaleString()}
-          className="w-full"
-          disabled
-        />
-      </div>
-      <Button
-        onClick={handleDone}
-        sx={{ fontFamily: "cairo" }}
-        className="!bg-mdDark !mt-3 w-fit"
-        variant="contained"
-      >
-        تأكيد الطلب
-      </Button>
     </div>
   );
 }

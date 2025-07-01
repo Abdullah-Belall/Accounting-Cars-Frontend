@@ -14,17 +14,17 @@ export default function UsersTable({
   data: ClientInterface[];
 }) {
   const headers = [
-    "تاريخ الاضافة",
-    // "عدد العناوين",
-    "عدد جهات الاتصال",
-    "عدد الطلبات المكتملة",
-    "الرقم الضريبي",
-    "الاسم",
     "*",
+    "الاسم",
+    "الرقم الضريبي",
+    "عدد الطلبات المكتملة",
+    "عدد جهات الاتصال",
+    "تاريخ الاضافة",
   ];
+
   if (type === "worker") {
     headers.splice(2, 2);
-    headers.splice(1, 0, "الدور");
+    headers.splice(2, 0, "الدور");
   }
   console.log(data);
   let columns = [

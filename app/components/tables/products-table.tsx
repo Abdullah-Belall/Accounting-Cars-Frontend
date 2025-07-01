@@ -37,15 +37,15 @@ export default function ProductsTable({
   };
   const [addSort, setAddSort] = useState(false);
   const headers = [
-    "العمليات",
-    "تاريخ الانشاء",
-    "ملاحظات",
-    "عدد الاصناف",
-    "الخامة",
-    "الكمية",
-    "الوصف",
-    "الاسم",
     "*",
+    "الاسم",
+    "الوصف",
+    "الكمية",
+    "الخامة",
+    "عدد الاصناف",
+    "ملاحظات",
+    "تاريخ الانشاء",
+    "العمليات",
   ];
   if (cat) {
     headers.splice(6, 0, cat);
@@ -96,7 +96,6 @@ export default function ProductsTable({
   const handleDeleteProduct = async () => {
     const id = popupState.deleteAlertPopup.data.id;
     const response = await CLIENT_COLLECTOR_REQ(DELETE_PRODUCT_REQ, { id });
-    console.log(response);
     if (response.done) {
       openPopup("snakeBarPopup", {
         message: "تم حذف المنتج بنجاح.",
@@ -137,60 +136,57 @@ export default function ProductsTable({
               closePopup("sortsPopup");
               closePopup("addSortPopup");
             }}
-          />
-          <PopupHolder>
-            <div className="relative rounded-xl shadow-md w-full min-[400px]:w-[400px] sm:w-[624px] bg-myLight p-mainxl">
-              <SortsTable
-                title={popupState.sortsPopup.data.name}
-                id={popupState.sortsPopup.data.id}
-              />
-              <Button
-                onClick={() => setAddSort(true)}
-                sx={{ fontFamily: "cairo" }}
-                className="!bg-mdDark !absolute !left-[18px] !top-[12px]"
-                variant="contained"
-              >
-                اضافة صنف
-              </Button>
+          >
+            <div className="w-full px-mainxs md:w-[768px]">
+              <div className="relative rounded-xl shadow-md bg-myLight p-mainxl">
+                <SortsTable
+                  title={popupState.sortsPopup.data.name}
+                  id={popupState.sortsPopup.data.id}
+                />
+                <Button
+                  onClick={() => setAddSort(true)}
+                  sx={{ fontFamily: "cairo" }}
+                  className="!bg-mdDark !absolute !left-[18px] !top-[12px]"
+                  variant="contained"
+                >
+                  اضافة صنف
+                </Button>
+              </div>
             </div>
-          </PopupHolder>
+          </BlackLayer>
         </>
       )}
       {addSort && popupState.addSortPopup.isOpen && (
         <>
-          <BlackLayer onClick={() => setAddSort(false)} />
-          <PopupHolder>
+          <BlackLayer onClick={() => setAddSort(false)}>
             <AddSortForm id={popupState.sortsPopup.data.id} onConfirm={onAddedSort} />
-          </PopupHolder>
+          </BlackLayer>
         </>
       )}
       {popupState.editSortPopup.isOpen && (
         <>
-          <BlackLayer onClick={() => closePopup("editSortPopup")} />
-          <PopupHolder>
+          <BlackLayer onClick={() => closePopup("editSortPopup")}>
             <AddSortForm
               id={undefined}
               onConfirm={onEditSortConfirm}
               isForEdit={popupState.editSortPopup.data}
             />
-          </PopupHolder>
+          </BlackLayer>
         </>
       )}
       {popupState.editQtyPopup.isOpen && (
         <>
-          <BlackLayer onClick={() => closePopup("editQtyPopup")} />
-          <PopupHolder>
+          <BlackLayer onClick={() => closePopup("editQtyPopup")}>
             <EditQtyPopup
               latest_cost_unit_price={popupState.editQtyPopup.data.latest_cost_unit_price as number}
               OnConfirm={onQtyConfirm}
             />
-          </PopupHolder>
+          </BlackLayer>
         </>
       )}
       {popupState.editProductPopup.isOpen && (
         <>
-          <BlackLayer onClick={() => closePopup("editProductPopup")} />
-          <PopupHolder>
+          <BlackLayer onClick={() => closePopup("editProductPopup")}>
             <AddProductForm
               isForEdit={{
                 ...popupState.editProductPopup.data,
@@ -203,19 +199,18 @@ export default function ProductsTable({
                 },
               }}
             />
-          </PopupHolder>
+          </BlackLayer>
         </>
       )}
       {popupState.deleteAlertPopup.isOpen && (
         <>
-          <BlackLayer onClick={() => closePopup("deleteAlertPopup")} />
-          <PopupHolder>
+          <BlackLayer onClick={() => closePopup("deleteAlertPopup")}>
             <DeleteAlert
               action={"حذف"}
               name={`المنتج ${popupState.deleteAlertPopup.data.name}`}
               onConfirm={handleDeleteProduct}
             />
-          </PopupHolder>
+          </BlackLayer>
         </>
       )}
     </>

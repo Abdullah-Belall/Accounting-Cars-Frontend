@@ -9,7 +9,6 @@ import { UserProvider } from "./utils/contexts/UserContext";
 import { useEffect, useState } from "react";
 import { ReturnsProvider } from "./utils/contexts/returns-contexts";
 import { BillesProvider } from "./utils/contexts/bills-contexts";
-import ReturnsItemsPopupCus from "./components/popup-return-layout/return-cus-popup";
 import { SearchProvider } from "./utils/contexts/search-results-contexts";
 import { GET_TENANT_VARS_REQ } from "./utils/requests/client-side.requests";
 import Header from "./components/header/header";
@@ -56,8 +55,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
+        dir="rtl"
         className={`${cairo.className} antialiased bg-myLight !text-secDark ${
-          !isLoginRoute ? "mr-[0] md:mr-[240px] mt-[80px]" : ""
+          !isLoginRoute && "mr-[0] md:mr-[240px] mt-[80px]"
         }`}
       >
         <>
@@ -67,7 +67,7 @@ export default function RootLayout({
           ></div>
           <div
             onClick={() => setOpenSidebar(!openSidebar)}
-            className={`${openSidebar ? "right-[240px]" : "right-0"} z-30 duration-[.3s] fixed md:hidden z-10 top-[25%] text-lg cursor-pointer rounded-l-md bg-myLight p-2 text-myDark shadow-lg`}
+            className={`${openSidebar ? "right-[240px]" : "right-0"} ${isLoginRoute && "hidden"} z-30 duration-[.3s] fixed md:hidden z-10 top-[25%] text-lg cursor-pointer rounded-l-md bg-myLight p-2 text-myDark shadow-lg`}
           >
             <PiListBold />
           </div>
@@ -78,10 +78,11 @@ export default function RootLayout({
                   <BillesProvider>
                     <StockChecksProvider>
                       <CustomSnackbar />
-                      {!isLoginRoute && <SideBar open={openSidebar} />}
+                      {!isLoginRoute && (
+                        <SideBar open={openSidebar} onClose={() => setOpenSidebar(false)} />
+                      )}
                       {!isLoginRoute && <Header logo={tenantsVars?.copmany_logo as string} />}
                       {children}
-                      <ReturnsItemsPopupCus />
                     </StockChecksProvider>
                   </BillesProvider>
                 </ReturnsProvider>

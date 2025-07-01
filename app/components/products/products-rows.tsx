@@ -34,34 +34,15 @@ export default function ProductsTableRows({
   return (
     <>
       <tr>
-        <td className="px-4 py-2 text-center">
-          <div dir="rtl" className="w-fit ml-auto flex items-center gap-2 mx-auto">
-            <p
-              onClick={() =>
-                openPopup("editProductPopup", { id, title: name, desc, material, note })
-              }
-              className="w-fit text-xl hover:text-red-600 cursor-pointer text-anotherDark"
-            >
-              <CiEdit />
-            </p>
-            <p
-              onClick={onWantToDelete}
-              className="w-fit text-xl ml-auto hover:text-orange-700 cursor-pointer text-anotherDark"
-            >
-              <MdDeleteOutline />
-            </p>
-          </div>
+        <td className="px-4 py-2 text-center">{index}</td>
+        <td className="px-4 py-2">
+          <p
+            onClick={() => openPopup("sortsPopup", { name, id })}
+            className="cursor-pointer font-semibold hover:no-underline underline cursor-pointer w-fit mx-auto"
+          >
+            {name}
+          </p>
         </td>
-        <td className="px-4 py-2 text-center">{formatDate(created_at)}</td>
-        <td className="px-4 py-2 text-center">{note ?? "لا يوجد"}</td>
-        <td className="px-4 py-2 text-center">{sorts_count}</td>
-        <td className="px-4 py-2 text-center">{material}</td>
-        <td className={`px-4 py-2 text-center relative`}>{qty}</td>
-        {category?.id && (
-          <td className="px-4 py-2 text-center hover:underline">
-            <Link href={`/categories/${category.id}`}>{category.name}</Link>
-          </td>
-        )}
         <td
           dir="rtl"
           onClick={() => setOpenDesc(!openDesc)}
@@ -71,15 +52,34 @@ export default function ProductsTableRows({
         >
           {desc ?? "لا يوجد"}
         </td>
-        <td className="px-4 py-2">
-          <p
-            onClick={() => openPopup("sortsPopup", { name, id })}
-            className="cursor-pointer hover:underline w-fit mx-auto"
-          >
-            {name}
-          </p>
+        <td className={`px-4 py-2 text-center relative`}>{qty}</td>
+        <td className="px-4 py-2 text-center">{material}</td>
+        <td className="px-4 py-2 text-center">{sorts_count}</td>
+        {category?.id && (
+          <td className="px-4 py-2 text-center font-semibold hover:no-underline underline cursor-pointer">
+            <Link href={`/categories/${category.id}`}>{category.name}</Link>
+          </td>
+        )}
+        <td className="px-4 py-2 text-center">{note ?? "لا يوجد"}</td>
+        <td className="px-4 py-2 text-center">{formatDate(created_at)}</td>
+        <td className="px-4 py-2 text-center">
+          <div dir="rtl" className="w-fit ml-auto flex items-center gap-2 mx-auto">
+            <p
+              onClick={() =>
+                openPopup("editProductPopup", { id, title: name, desc, material, note })
+              }
+              className="w-fit text-xl hover:text-orange-600 cursor-pointer text-anotherDark"
+            >
+              <CiEdit />
+            </p>
+            <p
+              onClick={onWantToDelete}
+              className="w-fit text-xl ml-auto hover:text-red-700 cursor-pointer text-anotherDark"
+            >
+              <MdDeleteOutline />
+            </p>
+          </div>
         </td>
-        <td className="px-4 py-2 text-center">{index}</td>
       </tr>
     </>
   );

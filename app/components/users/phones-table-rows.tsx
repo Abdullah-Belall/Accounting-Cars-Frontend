@@ -17,19 +17,23 @@ export default function PhonesTabelRow({
   return (
     <>
       <tr>
+        <td className="px-4 py-2 text-center">{index}</td>
+        <td className="px-4 py-2 text-center">{phone}</td>
+        <td className="px-4 py-2 text-center">{note ?? "لا يوجد"}</td>
+        <td className="px-4 py-2 text-center">{formatDate(created_at)}</td>
         {type === "العميل" && (
           <>
             <td className="px-4 py-2 text-center">
               <div dir="rtl" className="w-fit ml-auto flex items-center gap-2 mx-auto">
                 <p
                   onClick={() => openPopup("editPhonePopup", { phone, note, id })}
-                  className="w-fit text-xl hover:text-red-600 cursor-pointer text-anotherDark"
+                  className="w-fit text-xl hover:text-orange-600 cursor-pointer text-anotherDark"
                 >
                   <CiEdit />
                 </p>
                 <p
                   onClick={() => openPopup("deleteAlertPopup", { id, index })}
-                  className="w-fit text-xl ml-auto hover:text-orange-700 cursor-pointer text-anotherDark"
+                  className="w-fit text-xl ml-auto hover:text-red-700 cursor-pointer text-anotherDark"
                 >
                   <MdDeleteOutline />
                 </p>
@@ -37,10 +41,6 @@ export default function PhonesTabelRow({
             </td>
           </>
         )}
-        <td className="px-4 py-2 text-center">{formatDate(created_at)}</td>
-        <td className="px-4 py-2 text-center">{note ?? "لا يوجد"}</td>
-        <td className="px-4 py-2 text-center">{phone}</td>
-        <td className="px-4 py-2 text-center">{index}</td>
       </tr>
     </>
   );

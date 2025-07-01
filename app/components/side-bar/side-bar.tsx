@@ -12,7 +12,7 @@ import { FiCodesandbox } from "react-icons/fi";
 import Link from "next/link";
 import { RiBillLine } from "react-icons/ri";
 
-export default function SideBar({ open }: { open: boolean }) {
+export default function SideBar({ open, onClose }: { open: boolean; onClose: () => void }) {
   const path = usePathname();
   const dataItems = useMemo(
     () =>
@@ -22,6 +22,7 @@ export default function SideBar({ open }: { open: boolean }) {
           title={item.title}
           icon={item.icon}
           affiliateLinks={item.affiliateLinks}
+          onClose={onClose}
         />
       )),
     []
@@ -31,28 +32,28 @@ export default function SideBar({ open }: { open: boolean }) {
     <aside
       className={`${open ? "right-0" : "right-[-250px]"} duration-[.3s] z-30 md:z-[1] md:right-0 overflow-y-scroll flex flex-col gap-2 px-mainxs pb-[20px] pt-[80px] fixed top-0 w-[240px] h-dvh bg-myLight border-l-3 border-[#eee]`}
     >
-      <Link className="w-full" href={"/"}>
+      <Link className="w-full" onClick={onClose} href={"/"}>
         <Button
           className={`${
             path === "/" ? "!bg-[#f1f1f1]" : ""
-          } group w-full !rounded-md !text-start !px-mainxs !flex !gap-[5px] !items-center !justify-end !text-secDark !text-[16px] !font-[500] !py-1 hover:bg-myHover!`}
+          } group w-full !rounded-md !text-end !px-mainxs !flex !gap-[5px] !items-center !justify-start !text-secDark !text-[16px] !font-[500] !py-1 hover:bg-myHover!`}
           variant="text"
           sx={{ fontFamily: cairo.style.fontFamily }}
         >
-          الواجهة الرئيسية
           <HomeFilledIcon fontSize="small" className="opacity-50 group-hover:opacity-100" />
+          الواجهة الرئيسية
         </Button>
       </Link>
-      <Link className="w-full" href={"/categories"}>
+      <Link className="w-full" onClick={onClose} href={"/categories"}>
         <Button
           className={`${
             path === "/categories" ? "!bg-[#f1f1f1]" : ""
-          } group w-full !rounded-md !text-start !px-mainxs !flex !gap-[5px] !items-center !justify-end !text-secDark !text-[16px] !font-[500] !py-1 hover:bg-myHover!`}
+          } group w-full !rounded-md !text-end !px-mainxs !flex !gap-[5px] !items-center !justify-start !text-secDark !text-[16px] !font-[500] !py-1 hover:bg-myHover!`}
           variant="text"
           sx={{ fontFamily: cairo.style.fontFamily }}
         >
-          الفئات
           <BiCategory className="opacity-50 group-hover:opacity-100" />
+          الفئات
         </Button>
       </Link>
       {dataItems}

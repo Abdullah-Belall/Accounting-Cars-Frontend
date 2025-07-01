@@ -12,7 +12,7 @@ export default function Profile() {
   // };
   return (
     <>
-      <div dir="rtl" className="flex flex-col px-mainxs gap-mainxs w-full sm:max-w-[600px] mx-auto">
+      <div dir="rtl" className="flex flex-col px-mainxs gap-mainxs w-full sm:max-w-[640px] mx-auto">
         <div
           dir="rtl"
           className="w-full bg-myHover border border-mdLight text-white rounded-lg p-6 shadow-lg"

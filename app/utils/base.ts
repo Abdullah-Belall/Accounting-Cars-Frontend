@@ -37,7 +37,7 @@ export const formatDate = (input: string | Date) => {
   const month = getPart("month");
   const year = getPart("year");
 
-  return `${hours}:${minutes} ${day}-${month}-${year}`;
+  return `${day}-${month}-${year} ${hours}:${minutes}`;
 };
 
 export const getSlug = (arr: any, value: string) => {

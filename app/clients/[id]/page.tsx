@@ -44,10 +44,7 @@ export default function Client() {
   return (
     <>
       <div className="flex flex-col items-center px-mainxs gap-mainxs w-full ml-auto !gap-[40px]">
-        <div
-          dir="rtl"
-          className="w-full max-w-[600px] flex flex-col bg-myHover border border-mdLight text-white rounded-lg p-6 shadow-lg"
-        >
+        <div className="w-full max-w-[600px] flex flex-col bg-myHover border border-mdLight text-white rounded-lg p-6 shadow-lg">
           <h2 className="text-lg font-semibold mb-4 text-myDark">المعلومات الشخصية للعميل</h2>
           <div className="relative w-full flex items-center space-x-4 mb-6">
             <div className="h-16 w-16 bg-myDark rounded-md flex items-center justify-center text-sm text-gray-300">
@@ -63,7 +60,7 @@ export default function Client() {
             </div>
             <CiEdit
               onClick={() => setEdit(true)}
-              className="absolute left-0 top-[50%] translate-y-[-50%] text-[25px] text-mdDark hover:text-orange-700 cursor-pointer"
+              className="absolute left-0 top-[50%] translate-y-[-50%] text-[25px] text-mdDark hover:text-red-700 cursor-pointer"
             />
           </div>
         </div>
@@ -86,8 +83,7 @@ export default function Client() {
       </div>
       {edit && (
         <>
-          <BlackLayer onClick={handleClose} />
-          <PopupHolder>
+          <BlackLayer onClick={handleClose}>
             <AddUserForm
               type="client"
               title={"تعديل اسم العميل"}
@@ -98,7 +94,7 @@ export default function Client() {
               }}
               onDone={onDone}
             />
-          </PopupHolder>
+          </BlackLayer>
         </>
       )}
     </>

@@ -1,7 +1,6 @@
 "use client";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import BlackLayer from "../common/black-layer";
-import PopupHolder from "../common/popup-holder";
 import ReturnsItemsPopup from "../orders/returns-items-popup";
 
 export default function ReturnsItemsPopupCus() {
@@ -11,10 +10,9 @@ export default function ReturnsItemsPopupCus() {
     <>
       {popupState?.returnsItemsPopup.isOpen && (
         <>
-          <BlackLayer onClick={() => closePopup("returnsItemsPopup")} />
-          <PopupHolder>
+          <BlackLayer onClick={() => closePopup("returnsItemsPopup")}>
             <ReturnsItemsPopup returnId={popupState.returnsItemsPopup.data?.returnId} />
-          </PopupHolder>
+          </BlackLayer>
         </>
       )}
     </>

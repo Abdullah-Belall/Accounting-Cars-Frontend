@@ -43,7 +43,7 @@ export default function CategoriesTable({
     <>
       <MainTable
         title={"كل الفئات"}
-        headers={["العمليات", "تاريخ الانشاء", "عدد المنتجات التابعة", "الوصف", "الاسم", "*"]}
+        headers={["*", "الاسم", "الوصف", "عدد المنتجات التابعة", "تاريخ الانشاء", "العمليات"]}
         filter={[true, "categories", columns]}
       >
         {data?.map((row, index) => (
@@ -61,8 +61,7 @@ export default function CategoriesTable({
       {data?.length === 0 && <NoData />}
       {popupState.editCategoryPopup.isOpen && (
         <>
-          <BlackLayer onClick={() => closePopup("editCategoryPopup")} />
-          <PopupHolder>
+          <BlackLayer onClick={() => closePopup("editCategoryPopup")}>
             <AddCategoryForm
               onCategoryAdded={undefined}
               isForEdit={{
@@ -79,15 +78,14 @@ export default function CategoriesTable({
                 },
               }}
             />
-          </PopupHolder>
+          </BlackLayer>
         </>
       )}
       {popupState.deleteAlertPopup.isOpen && (
         <>
-          <BlackLayer onClick={() => closePopup("deleteAlertPopup")} />
-          <PopupHolder>
+          <BlackLayer onClick={() => closePopup("deleteAlertPopup")}>
             <DeleteAlert action={"حذف"} name={`فئة ${deleteCatData?.title}`} onConfirm={onDelele} />
-          </PopupHolder>
+          </BlackLayer>
         </>
       )}
     </>

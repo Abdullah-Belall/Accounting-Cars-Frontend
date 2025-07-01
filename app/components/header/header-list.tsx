@@ -28,9 +28,6 @@ export default function BasicList() {
       <List>
         <ListItem disablePadding>
           <ListItemButton className="hover:text-myDark group">
-            <ListItemIcon>
-              <AccountBoxIcon className="opacity-50 group-hover:opacity-100 text-secDark" />
-            </ListItemIcon>
             <Link href={"/profile"}>
               <ListItemText
                 sx={{
@@ -38,17 +35,17 @@ export default function BasicList() {
                     fontFamily: "cairo",
                   },
                 }}
-                className={"text-end text-nowrap text-secDark"}
+                className={"text-start text-nowrap text-secDark"}
                 primary="المعلومات الشخصية"
               />
             </Link>
+            <ListItemIcon>
+              <AccountBoxIcon className="mr-auto opacity-50 group-hover:opacity-100 text-secDark" />
+            </ListItemIcon>
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
           <ListItemButton>
-            <ListItemIcon>
-              <LogoutIcon className="text-red-600" />
-            </ListItemIcon>
             <ListItemText
               onClick={handleSignOut}
               sx={{
@@ -56,9 +53,12 @@ export default function BasicList() {
                   fontFamily: "cairo",
                 },
               }}
-              className={"text-end text-nowrap text-red-600"}
+              className={"text-start text-nowrap text-red-600"}
               primary="تسجيل الخروج"
             />
+            <ListItemIcon>
+              <LogoutIcon className="mr-auto text-red-600" />
+            </ListItemIcon>
           </ListItemButton>
         </ListItem>
       </List>

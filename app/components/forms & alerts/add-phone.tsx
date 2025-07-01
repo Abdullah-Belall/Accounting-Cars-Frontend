@@ -75,15 +75,15 @@ export default function AddPhoneForm({
           id: isForEdit?.id,
         })
       : type === "client"
-      ? await CLIENT_COLLECTOR_REQ(ADD_CLIENT_CONTACT_REQ, {
-          ...data,
-          phone: "+" + data.phone,
-          user_id,
-        })
-      : await CLIENT_COLLECTOR_REQ(ADD_WORKER_CONTACT_REQ, {
-          data: { ...data, phone: "+" + data.phone },
-          id: user_id,
-        });
+        ? await CLIENT_COLLECTOR_REQ(ADD_CLIENT_CONTACT_REQ, {
+            ...data,
+            phone: "+" + data.phone,
+            user_id,
+          })
+        : await CLIENT_COLLECTOR_REQ(ADD_WORKER_CONTACT_REQ, {
+            data: { ...data, phone: "+" + data.phone },
+            id: user_id,
+          });
     setLoading(false);
     console.log(response);
     if (response.done) {
@@ -93,41 +93,43 @@ export default function AddPhoneForm({
     }
   };
   return (
-    <div className="rounded-md shadow-md min-w-[320px] bg-myLight p-mainxl">
-      <h2 className="text-lg text-center font-semibold mb-4">
-        {isForEdit ? "تعديل بيانات هاتف" : "اضافة رقم جديد"}
-      </h2>
+    <div className="w-full min-[380px]:w-[380px] px-mainxs">
+      <div className="rounded-md shadow-md bg-myLight p-mainxl">
+        <h2 className="text-lg text-center font-semibold mb-4">
+          {isForEdit ? "تعديل بيانات هاتف" : "اضافة رقم جديد"}
+        </h2>
 
-      <div className="space-y-4 flex flex-col gap-[15px]">
-        <TextField
-          id="Glu"
-          dir="rtl"
-          label="الرقم"
-          variant="filled"
-          className="w-full"
-          sx={sameTextField}
-          value={data?.phone ?? ""}
-          onChange={(e) => handleData("phone", e.target.value.replace(/[^0-9.]/g, ""))}
-        />
-        <TextField
-          id="Glu"
-          dir="rtl"
-          label="ملاحظات"
-          variant="filled"
-          className="w-full"
-          sx={sameTextField}
-          value={data.note ?? ""}
-          onChange={(e) => handleData("note", e.target.value)}
-        />
+        <div className="space-y-4 flex flex-col gap-[15px]">
+          <TextField
+            id="Glu"
+            dir="rtl"
+            label="الرقم"
+            variant="filled"
+            className="w-full"
+            sx={sameTextField}
+            value={data?.phone ?? ""}
+            onChange={(e) => handleData("phone", e.target.value.replace(/[^0-9.]/g, ""))}
+          />
+          <TextField
+            id="Glu"
+            dir="rtl"
+            label="ملاحظات"
+            variant="filled"
+            className="w-full"
+            sx={sameTextField}
+            value={data.note ?? ""}
+            onChange={(e) => handleData("note", e.target.value)}
+          />
 
-        <Button
-          onClick={handleDone}
-          sx={{ fontFamily: "cairo" }}
-          className="!bg-mdDark"
-          variant="contained"
-        >
-          اضافة
-        </Button>
+          <Button
+            onClick={handleDone}
+            sx={{ fontFamily: "cairo" }}
+            className="!bg-mdDark"
+            variant="contained"
+          >
+            اضافة
+          </Button>
+        </div>
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ export default function DeleteAlert({
   onConfirm: any;
 }) {
   return (
-    <div className="rounded-md shadow-md min-w-[320px] bg-myLight p-mainxl">
+    <div className="rounded-md shadow-md w-full min-[316px]:w-[300px] mx-mainxs bg-myLight p-mainxl">
       <h2 className="text-lg text-myDark text-center font-semibold mb-4">
         هل انت متأكد انك تريد {action} {name} ؟
       </h2>

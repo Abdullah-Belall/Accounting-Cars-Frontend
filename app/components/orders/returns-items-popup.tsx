@@ -20,8 +20,10 @@ export default function ReturnsItemsPopup({ returnId }: { returnId: string }) {
     fetchData();
   }, []);
   return (
-    <div className="relative rounded-md shadow-md w-[384px] min-[560px]:w-[544px] lg:min-w-[800px] bg-myLight p-mainxl">
-      <ReturnsItemsTable data={data as ReturnDataInterface} />
+    <div className="w-full lg:w-[1024px] px-mainxs">
+      <div className="relative rounded-md shadow-md bg-myLight p-mainxl">
+        <ReturnsItemsTable data={data as ReturnDataInterface} />
+      </div>
     </div>
   );
 }

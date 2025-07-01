@@ -47,23 +47,6 @@ export default function OrderItemsTableRow({
   return (
     <>
       <tr>
-        <td className="px-4 py-2 text-center">{formattedEarnig} ج.م</td>
-        <td className="px-4 py-2 text-center">{formattedUnitPrice} ج.م</td>
-        <td className="px-4 py-2 text-center">{qty}</td>
-        <td className="px-4 py-2 text-center">{color ?? "لا يوجد"}</td>
-        <td className="px-4 py-2 text-center">{size}</td>
-        <td className="px-4 py-2 text-center">{name}</td>
-        <td className="px-4 py-2 text-center">
-          <p
-            onClick={() => {
-              router.push(`/products`);
-              openPopup("sortsPopup", { id: product.id, name: product.name });
-            }}
-            className="cursor-pointer hover:underline w-fit mx-auto"
-          >
-            {product.name}
-          </p>
-        </td>
         <td className="text-center">
           {returns?.isActive ? (
             <input
@@ -81,6 +64,23 @@ export default function OrderItemsTableRow({
             index
           )}
         </td>
+        <td className="px-4 py-2 text-center">
+          <p
+            onClick={() => {
+              router.push(`/products`);
+              openPopup("sortsPopup", { id: product.id, name: product.name });
+            }}
+            className="cursor-pointer font-semibold underline hover:no-underline w-fit mx-auto"
+          >
+            {product.name}
+          </p>
+        </td>
+        <td className="px-4 py-2 text-center">{name}</td>
+        <td className="px-4 py-2 text-center">{size}</td>
+        <td className="px-4 py-2 text-center">{color ?? "لا يوجد"}</td>
+        <td className="px-4 py-2 text-center">{qty}</td>
+        <td className="px-4 py-2 text-center">{formattedUnitPrice} ج.م</td>
+        <td className="px-4 py-2 text-center">{formattedEarnig} ج.م</td>
       </tr>
     </>
   );

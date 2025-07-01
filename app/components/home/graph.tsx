@@ -111,7 +111,7 @@ export default function AllGraphs() {
     setIsForTrail(cond);
   }, []);
   return (
-    <div className="w-full flex flex-col gap-10">
+    <div dir="ltr" className="w-full flex flex-col gap-10">
       <div className="w-full flex flex-col gap-12 lg:gap-3 lg:flex-row">
         <div className="w-full h-[300px]">
           <GraphTemplet

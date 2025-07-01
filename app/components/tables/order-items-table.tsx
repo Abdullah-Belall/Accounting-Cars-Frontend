@@ -110,7 +110,7 @@ export default function OrderItemsTable({
     <>
       <MainTable
         title={title}
-        headers={["الفاتورة", "سعر الوحدة", "الكمية", "اللون", "المقاس", "الصنف", "المنتج", "*"]}
+        headers={["*", "المنتج", "الصنف", "المقاس", "اللون", "الكمية", "سعر الوحدة", "الفاتورة"]}
       >
         {data?.order_items?.map((row: any, index: number) => (
           <OrderItemsTableRow
@@ -132,13 +132,13 @@ export default function OrderItemsTable({
           <ReturnsPopUp index={title.replace(/\D/g, "")} id={data?.return?.id} />
         </div>
       )}
-      <div className="!absolute !left-[18px] !top-[13px] flex gap-1">
+      <div className="!absolute !left-0 !top-0 p-[8px] rounded-t-md bg-myLight translate-y-[calc(-100%+5px)] flex gap-1">
         <Button
           onClick={() => {
             return returns?.isActive ? closeReturns() : setReturns({ isActive: true, data: [] });
           }}
           sx={{ fontFamily: "cairo" }}
-          className="!bg-mdDark"
+          className="!bg-mdDark !max-w-[110px] !text-nowrap"
           variant="contained"
         >
           {returns?.isActive ? "الغاء" : "انشاء مرتجع"}
@@ -147,7 +147,7 @@ export default function OrderItemsTable({
           <Button
             onClick={onConfirmReturns}
             sx={{ fontFamily: "cairo" }}
-            className="!bg-mdDark"
+            className="!bg-mdDark !max-w-[110px] !text-nowrap"
             variant="contained"
           >
             تأكيد
@@ -158,7 +158,7 @@ export default function OrderItemsTable({
             onClick={() => setOpenReturns(!openReturns)}
             dir="rtl"
             sx={{ fontFamily: "cairo" }}
-            className="!bg-mdDark"
+            className="!bg-mdDark !max-w-[110px] !text-nowrap"
             variant="contained"
           >
             {openReturns ? "اخفاء" : "عرض"} {data?.return?.return_count} مرتجعات

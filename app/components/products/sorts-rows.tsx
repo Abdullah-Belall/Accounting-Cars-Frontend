@@ -29,6 +29,30 @@ export default function SortsTableRows({
   return (
     <>
       <tr>
+        <td className="px-4 py-2 text-center">{index}</td>
+        <td className="px-4 py-2 text-center">{name ?? "لا يوجد"}</td>
+        <td className="px-4 py-2 text-center">{color ?? "لا يوجد"}</td>
+        <td className="px-4 py-2 text-center">{size}</td>
+        <td
+          onClick={() =>
+            openPopup("editQtyPopup", {
+              id,
+              currQty: qty,
+              title: name,
+              refetchOnEdit,
+              latest_cost_unit_price,
+            })
+          }
+          className={`${styles.mioQty} px-4 py-2 text-center relative font-semibold cursor-pointer`}
+        >
+          {qty}
+        </td>
+        <td className="px-4 py-2 text-center">
+          {Number(Number(unit_price).toFixed(2)).toLocaleString()} ج.م
+        </td>
+        <td className="px-4 py-2 text-center">{orders_count}</td>
+        <td className="px-4 py-2 text-center">{note ?? "لا يوجد"}</td>
+        <td className="px-4 py-2 text-center">{formatDate(created_at)}</td>
         <td className="px-4 py-2 text-center">
           <div dir="rtl" className="w-fit ml-auto flex items-center gap-2 mx-auto">
             <p
@@ -44,36 +68,12 @@ export default function SortsTableRows({
                   refetchOnEdit,
                 })
               }
-              className="w-fit text-xl hover:text-red-600 cursor-pointer text-anotherDark"
+              className="w-fit text-xl hover:text-orange-600 cursor-pointer text-anotherDark"
             >
               <CiEdit />
             </p>
           </div>
         </td>
-        <td className="px-4 py-2 text-center">{formatDate(created_at)}</td>
-        <td className="px-4 py-2 text-center">{note ?? "لا يوجد"}</td>
-        <td className="px-4 py-2 text-center">{orders_count}</td>
-        <td className="px-4 py-2 text-center">
-          {Number(Number(unit_price).toFixed(2)).toLocaleString()} ج.م
-        </td>
-        <td
-          onClick={() =>
-            openPopup("editQtyPopup", {
-              id,
-              currQty: qty,
-              title: name,
-              refetchOnEdit,
-              latest_cost_unit_price,
-            })
-          }
-          className={`${styles.mioQty} px-4 py-2 text-center relative cursor-pointer`}
-        >
-          {qty}
-        </td>
-        <td className="px-4 py-2 text-center">{size}</td>
-        <td className="px-4 py-2 text-center">{color ?? "لا يوجد"}</td>
-        <td className="px-4 py-2 text-center">{name ?? "لا يوجد"}</td>
-        <td className="px-4 py-2 text-center">{index}</td>
       </tr>
     </>
   );

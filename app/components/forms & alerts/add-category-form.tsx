@@ -79,7 +79,7 @@ export default function AddCategoryForm({
     }
   };
   return (
-    <div className="rounded-md shadow-md w-full min-[400px]:min-w-sm bg-myLight p-mainxl">
+    <div className="mx-mainxs rounded-md shadow-md w-full min-[400px]:w-[384px] bg-myLight p-mainxl">
       <h2 className="text-lg text-center font-semibold mb-4">انشاء فئة جديدة</h2>
       <div className="space-y-4 flex flex-col gap-[15px]">
         <TextField

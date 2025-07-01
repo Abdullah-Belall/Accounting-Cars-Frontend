@@ -33,27 +33,26 @@ export default function CustomSnackbar() {
   };
 
   return (
-    <div>
-      <Snackbar
-        open={popupState.snakeBarPopup.isOpen}
-        onClose={handleClose}
-        slots={{ transition: SlideTransition }}
-        message={
-          <Msg
-            msg={popupState.snakeBarPopup.data.message}
-            type={popupState.snakeBarPopup.data.type ?? "error"}
-          />
-        }
-        key={popupState.snakeBarPopup.data.message + Date.now()}
-        autoHideDuration={3000}
-        sx={{
-          "& .MuiSnackbarContent-root": {
-            backgroundColor: "transparent !important",
-            boxShadow: "none !important",
-          },
-        }}
-      />
-    </div>
+    <Snackbar
+      open={popupState.snakeBarPopup.isOpen}
+      onClose={handleClose}
+      slots={{ transition: SlideTransition }}
+      message={
+        <Msg
+          msg={popupState.snakeBarPopup.data.message}
+          type={popupState.snakeBarPopup.data.type ?? "error"}
+        />
+      }
+      key={popupState.snakeBarPopup.data.message + Date.now()}
+      autoHideDuration={3000}
+      sx={{
+        "& .MuiSnackbarContent-root": {
+          backgroundColor: "transparent !important",
+          boxShadow: "none !important",
+          justifyContent: "end",
+        },
+      }}
+    />
   );
 }
 

@@ -51,69 +51,71 @@ export default function EditQtyPopup({
   };
   const total = (Number(data?.oldQty) ?? 0) + (Number(data.newQty) ?? 0);
   return (
-    <div className="rounded-md shadow-md min-w-[320px] bg-myLight p-mainxl">
-      <h2 className="text-lg text-center font-semibold mb-4">
-        تعديل كمية صنف {popupState.editQtyPopup.data?.title}
-      </h2>
+    <div className="w-full min-[365px]:w-[365px] px-mainxs">
+      <div className="rounded-md shadow-md bg-myLight p-mainxl">
+        <h2 className="text-lg text-center font-semibold mb-4">
+          تعديل كمية صنف {popupState.editQtyPopup.data?.title}
+        </h2>
 
-      <div className="space-y-4 flex flex-col gap-[15px]">
-        <TextField
-          id="Glu"
-          dir="rtl"
-          label="الكمية الاجمالية"
-          variant="filled"
-          className="w-full"
-          sx={sameTextField}
-          value={total}
-          onChange={(e) => handleData("oldQty", e.target.value)}
-          disabled
-        />
-        <div className="flex gap-2 w-full m-0">
+        <div className="space-y-4 flex flex-col gap-[15px]">
           <TextField
             id="Glu"
             dir="rtl"
-            label="التكلفة للوحدة"
+            label="الكمية الاجمالية"
             variant="filled"
             className="w-full"
             sx={sameTextField}
-            value={data.costPrice ?? ""}
-            onChange={(e) => handleData("costPrice", e.target.value.replace(/[^0-9.]/g, ""))}
+            value={total}
+            onChange={(e) => handleData("oldQty", e.target.value)}
+            disabled
           />
+          <div className="flex gap-2 w-full m-0">
+            <TextField
+              id="Glu"
+              dir="rtl"
+              label="التكلفة للوحدة"
+              variant="filled"
+              className="w-full"
+              sx={sameTextField}
+              value={data.costPrice ?? ""}
+              onChange={(e) => handleData("costPrice", e.target.value.replace(/[^0-9.]/g, ""))}
+            />
+            <TextField
+              id="Glu"
+              dir="rtl"
+              label="الكمية الجديدة"
+              variant="filled"
+              className="w-full"
+              sx={sameTextField}
+              value={data.newQty ?? ""}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (/^-?\d*\.?\d*$/.test(value)) {
+                  handleData("newQty", value);
+                }
+              }}
+            />
+          </div>
           <TextField
             id="Glu"
             dir="rtl"
-            label="الكمية الجديدة"
+            label="اخر تكلفة لهذا الصنف"
             variant="filled"
             className="w-full"
             sx={sameTextField}
-            value={data.newQty ?? ""}
-            onChange={(e) => {
-              const value = e.target.value;
-              if (/^-?\d*\.?\d*$/.test(value)) {
-                handleData("newQty", value);
-              }
-            }}
+            value={latest_cost_unit_price.toString()}
+            disabled
           />
+
+          <Button
+            onClick={handleDone}
+            sx={{ fontFamily: "cairo" }}
+            className="!bg-mdDark"
+            variant="contained"
+          >
+            تأكيد
+          </Button>
         </div>
-        <TextField
-          id="Glu"
-          dir="rtl"
-          label="اخر تكلفة لهذا الصنف"
-          variant="filled"
-          className="w-full"
-          sx={sameTextField}
-          value={latest_cost_unit_price.toString()}
-          disabled
-        />
-
-        <Button
-          onClick={handleDone}
-          sx={{ fontFamily: "cairo" }}
-          className="!bg-mdDark"
-          variant="contained"
-        >
-          تأكيد
-        </Button>
       </div>
     </div>
   );

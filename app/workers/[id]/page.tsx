@@ -99,10 +99,9 @@ export default function Worker() {
       </div>
       {deleteAlert && (
         <>
-          <BlackLayer onClick={() => setDeleteAlert(false)} />
-          <PopupHolder>
+          <BlackLayer onClick={() => setDeleteAlert(false)}>
             <DeleteAlert name="هذا الموظف" action="حظر" onConfirm={handleBanConfirm} />
-          </PopupHolder>
+          </BlackLayer>
         </>
       )}
     </>

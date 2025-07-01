@@ -13,17 +13,17 @@ export default function StockChecksTableRows({
   return (
     <>
       <tr>
-        <td className="px-4 py-2 text-center">{formatDate(created_at)}</td>
-        <td className="px-4 py-2 text-center">{note ?? "لا يوجد"}</td>
+        <td className="px-4 py-2 text-center">{index}</td>
         <td className="px-4 py-2 text-center">
           <p
             onClick={() => router.push(`stock-checks/${id}`)}
-            className="w-fit mx-auto hover:underline cursor-pointer"
+            className="w-fit mx-auto font-semibold hover:no-underline underline cursor-pointer"
           >
             عرض الاصناف
           </p>
         </td>
-        <td className="px-4 py-2 text-center">{index}</td>
+        <td className="px-4 py-2 text-center">{note ?? "لا يوجد"}</td>
+        <td className="px-4 py-2 text-center">{formatDate(created_at)}</td>
       </tr>
     </>
   );

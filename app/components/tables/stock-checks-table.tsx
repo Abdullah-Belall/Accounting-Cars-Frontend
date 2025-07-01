@@ -7,7 +7,7 @@ import StockChecksTableRows from "../stock-checks/stock-checks-table-rows";
 export default function StockChecksTable({ data }: { data: StockChecksInterface[] }) {
   return (
     <>
-      <MainTable title="فواتير المصاريف" headers={["التاريخ", "ملاحظة", "الاصناف", "*"]}>
+      <MainTable title={"كل الجرود"} headers={["*", "الاصناف", "ملاحظة", "التاريخ"]}>
         {data?.map((row, index) => (
           <StockChecksTableRows
             key={index}

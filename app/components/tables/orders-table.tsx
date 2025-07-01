@@ -23,20 +23,21 @@ export default function OrdersTable({
   const { closePopup, popupState } = usePopup();
   const { closeReturns } = useReturns();
   const headers = [
-    "العمليات",
-    "التاريخ",
-    "حالة الدفع",
-    "طريقة الدفع",
-    "الفاتورة بعد الضريبة والخصم",
-    "الخصم",
-    "ضريبة القيمة المضافة",
-    "الفاتورة",
-    "الطلبات",
-    "العميل",
     "*",
+    "العميل",
+    "الطلبات",
+    "الفاتورة",
+    "ضريبة القيمة المضافة",
+    "الخصم",
+    "المصروف الاضافي",
+    "الفاتورة بعد الضريبة والخصم",
+    "طريقة الدفع",
+    "حالة الدفع",
+    "التاريخ",
+    "العمليات",
   ];
   if (tableFor === "client") {
-    headers.splice(9, 1);
+    headers.splice(1, 1);
   }
   const columns = [
     { name: "order.short_id", slug: "رقم الفاتورة" },
@@ -61,6 +62,7 @@ export default function OrdersTable({
             date={row.created_at}
             tableFor={tableFor}
             tax={row.tax}
+            additional_fees={row.additional_fees}
             discount={row.discount}
             short_id={row.short_id}
           />
@@ -68,29 +70,23 @@ export default function OrdersTable({
       </MainTable>
       {data?.length === 0 && <NoData />}
       {popupState.ordersPopup.isOpen && (
-        <>
-          <BlackLayer
-            onClick={() => {
-              closePopup("ordersPopup");
-              closeReturns();
-            }}
+        <BlackLayer
+          onClick={() => {
+            closePopup("ordersPopup");
+            closeReturns();
+          }}
+        >
+          <OrderItemsPopUp
+            refetchOrders={refetch}
+            index={popupState.ordersPopup.data.index}
+            id={popupState.ordersPopup.data.id}
           />
-          <PopupHolder>
-            <OrderItemsPopUp
-              refetchOrders={refetch}
-              index={popupState.ordersPopup.data.index}
-              id={popupState.ordersPopup.data.id}
-            />
-          </PopupHolder>
-        </>
+        </BlackLayer>
       )}
       {popupState.editOrderPopup.isOpen && (
-        <>
-          <BlackLayer onClick={() => closePopup("editOrderPopup")} />
-          <PopupHolder>
-            <EditOrderPopup refetch={refetch} />
-          </PopupHolder>
-        </>
+        <BlackLayer onClick={() => closePopup("editOrderPopup")}>
+          <EditOrderPopup refetch={refetch} />
+        </BlackLayer>
       )}
     </>
   );

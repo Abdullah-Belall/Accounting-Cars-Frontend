@@ -15,7 +15,7 @@ export default function ExpensesTable({
     <>
       <MainTable
         title="فواتير المصاريف"
-        headers={["العمليات", "التاريخ", "ملاحظة", "المصروف", "اسم البند", "*"]}
+        headers={["*", "اسم البند", "المصروف", "ملاحظة", "التاريخ", "العمليات"]}
       >
         {data?.map((row, index) => (
           <ExpensesTableRows

@@ -9,7 +9,7 @@ export default function SortsStockChecksTable({ data }: { data: SortInterface[] 
     <>
       <MainTable
         title={`انشاء جرد`}
-        headers={["الفئة", "الكمية", "المقاس", "الخامة", "اللون", "اسم الصنف", "اسم المنتج", "*"]}
+        headers={["*", "اسم المنتج", "اسم الصنف", "اللون", "الخامة", "المقاس", "الكمية", "الفئة"]}
       >
         {data?.map((row) => (
           <StockSortsTableRows

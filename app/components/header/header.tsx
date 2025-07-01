@@ -45,18 +45,18 @@ export default function Header({ logo }: { logo: string }) {
           </div>
         </>
       )}
-      <Link href={"/"} className="font-bold mr-mainxxl">
-        <Image width={70} height={70} src={`${BaseLogosUrl}${logo}`} alt={"لوجو"} />
-      </Link>
       <div
         onClick={() => setList(!list)}
         className={`${
           list ? "bg-myHover" : ""
         } cursor-pointer px-mainxxl py-mainxl flex flex-row-reverse gap-[10px] items-center hover:bg-myHover`}
       >
-        <Avatar sx={{ bgcolor: "#ced4da", color: "#343a40" }}>{user?.user_name.slice(0, 1)}</Avatar>
         <div>{user?.user_name}</div>
+        <Avatar sx={{ bgcolor: "#ced4da", color: "#343a40" }}>{user?.user_name.slice(0, 1)}</Avatar>
       </div>
+      <Link href={"/"} className="font-bold mr-mainxxl">
+        <Image width={70} height={70} src={`${BaseLogosUrl}${logo}`} alt={"لوجو"} />
+      </Link>
     </header>
   );
 }
