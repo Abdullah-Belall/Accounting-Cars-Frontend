@@ -7,6 +7,5 @@ const CategoryProductsClient = dynamic(
   }
 );
 export default function Sorts() {
-  console.log("object");
   return <CategoryProductsClient />;
 }

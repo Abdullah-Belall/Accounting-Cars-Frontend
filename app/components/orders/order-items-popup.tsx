@@ -14,7 +14,7 @@ export default function OrderItemsPopUp({
     <div className="px-mainxs w-full md:w-[752px]">
       <div className="relative rounded-md shadow-md bg-myLight p-mainxl">
         <OrderItemsTable
-          title={`منتجات الطلب رقم ${index}`}
+          title={`منتجات الفاتورة رقم ${index}`}
           id={id}
           refetchOrders={refetchOrders}
         />

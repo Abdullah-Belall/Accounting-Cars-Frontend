@@ -13,7 +13,7 @@ export default function StockChecksPage({ id }: { id: string }) {
   const { fillSearch, getSearch } = useSearch();
   const fetchData = async () => {
     const response = await CLIENT_COLLECTOR_REQ(GET_STOCK_CHECKS_ITEMS_REQ, { id });
-    console.log(response);
+
     if (response.done) {
       fillSearch("stockChecksItems", {
         results: response.data?.items,

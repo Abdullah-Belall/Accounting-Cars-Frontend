@@ -30,6 +30,9 @@ type BillsValueType = {
     tax: string;
     discount: string;
     paid_status: string;
+    installment_type?: string;
+    down_payment?: string;
+    installment?: string;
     payment_method: string;
     created_at?: Date;
   };
@@ -57,6 +60,9 @@ export const BillesProvider = ({ children }: { children: ReactNode }) => {
       tax: "",
       discount: "",
       paid_status: "",
+      installment_type: "",
+      down_payment: "",
+      installment: "",
       payment_method: "",
     },
   });
@@ -74,6 +80,9 @@ export const BillesProvider = ({ children }: { children: ReactNode }) => {
         tax: "",
         discount: "",
         paid_status: "",
+        installment_type: "",
+        down_payment: "",
+        installment: "",
         payment_method: "",
       },
     });

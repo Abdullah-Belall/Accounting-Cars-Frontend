@@ -28,7 +28,6 @@ const Msg = ({ msg, type }: { msg: string; type: "success" | "error" }) => {
 export default function CustomSnackbar() {
   const { popupState, closeSnakeBarPopup } = usePopup();
   const handleClose = () => {
-    console.log("custom close");
     closeSnakeBarPopup("snakeBarPopup");
   };
 

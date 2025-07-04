@@ -109,7 +109,6 @@ export default function AddSortForm({
       isForEdit ? UPDATE_SORT_REQ : ADD_SORT_REQ,
       isForEdit ? editObj : addObj
     );
-    console.log(response);
     setLoading(false);
     if (response.done) {
       onConfirm();

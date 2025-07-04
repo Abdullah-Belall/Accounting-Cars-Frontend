@@ -38,7 +38,7 @@ export default function SortsTable({ title, id }: { id: string; title: string })
           "المقاس",
           "الكمية",
           "السعر",
-          "عدد الطلبات",
+          "عدد الفواتير",
           "ملاحظات",
           "التاريخ",
           "العمليات",

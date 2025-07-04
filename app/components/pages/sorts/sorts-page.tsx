@@ -19,7 +19,7 @@ export default function SortsPage() {
   const fetchData = async () => {
     const response: { done: boolean; data: { sorts: SortInterface[] } } =
       await CLIENT_COLLECTOR_REQ(GET_ALL_SORTS_REQ);
-    console.log(response);
+
     if (response.done) {
       fillSearch("sorts", { results: response.data.sorts, total: response.data.sorts.length });
     } else {

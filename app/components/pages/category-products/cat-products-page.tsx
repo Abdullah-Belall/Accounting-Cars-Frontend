@@ -15,7 +15,7 @@ export default function CategoryProductsPage() {
   const [catName, setCatName] = useState([]);
   const fetchData = async () => {
     const response = await CLIENT_COLLECTOR_REQ(GET_CATEGORIES_PRODUCTS_REQ, { id });
-    console.log(response);
+
     if (response.done) {
       setData(response.data.products);
       setCatName(response.data.name);

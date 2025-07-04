@@ -17,7 +17,6 @@ export default function ExpenseForm({
   onDone: any;
   title: string;
 }) {
-  console.log(isForEdit);
   const [data, setData] = useState<{
     name: null | string;
     amount: null | string | number;

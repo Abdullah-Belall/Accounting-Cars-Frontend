@@ -13,7 +13,6 @@ export default function ReturnsTableRows({
   created_at,
 }: ReturnDataInterface) {
   const { openPopup } = usePopup();
-  console.log(totalPrice);
   return (
     <tr>
       <td className="px-4 py-2 text-center">{short_id?.slice(4)}</td>

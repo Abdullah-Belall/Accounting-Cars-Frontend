@@ -11,7 +11,7 @@ export default function ReturnsItemsPopup({ returnId }: { returnId: string }) {
   const [data, setData] = useState<undefined | ReturnDataInterface>();
   const fetchData = async () => {
     const response = await CLIENT_COLLECTOR_REQ(GET_ONE_RETURNS_REQ, { id: returnId });
-    console.log(response);
+
     if (response.done) {
       setData(response.data);
     }

@@ -19,7 +19,7 @@ export default function CategoriesPage() {
   const { fillSearch, getSearch } = useSearch();
   const fetchData = async () => {
     const response = await CLIENT_COLLECTOR_REQ(GET_CATEGORIES_REQ);
-    console.log(response);
+
     if (response.done) {
       fillSearch("categories", { results: response.data.categories, total: response.data.total });
       setCat(false);

@@ -8,25 +8,26 @@ export default function UsersTable({
   type,
   forOrder,
   data,
+  paySalaries,
 }: {
   type: "worker" | "client";
   forOrder?: boolean;
   data: ClientInterface[];
+  paySalaries?: boolean;
 }) {
   const headers = [
     "*",
     "الاسم",
     "الرقم الضريبي",
-    "عدد الطلبات المكتملة",
+    "عدد الفواتير المكتملة",
     "عدد جهات الاتصال",
     "تاريخ الاضافة",
   ];
 
   if (type === "worker") {
     headers.splice(2, 2);
-    headers.splice(2, 0, "الدور");
+    headers.splice(2, 0, "الدور", "الراتب");
   }
-  console.log(data);
   let columns = [
     { name: "client.user_name", slug: "الأسم" },
     { name: "client.tax_num", slug: "الرقم الضريبي" },
@@ -34,13 +35,10 @@ export default function UsersTable({
   if (type === "worker") {
     columns = [];
   }
+  const title = type === "client" ? (forOrder ? "" : "كل العملاء") : "كل الموظفين";
   return (
     <div className="px-mainxs">
-      <MainTable
-        filter={[!forOrder, `${type}s`, columns]}
-        title={type === "client" ? "كل العملاء" : "كل الموظفين"}
-        headers={headers}
-      >
+      <MainTable filter={[!forOrder, `${type}s`, columns]} title={title} headers={headers}>
         {data?.map((row, index) => (
           <UsersTableRows
             key={row.id}
@@ -55,6 +53,8 @@ export default function UsersTable({
             phone_count={row.contacts_count as number}
             type={type}
             role={getSlug(rolesArray, row?.role as string)}
+            salary={row.salary}
+            paySalaries={paySalaries}
           />
         ))}
       </MainTable>

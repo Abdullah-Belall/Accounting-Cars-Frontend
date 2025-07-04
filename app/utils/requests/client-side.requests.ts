@@ -236,7 +236,7 @@ const ADD_ORDER_REQ = async (data: AddOrderInterface) => {
     const response: any = await axios.post(`${BASE_URL}/orders`, data, {
       headers: { Authorization: `Bearer ${getCookie("access_token")}` },
     });
-    console.log(response);
+
     if (response?.data?.done) {
       return { done: true, data: response.data.order };
     } else {
@@ -260,7 +260,7 @@ const ADD_PRODUCT_REQ = async (data: AddProductInterface) => {
     const response: any = await axios.post(`${BASE_URL}/products`, data, {
       headers: { Authorization: `Bearer ${getCookie("access_token")}` },
     });
-    console.log(response);
+
     if (response?.data?.done) {
       return { done: true };
     } else {
@@ -364,7 +364,7 @@ const GET_MY_PROFILE_REQ = async () => {
     const response: any = await axios.get(`${BASE_URL}/workers/profile`, {
       headers: { Authorization: `Bearer ${getCookie("access_token")}` },
     });
-    console.log(response);
+
     return response?.data.done
       ? { done: true, data: response?.data?.worker }
       : { done: false, message: unCountedMessage, status: response.status };
@@ -570,7 +570,12 @@ const ADD_CLIENT_REQ = async (data: { user_name: string; tax_num: string }) => {
     };
   }
 };
-const ADD_WORKER_REQ = async (data: { user_name: string; password: string; role: string }) => {
+const ADD_WORKER_REQ = async (data: {
+  user_name: string;
+  password: string;
+  role: string;
+  salary: number;
+}) => {
   try {
     const response: any = await axios.post(`${BASE_URL}/workers/create-worker`, data, {
       headers: { Authorization: `Bearer ${getCookie("access_token")}` },
@@ -946,7 +951,7 @@ const GET_CALCS_REQ = async () => {
     const response: any = await axios.get(`${BASE_URL}/common/calcs`, {
       headers: { Authorization: `Bearer ${getCookie("access_token")}` },
     });
-    console.log(response);
+
     return typeof response?.data.totalCostsPrice === "number"
       ? { done: true, data: response?.data }
       : { done: false, message: unCountedMessage, status: response.status };
@@ -1008,6 +1013,58 @@ const GET_GRAPH_DATA_REQ = async ({ type }: { type: "years" | "months" | "days" 
 const DELETE_PRODUCT_REQ = async ({ id }: { id: string }) => {
   try {
     const response: any = await axios.delete(`${BASE_URL}/products/${id}`, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const UPDATE_WORKER_REQ = async ({
+  data,
+  id,
+}: {
+  id: string;
+  data: { role?: string; salary?: number };
+}) => {
+  try {
+    const response: any = await axios.patch(`${BASE_URL}/workers/update-worker/${id}`, data, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const PAY_SALARIES_REQ = async (data: any) => {
+  try {
+    const response: any = await axios.post(`${BASE_URL}/expenses/paying-salaries`, data, {
       headers: { Authorization: `Bearer ${getCookie("access_token")}` },
     });
     if (response?.data?.done) {
@@ -1133,7 +1190,7 @@ const GET_TENANT_VARS_REQ = async ({ tenant_domain }: { tenant_domain: string })
         headers: { Authorization: `Bearer ${getCookie("access_token")}` },
       }
     );
-    console.log(response);
+
     return response?.data?.company_title
       ? { done: true, data: response?.data }
       : { done: false, message: unCountedMessage, status: response.status };
@@ -1412,4 +1469,6 @@ export {
   GET_ALL_STOCK_CHECKS_REQ,
   CREATE_STOCK_CHECKS_REQ,
   UPDATE_BALANCE_REQ,
+  UPDATE_WORKER_REQ,
+  PAY_SALARIES_REQ,
 };

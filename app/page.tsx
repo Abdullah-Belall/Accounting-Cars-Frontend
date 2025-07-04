@@ -11,7 +11,6 @@ export default function Home() {
   const [data, setData] = useState<CalcsInterface>();
   const fetchData = async () => {
     const response = await CLIENT_COLLECTOR_REQ(GET_CALCS_REQ);
-    console.log(response);
     if (response.done) {
       setData(response.data);
     } else {

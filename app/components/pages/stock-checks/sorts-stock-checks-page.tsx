@@ -22,7 +22,7 @@ export default function SortsStockChecksPage() {
   const fetchData = async () => {
     const response: { done: boolean; data: { sorts: SortInterface[] } } =
       await CLIENT_COLLECTOR_REQ(GET_ALL_SORTS_REQ);
-    console.log(response);
+
     if (response.done) {
       fillSearch("stockChecksSorts", {
         results: response.data.sorts,

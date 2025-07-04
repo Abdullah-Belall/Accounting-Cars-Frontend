@@ -37,7 +37,7 @@ export default function AllGraphs() {
   };
   const fetchData = async (type: keyof typeof data) => {
     const response = await CLIENT_COLLECTOR_REQ(GET_GRAPH_DATA_REQ, { type });
-    console.log(response);
+
     if (response.done) {
       handleData(type, response.data.totalGraphData);
     }
@@ -105,9 +105,7 @@ export default function AllGraphs() {
     { totalEarning: 20500, netProfit: 7000, year: 2025 },
   ];
   useEffect(() => {
-    console.log(window.location.hostname);
     const cond = ["localhost", "wolf-jet.vercel.app"].includes(window.location.hostname);
-    console.log(cond);
     setIsForTrail(cond);
   }, []);
   return (

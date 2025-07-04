@@ -11,9 +11,7 @@ export default function GeneralInfo({ data }: { data: CalcsInterface }) {
   const [isForTrail, setIsForTrail] = useState(false);
   const [editBalance, setEditBalance] = useState(false);
   useEffect(() => {
-    console.log(window.location.hostname);
     const cond = ["localhost", "wolf-jet.vercel.app"].includes(window.location.hostname);
-    console.log(cond);
     setIsForTrail(cond);
   }, []);
   return (

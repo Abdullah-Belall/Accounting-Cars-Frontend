@@ -13,7 +13,7 @@ export default function OrdersPage() {
   const { fillSearch, getSearch } = useSearch();
   const fetchData = async () => {
     const response = await CLIENT_COLLECTOR_REQ(GET_ALL_ORDERS_REQ);
-    console.log(response);
+
     if (response.done) {
       fillSearch("orders", { results: response.data.orders, total: response.data.total });
     } else {

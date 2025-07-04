@@ -102,6 +102,7 @@ export const methodsArray: DropDownsInterface[] = [
 
 export const paidStatusArray: DropDownsInterface[] = [
   { value: PaidStatusEnum.PAID, label: "دفع الأن" },
+  { value: PaidStatusEnum.INSTALLMENTS, label: "دفع بالأقساط" },
   { value: PaidStatusEnum.PENDING, label: "لم يدفع بعد" },
 ];
 export const rolesArray = [
@@ -111,6 +112,7 @@ export const rolesArray = [
   { value: "admin", label: "موظف" },
 ];
 export const periodsArray = [
+  { value: "weekly", label: "اسبوع" },
   { value: "month", label: "شهري" },
   { value: "quarter", label: "ربع سنوي" },
   { value: "halfyear", label: "نصف سنوي" },

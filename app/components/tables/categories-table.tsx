@@ -24,7 +24,7 @@ export default function CategoriesTable({
   const deleteCatData = popupState.deleteAlertPopup.data;
   const onDelele = async () => {
     const response = await CLIENT_COLLECTOR_REQ(DELETE_CATEGORY_REQ, { id: deleteCatData.id });
-    console.log(response);
+
     if (response.done) {
       openPopup("snakeBarPopup", {
         message: "تم حذف فئة بنجاح.",

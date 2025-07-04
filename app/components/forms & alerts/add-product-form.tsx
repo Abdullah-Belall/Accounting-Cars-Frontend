@@ -47,7 +47,6 @@ export default function AddProductForm({
   const [categories, setCategories] = useState<CategoryInterface[]>([]);
   const fetchData = async () => {
     const response = await CLIENT_COLLECTOR_REQ(GET_CATEGORIES_REQ);
-    console.log(response);
     if (response.done) {
       setCategories(response.data.categories);
     }

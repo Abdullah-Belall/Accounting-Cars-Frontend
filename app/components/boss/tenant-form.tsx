@@ -65,7 +65,6 @@ export default function TenantForm({
       title: base.title,
       telegram_chat_id: base.telegram_chat_id,
     });
-    console.log(response);
     if (response.done) {
       const mioObj: any = addTenant;
       delete mioObj.phone;
@@ -73,7 +72,6 @@ export default function TenantForm({
       delete mioObj.logo;
       delete mioObj.telegram_chat_id;
       const fuserResponse = await CLIENT_COLLECTOR_REQ(SIGN_FUSER_REQ, mioObj);
-      console.log(fuserResponse);
       if (fuserResponse.done) {
         fetchData();
         openPopup("snakeBarPopup", { message: "تم اضافة المستأجر الجديد بنجاح.", type: "success" });

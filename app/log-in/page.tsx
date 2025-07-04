@@ -41,9 +41,8 @@ export default function LogIn() {
     if (loading) return;
     if (!vaildation()) return;
     setLoading(true);
-    console.log(window.location.hostname);
     const response = await LOGIN_REQ({ ...data, tenant_domain: window.location.hostname });
-    console.log(response);
+
     setLoading(false);
     if (response.done) {
       router.replace("/");

@@ -61,6 +61,9 @@ export interface PaymentInterface {
   id: string;
   payment_method: string;
   status: string;
+  installment_type?: string;
+  down_payment?: number;
+  installment?: number;
   created_at?: Date;
 }
 
@@ -115,6 +118,7 @@ export enum PaymentMethodsEnum {
 export enum PaidStatusEnum {
   PAID = "paid",
   PENDING = "pending",
+  INSTALLMENTS = "installments",
 }
 export interface AddOrderInterface {
   client_id: string;
@@ -164,6 +168,7 @@ export interface ClientInterface {
   orders_count?: number;
   contacts_count?: number;
   addresses_count?: number;
+  salary?: number;
 }
 export interface WorkersInterface {
   id: string;
@@ -175,6 +180,7 @@ export interface WorkersInterface {
   updated_at: Date;
   contacts?: PhoneInterface[];
   contacts_count: number;
+  salary?: number;
 }
 
 export interface AddClientContactInterface {

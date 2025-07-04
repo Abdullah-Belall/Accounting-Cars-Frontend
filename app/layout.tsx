@@ -15,6 +15,7 @@ import Header from "./components/header/header";
 import { BaseLogosUrl } from "./utils/base";
 import { PiListBold } from "react-icons/pi";
 import { StockChecksProvider } from "./utils/contexts/stock-checks-contexts";
+import { WorkerSalaryProvider } from "./utils/contexts/paying-salaries-context";
 
 export default function RootLayout({
   children,
@@ -77,12 +78,14 @@ export default function RootLayout({
                 <ReturnsProvider>
                   <BillesProvider>
                     <StockChecksProvider>
-                      <CustomSnackbar />
-                      {!isLoginRoute && (
-                        <SideBar open={openSidebar} onClose={() => setOpenSidebar(false)} />
-                      )}
-                      {!isLoginRoute && <Header logo={tenantsVars?.copmany_logo as string} />}
-                      {children}
+                      <WorkerSalaryProvider>
+                        <CustomSnackbar />
+                        {!isLoginRoute && (
+                          <SideBar open={openSidebar} onClose={() => setOpenSidebar(false)} />
+                        )}
+                        {!isLoginRoute && <Header logo={tenantsVars?.copmany_logo as string} />}
+                        {children}
+                      </WorkerSalaryProvider>
                     </StockChecksProvider>
                   </BillesProvider>
                 </ReturnsProvider>

@@ -43,11 +43,9 @@ export default function SearchInput({
         delete bodyObj.column;
       }
       const response = await CLIENT_COLLECTOR_REQ(SEARCH_REQ, bodyObj);
-      console.log(response);
       if (response.done) {
         fillSearch(currentSearchin as any, response.data);
       } else {
-        console.log("problema");
       }
     };
     fetchData();

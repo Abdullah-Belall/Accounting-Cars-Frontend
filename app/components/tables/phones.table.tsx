@@ -46,7 +46,7 @@ export default function PhonesTable({
       type: type === "العميل" ? "client" : "worker",
     });
     setLoading(false);
-    console.log(response);
+
     if (response.done) {
       openPopup("snakeBarPopup", { message: "تم حذف رقم الهاتف بنجاح.", type: "success" });
       closePopup("deleteAlertPopup");

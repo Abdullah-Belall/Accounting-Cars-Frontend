@@ -10,7 +10,7 @@ export default function CostsPage() {
   const { fillSearch, getSearch } = useSearch();
   const fetchData = async () => {
     const response = await CLIENT_COLLECTOR_REQ(GET_ALL_COSTS_REQ);
-    console.log(response);
+
     if (response.done) {
       fillSearch("costs", { results: response.data?.costs, total: response.data?.total });
     } else {

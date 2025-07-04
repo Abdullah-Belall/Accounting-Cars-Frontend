@@ -61,10 +61,7 @@ export default function AddPhoneForm({
     if (!validation()) return;
     if (loading) return;
     setLoading(true);
-    console.log({
-      ...data,
-      phone: "+" + data.phone,
-    });
+
     const response = isForEdit
       ? await CLIENT_COLLECTOR_REQ(UPDATE_CONTACT_REQ, {
           data: {
@@ -85,7 +82,6 @@ export default function AddPhoneForm({
             id: user_id,
           });
     setLoading(false);
-    console.log(response);
     if (response.done) {
       onDone();
     } else {

@@ -10,7 +10,7 @@ export default function ReturnsPopUp({ index, id }: { index: number | string; id
   const [data, setData] = useState<any>();
   const fetchData = async () => {
     const response = await CLIENT_COLLECTOR_REQ(GET_ORDER_RETURNS_REQ, { id });
-    console.log(response);
+
     if (response.done) {
       setData(response.data);
     }
@@ -18,11 +18,10 @@ export default function ReturnsPopUp({ index, id }: { index: number | string; id
   useEffect(() => {
     fetchData();
   }, []);
-  console.log(data);
   return (
     <ReturnsTable
       isMainTable={false}
-      title={`مرتجعات الطلب رقم ${index}`}
+      title={`مرتجعات الفاتورة رقم ${index}`}
       data={data?.returns_items}
     />
   );

@@ -16,8 +16,8 @@ import { useRouter } from "next/navigation";
 export default function BasicList() {
   const router = useRouter();
   const handleSignOut = async () => {
-    const response = await CLIENT_COLLECTOR_REQ(SIGN_OUT_REQ);
-    console.log(response);
+    await CLIENT_COLLECTOR_REQ(SIGN_OUT_REQ);
+
     router.push("/log-in");
   };
   return (

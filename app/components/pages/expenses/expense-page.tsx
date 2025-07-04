@@ -28,7 +28,7 @@ export default function ExpensesPage() {
   const { fillSearch, getSearch } = useSearch();
   const fetchData = async () => {
     const response = await CLIENT_COLLECTOR_REQ(GET_ALL_EXPENSES_REQ);
-    console.log(response);
+
     if (response.done) {
       fillSearch("expenses", { results: response.data?.expenses, total: response.data?.total });
     } else {

@@ -10,7 +10,6 @@ export default function OrderPrint() {
   const handlePrint = () => {
     window.print();
   };
-  console.log(bills);
   return (
     <div className="print-content relative mx-auto flex flex-col items-center max-w-[637px] justify-center w-full px-mainxs">
       <h1 className="font-bold">
@@ -25,6 +24,13 @@ export default function OrderPrint() {
         </h2>
         <h2>وسيلة الدفع: {bills?.totals?.payment_method}</h2>
         <h2>حالة الدفع: {bills?.totals?.paid_status}</h2>
+        {bills?.totals?.paid_status === "دفع بالأقساط" && (
+          <>
+            <h2>نوع القسط: {bills?.totals?.installment_type}</h2>
+            <h2>المقدم: {bills?.totals?.down_payment} ج.م</h2>
+            <h2>قيمة القسط: {bills?.totals?.installment} ج.م</h2>
+          </>
+        )}
         <h2>تاريخ انشاء الفاتورة: {formatDate(bills?.totals?.created_at as Date)}</h2>
         <h2>تاريخ طباعة الفاتورة: {formatDate(new Date())}</h2>
         <Button

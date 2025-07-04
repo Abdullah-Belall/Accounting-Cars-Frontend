@@ -4,7 +4,6 @@ import NoData from "../common/no-data";
 import OrderPrintRows from "../orders/order-print-rows";
 
 export default function OrderBillsTable({ data }: { data: any }) {
-  console.log(data);
   return (
     <>
       <MainTable

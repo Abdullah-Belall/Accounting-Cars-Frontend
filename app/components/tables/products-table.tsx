@@ -91,7 +91,6 @@ export default function ProductsTable({
     { name: "product.material", slug: "الخامة" },
     { name: "product.note", slug: "الملاحظات" },
   ];
-  console.log(data);
   const handleDeleteProduct = async () => {
     const id = popupState.deleteAlertPopup.data.id;
     const response = await CLIENT_COLLECTOR_REQ(DELETE_PRODUCT_REQ, { id });

@@ -17,7 +17,7 @@ export default function ReturnsPage() {
   const { popupState, closePopup } = usePopup();
   const fetchData = async () => {
     const response = await CLIENT_COLLECTOR_REQ(GET_ALL_RETURNS_REQ);
-    console.log(response);
+
     if (response.done) {
       fillSearch("returns", { results: response.data?.returns_items, total: response.data?.total });
     } else {

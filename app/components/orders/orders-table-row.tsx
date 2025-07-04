@@ -18,12 +18,14 @@ export default function OrdersTableRow({
   date,
   tableFor,
   id,
-  index,
   tax,
   discount,
   client: { client_id, name },
   additional_fees,
   short_id,
+  installment_type,
+  down_payment,
+  installment,
 }: {
   index: number;
   id: string;
@@ -40,6 +42,9 @@ export default function OrdersTableRow({
   discount: number;
   additional_fees?: number;
   short_id: string;
+  installment_type?: string;
+  down_payment?: number;
+  installment?: number;
 }) {
   const router = useRouter();
   const { setBills } = useBills();
@@ -100,7 +105,11 @@ export default function OrdersTableRow({
     }
   };
   const statusColor =
-    payment_status === "paid" ? "bg-green-900 text-green-300" : "bg-yellow-900 text-yellow-300";
+    payment_status === "paid"
+      ? "bg-green-900 text-green-300"
+      : payment_status === "installments"
+        ? "bg-yellow-900 text-yellow-300"
+        : "bg-red-900 text-red-300";
   return (
     <>
       <tr>
@@ -125,10 +134,10 @@ export default function OrdersTableRow({
         <td className="px-4 py-2 text-center">
           {totalPriceAfter > 0 ? totalPriceAfter.toLocaleString() : 0} ج.م
         </td>
-        <td className="px-4 py-2">{paymentMethodSlug(payment_method)}</td>
+        <td className="px-4 py-2 text-center">{paymentMethodSlug(payment_method)}</td>
         <td className="px-4 py-2 text-center">
           <p
-            className={`${statusColor} w-fit text-nowrap mx-auto px-4 py-2 rounded-full text-center`}
+            className={`${statusColor} w-fit text-nowrap mx-auto px-2 py-1 rounded-[4px] text-center`}
           >
             {paymentStatusSlug(payment_status)}
           </p>
@@ -151,7 +160,10 @@ export default function OrdersTableRow({
                   earning,
                   payment_method,
                   payment_status,
-                  index,
+                  index: short_id.slice(4),
+                  installment_type,
+                  down_payment,
+                  installment,
                 })
               }
               className="w-fit text-xl hover:text-orange-600 cursor-pointer text-anotherDark"

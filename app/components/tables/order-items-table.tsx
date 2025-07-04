@@ -66,9 +66,8 @@ export default function OrderItemsTable({
       message: "تم تنفيذ المرتجع بنجاح.",
       type: "success",
     });
-    console.log(response);
+
     const data = response.data;
-    console.log(data);
     const sortsData = data?.order_items?.map((item: any, index: number) => ({
       color: item?.sort?.color,
       index: index + 1,

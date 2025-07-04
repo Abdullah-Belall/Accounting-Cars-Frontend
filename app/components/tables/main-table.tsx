@@ -24,7 +24,6 @@ export default function MainTable({
   let startX: any;
   let scrollLeft: any;
   const handleMouseDown = (e: any) => {
-    console.log("hello");
     containerRef.current.classList.remove("cursor-normal");
     containerRef.current.classList.add("cursor-grabbing");
     isDragging = true;

@@ -10,7 +10,14 @@ import {
   CLIENT_COLLECTOR_REQ,
   GET_ALL_CLIENTS_REQ,
 } from "@/app/utils/requests/client-side.requests";
-import { getSlug, methodsArray, paidStatusArray, sameTextField, taxArray } from "@/app/utils/base";
+import {
+  getSlug,
+  methodsArray,
+  paidStatusArray,
+  periodsArray,
+  sameTextField,
+  taxArray,
+} from "@/app/utils/base";
 import { useRouter } from "next/navigation";
 import { useBills } from "@/app/utils/contexts/bills-contexts";
 import styles2 from "@/app/styles/drop-down.module.css";
@@ -24,15 +31,21 @@ export default function AddOrderForm() {
   };
   const [formData, setFormData] = useState<{
     payment_method: string;
+    installment_type: string;
     paid_status: string;
     tax: string | null;
     discount: string;
+    installment: string;
+    down_payment: string;
     additional_fees: string | null;
   }>({
     payment_method: "",
+    installment_type: "",
     paid_status: "",
     tax: null,
     discount: "",
+    installment: "",
+    down_payment: "",
     additional_fees: "",
   });
   const handleFormData = (key: keyof typeof formData, value: string) => {
@@ -42,6 +55,7 @@ export default function AddOrderForm() {
     payment_method: false,
     paid_status: false,
     tax: false,
+    installment_type: false,
   });
   const { setBills } = useBills();
   const handleOpenDropDown = (key: keyof typeof openDropDown, value: boolean) => {
@@ -57,7 +71,8 @@ export default function AddOrderForm() {
             formDataKeyName !== "discount" &&
             (formDataKeyName === "payment_method" ||
               formDataKeyName === "paid_status" ||
-              formDataKeyName === "tax")
+              formDataKeyName === "tax" ||
+              formDataKeyName === "installment_type")
           ) {
             handleOpenDropDown(formDataKeyName, false);
           }
@@ -102,6 +117,41 @@ export default function AddOrderForm() {
       openSnakeBar("يجب تحديد حالة الدفع للمتابعة.");
       return false;
     }
+
+    if (formData.paid_status === "installments") {
+      if (formData.installment_type === "") {
+        openSnakeBar("يجب تحديد نوع القسط للمتابعة.");
+        return false;
+      }
+      if (
+        formData.down_payment !== "" &&
+        +formData.down_payment >= Number(totalPriceAfter.toFixed(2))
+      ) {
+        openSnakeBar("لا يمكن ان يكون المقدم اكبر من او يساوي اجمالي السعر بعد الضريبة والخصم.");
+        return false;
+      }
+      if (formData.installment === "" || +formData.installment <= 0) {
+        openSnakeBar("يجب تحديد قيمة قسط للمتابعة.");
+        return false;
+      }
+      if (
+        formData.installment !== "" &&
+        +formData.installment > Number(totalPriceAfter.toFixed(2))
+      ) {
+        openSnakeBar("لا يمكن ان يكون قيمة القسط اكبر من اجمالي السعر بعد الضريبة والخصم.");
+        return false;
+      }
+      if (
+        formData.down_payment !== "" &&
+        formData.installment !== "" &&
+        +formData.down_payment + +formData.installment > Number(totalPriceAfter.toFixed(2))
+      ) {
+        openSnakeBar(
+          "لا يمكن ان يكون مجموع المقدم وقيمة القسط اكبر من اجمالي السعر بعد الضريبة والخصم."
+        );
+        return false;
+      }
+    }
     if (Number(formData.discount) < 0) {
       openSnakeBar("لا يمكن ان يكون الخصم بالسالب.");
       return false;
@@ -117,7 +167,6 @@ export default function AddOrderForm() {
     return true;
   };
   const handleDone = async () => {
-    console.log(validation());
     if (!validation()) return;
     const finalObj: any = {
       client_id: popupState.makeOrderPopup.data.client?.id,
@@ -139,13 +188,20 @@ export default function AddOrderForm() {
     } else {
       delete finalObj.additional_fees;
     }
+    if (finalObj.paid_status === "installments") {
+      finalObj.installment = Number(finalObj.installment);
+      finalObj.down_payment = finalObj.down_payment !== "" ? Number(finalObj.down_payment) : 0;
+    } else {
+      delete finalObj.installment;
+      delete finalObj.down_payment;
+      delete finalObj.installment_type;
+    }
     const response = await CLIENT_COLLECTOR_REQ(ADD_ORDER_REQ, {
       client_id: popupState.makeOrderPopup.data.client?.id,
       ...finalObj,
     });
-    console.log(response);
     if (response.done) {
-      openPopup("snakeBarPopup", { message: "تم انشاء الطلب بنجاح.", type: "success" });
+      openPopup("snakeBarPopup", { message: "تم انشاء الفاتورة بنجاح.", type: "success" });
       const data = response.data;
       const sortsData = data?.order_items?.map((item: any, index: number) => ({
         color: item?.sort?.color,
@@ -177,6 +233,9 @@ export default function AddOrderForm() {
           tax: data?.tax + "%",
           discount: data?.discount,
           paid_status: getSlug(paidStatusArray, data?.payment.status),
+          installment_type: getSlug(periodsArray, formData.installment_type),
+          down_payment: formData.down_payment,
+          installment: formData.installment,
           payment_method: getSlug(methodsArray, data?.payment?.payment_method),
           created_at: data?.created_at,
         },
@@ -189,12 +248,12 @@ export default function AddOrderForm() {
   };
   return (
     <div className="w-full sm:w-[640px] px-mainxs">
-      <div className="relative rounded-xl shadow-md bg-myLight p-mainxl flex flex-col items-center">
-        <h2 className="text-lg text-center font-semibold mb-4">انشاء طلب جديد</h2>
-        <div className={styles2.list + " w-full max-h-[220px] overflow-y-scroll"}>
+      <div className="relative rounded-xl shadow-md bg-myLight p-mainxs flex flex-col items-center">
+        <h2 className="text-lg text-center font-semibold mb-1">انشاء طلب جديد</h2>
+        <div className={styles2.list + " w-full max-h-[190px] overflow-y-scroll"}>
           <UsersTable type="client" forOrder={true} data={data} />
         </div>
-        <div className="w-full flex gap-2 items-center mt-5">
+        <div className="w-full flex gap-2 items-center mt-2.5">
           <SelectList
             placeHolder="وسيلة الدفع"
             select={
@@ -244,7 +303,61 @@ export default function AddOrderForm() {
             )}
           </SelectList>
         </div>
-        <div className="w-full flex flex-col sm:flex-row gap-2 items-center mt-2.5">
+        <div
+          className={`${formData.paid_status === "installments" ? "h-[114px] md:h-[53px] mt-1.5 overflow-visible" : "h-[0] overflow-hidden"} duration-[.3s] transition-[margin height] w-full flex flex-col md:flex-row gap-2 items-center`}
+        >
+          <SelectList
+            placeHolder="نوع القسط"
+            select={
+              formData.installment_type !== ""
+                ? getSlug(periodsArray, formData.installment_type)
+                : "نوع القسط"
+            }
+            onClick={() => handleOpenDropDown("installment_type", true)}
+            onBlur={() => handleOpenDropDown("installment_type", false)}
+            dropDown={openDropDown.installment_type}
+          >
+            {openDropDown.installment_type && (
+              <>
+                <ul
+                  className={
+                    styles.list +
+                    " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
+                  }
+                >
+                  {DropDownOptions(periodsArray, "installment_type")}
+                </ul>
+              </>
+            )}
+          </SelectList>
+          <div className="flex gap-2 items-center w-full">
+            <TextField
+              id="Glu"
+              dir="rtl"
+              label="المقدم"
+              variant="filled"
+              sx={sameTextField}
+              onChange={(e) =>
+                handleFormData("down_payment", e.target.value.replace(/[^0-9.]/g, ""))
+              }
+              value={formData.down_payment}
+              className="w-full"
+            />
+            <TextField
+              id="Glu"
+              dir="rtl"
+              label="قيمة القسط"
+              variant="filled"
+              sx={sameTextField}
+              onChange={(e) =>
+                handleFormData("installment", e.target.value.replace(/[^0-9.]/g, ""))
+              }
+              value={formData.installment}
+              className="w-full"
+            />
+          </div>
+        </div>
+        <div className="w-full flex flex-col sm:flex-row gap-2 items-center mt-1.5">
           <SelectList
             placeHolder="ضريبة القيمة المضافة"
             select={getSlug(taxArray, formData.tax as string) ?? "ضريبة القيمة المضافة"}
@@ -290,7 +403,7 @@ export default function AddOrderForm() {
             />
           </div>
         </div>
-        <div className="w-full flex gap-2 items-center mt-5">
+        <div className="w-full flex gap-2 items-center mt-1.5">
           <TextField
             id="Glu"
             dir="rtl"
@@ -318,7 +431,7 @@ export default function AddOrderForm() {
           className="!bg-mdDark !mt-3 w-fit"
           variant="contained"
         >
-          تأكيد الطلب
+          تأكيد الفاتورة
         </Button>
       </div>
     </div>

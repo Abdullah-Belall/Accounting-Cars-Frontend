@@ -27,11 +27,13 @@ export default function AddUserForm({
     tax_num?: null | string;
     password?: null | string;
     role?: null | string;
+    salary?: null | string | number;
   }>({
     user_name: isForEdit ? isForEdit.user_name : null,
     tax_num: isForEdit ? isForEdit.tax_num : null,
     password: null,
     role: null,
+    salary: null,
   });
   const [dropDown, setDropDown] = useState(false);
   const [dropDownSlug, setDropDownSlug] = useState<null | string>(null);
@@ -80,9 +82,11 @@ export default function AddUserForm({
     if (!validation()) return;
     const finalObjWorker = { ...data };
     delete finalObjWorker.tax_num;
+    finalObjWorker.salary = finalObjWorker.salary ? Number(finalObjWorker.salary) : null;
     const finalObjClient = { ...data };
     delete finalObjClient.password;
     delete finalObjClient.role;
+    delete finalObjClient.salary;
     let finalObj;
     if (type === "worker") {
       finalObj = finalObjWorker;
@@ -97,7 +101,6 @@ export default function AddUserForm({
       finalObj
     );
     setLoading(false);
-    console.log(response);
     if (response.done) {
       onDone();
     } else {
@@ -144,6 +147,15 @@ export default function AddUserForm({
                 type="password"
                 sx={sameTextField}
                 onChange={(e) => handleData("password", e.target.value)}
+              />
+              <TextField
+                id="Glu"
+                dir="rtl"
+                label="الراتب"
+                variant="filled"
+                className="w-full"
+                sx={sameTextField}
+                onChange={(e) => handleData("salary", e.target.value.replace(/[^0-9.]/g, ""))}
               />
               <SelectList
                 placeHolder="الدور"

@@ -25,7 +25,6 @@ export default function Client() {
   };
   const fetchData = async () => {
     const response = await CLIENT_COLLECTOR_REQ(GET_CLIENT_PROFILE_REQ, { id });
-    console.log(response);
     if (response.done) {
       setData(response.data);
     } else {
@@ -76,7 +75,7 @@ export default function Client() {
             refetch={fetchData}
             data={data?.orders as OrderInterface[]}
             tableFor="client"
-            title="الطلبات المسجلة للعميل"
+            title="الفواتير المسجلة للعميل"
           />
         </div>
       </div>

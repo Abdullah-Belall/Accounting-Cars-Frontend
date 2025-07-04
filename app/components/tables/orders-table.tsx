@@ -64,6 +64,9 @@ export default function OrdersTable({
             additional_fees={row.additional_fees}
             discount={row.discount}
             short_id={row.short_id}
+            installment_type={row.payment.installment_type}
+            down_payment={row.payment.down_payment}
+            installment={row.payment.installment}
           />
         ))}
       </MainTable>
