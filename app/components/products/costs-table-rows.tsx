@@ -4,9 +4,18 @@ import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import { CostsInterface } from "@/app/utils/types/interfaces";
 import { useRouter } from "next/navigation";
 
-export default function CostsTableRows({ short_id, sort, qty, price, created_at }: CostsInterface) {
+export default function CostsTableRows({
+  short_id,
+  sort,
+  qty,
+  price,
+  created_at,
+  is_paid,
+}: CostsInterface) {
   const router = useRouter();
   const { openPopup } = usePopup();
+  const statusColor = is_paid ? "bg-green-900 text-green-300" : "bg-yellow-900 text-yellow-300";
+
   return (
     <>
       <tr>
@@ -43,6 +52,13 @@ export default function CostsTableRows({ short_id, sort, qty, price, created_at 
         </td>
         <td className="px-4 py-2 text-center">
           {qty > 0 && "-"} {Number(price).toLocaleString()} ج.م
+        </td>
+        <td className="px-4 py-2 text-center">
+          <button
+            className={`${statusColor} cursor-pointer w-fit text-nowrap mx-auto px-2 py-1 rounded-[4px] text-center`}
+          >
+            {is_paid ? "مسددة" : "لم تسدد"}
+          </button>
         </td>
         <td className="px-4 py-2 text-center">{formatDate(created_at)}</td>
       </tr>

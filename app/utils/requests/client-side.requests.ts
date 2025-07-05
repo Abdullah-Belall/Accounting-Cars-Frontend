@@ -1387,6 +1387,112 @@ const UPDATE_BALANCE_REQ = async ({ data }: { data: { balance: number; period: s
     };
   }
 };
+const GET_ORDER_INSTALLMENTS_REQ = async ({ id }: { id: string }) => {
+  try {
+    const response: any = await axios.get(`${BASE_URL}/orders/installments/${id}`, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    return response?.data.installments
+      ? { done: true, data: response?.data }
+      : { done: false, message: unCountedMessage, status: response.status };
+  } catch (error: any) {
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const PAY_INSTALLMENT_REQ = async ({ data, id }: { id: string; data: { installment: number } }) => {
+  try {
+    const response: any = await axios.post(`${BASE_URL}/orders/installments/${id}`, data, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const GET_ALL_SUPPLIERS_REQ = async () => {
+  try {
+    const response: any = await axios.get(`${BASE_URL}/suppliers`, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    return response?.data.suppliers
+      ? { done: true, data: response?.data }
+      : { done: false, message: unCountedMessage, status: response.status };
+  } catch (error: any) {
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const GET_ONE_SUPPLIER_REQ = async ({ id }: { id: string }) => {
+  try {
+    const response: any = await axios.get(`${BASE_URL}/suppliers/${id}`, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    return response?.data.id
+      ? { done: true, data: response?.data }
+      : { done: false, message: unCountedMessage, status: response.status };
+  } catch (error: any) {
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const ADD_SUPPLIER_REQ = async (data: { user_name: string }) => {
+  try {
+    const response: any = await axios.post(`${BASE_URL}/suppliers`, data, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
 //* MAIN FUNCTION (USED FOR ALL REQUESTS THAT NEED ACCESS_TOKEN)
 const CLIENT_COLLECTOR_REQ = async (varFunction: any, dataBody?: any) => {
   const access_token = getCookie("access_token");
@@ -1471,4 +1577,9 @@ export {
   UPDATE_BALANCE_REQ,
   UPDATE_WORKER_REQ,
   PAY_SALARIES_REQ,
+  GET_ORDER_INSTALLMENTS_REQ,
+  PAY_INSTALLMENT_REQ,
+  GET_ALL_SUPPLIERS_REQ,
+  GET_ONE_SUPPLIER_REQ,
+  ADD_SUPPLIER_REQ,
 };

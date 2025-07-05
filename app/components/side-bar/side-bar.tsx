@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 import SideBarList from "./side-bar-list";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
-import { FaClipboardCheck, FaPerson } from "react-icons/fa6";
+import { FaClipboardCheck, FaPeopleCarryBox, FaPerson } from "react-icons/fa6";
 import { FaIdCardAlt } from "react-icons/fa";
 import { BiCategory } from "react-icons/bi";
 import { FiCodesandbox } from "react-icons/fi";
@@ -129,6 +129,20 @@ const sideBarItems = [
       {
         title: "اضافة عميل",
         link: "/clients/add-client",
+      },
+    ],
+  },
+  {
+    title: "الموردين",
+    icon: <FaPeopleCarryBox className={sameClass} />,
+    affiliateLinks: [
+      {
+        title: "كل الموردين",
+        link: "/suppliers?searchin=suppliers",
+      },
+      {
+        title: "اضافة مورد",
+        link: "/suppliers/add-supplier",
       },
     ],
   },

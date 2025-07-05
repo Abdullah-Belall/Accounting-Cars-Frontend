@@ -26,6 +26,7 @@ export default function OrdersTableRow({
   installment_type,
   down_payment,
   installment,
+  next_payment_date,
 }: {
   index: number;
   id: string;
@@ -45,6 +46,7 @@ export default function OrdersTableRow({
   installment_type?: string;
   down_payment?: number;
   installment?: number;
+  next_payment_date?: Date;
 }) {
   const router = useRouter();
   const { setBills } = useBills();
@@ -136,11 +138,24 @@ export default function OrdersTableRow({
         </td>
         <td className="px-4 py-2 text-center">{paymentMethodSlug(payment_method)}</td>
         <td className="px-4 py-2 text-center">
-          <p
-            className={`${statusColor} w-fit text-nowrap mx-auto px-2 py-1 rounded-[4px] text-center`}
+          <button
+            onClick={() =>
+              payment_status === "installments"
+                ? openPopup("installmentsPopup", {
+                    id,
+                    short_id: short_id.slice(4),
+                    installment,
+                    installment_type,
+                    down_payment,
+                    next_payment_date,
+                    totalPriceAfter,
+                  })
+                : null
+            }
+            className={`${statusColor} ${payment_status === "installments" && "cursor-pointer"} w-fit text-nowrap mx-auto px-2 py-1 rounded-[4px] text-center`}
           >
             {paymentStatusSlug(payment_status)}
-          </p>
+          </button>
         </td>
         <td className="px-4 py-2 text-center">{formatDate(date)}</td>
         <td className="px-4 py-2 text-center">

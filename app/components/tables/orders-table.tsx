@@ -7,6 +7,7 @@ import { OrderInterface } from "@/app/utils/types/interfaces";
 import EditOrderPopup from "../forms & alerts/edit-order";
 import NoData from "../common/no-data";
 import { useReturns } from "@/app/utils/contexts/returns-contexts";
+import InstallmentsPopUp from "../orders/installments-popup";
 
 export default function OrdersTable({
   title,
@@ -42,6 +43,7 @@ export default function OrdersTable({
     { name: "order.short_id", slug: "رقم الفاتورة" },
     { name: "client.user_name", slug: "العميل" },
   ];
+  console.log(data);
   return (
     <>
       <MainTable
@@ -67,6 +69,7 @@ export default function OrdersTable({
             installment_type={row.payment.installment_type}
             down_payment={row.payment.down_payment}
             installment={row.payment.installment}
+            next_payment_date={row.payment.next_payment_date}
           />
         ))}
       </MainTable>
@@ -88,6 +91,11 @@ export default function OrdersTable({
       {popupState.editOrderPopup.isOpen && (
         <BlackLayer onClick={() => closePopup("editOrderPopup")}>
           <EditOrderPopup refetch={refetch} />
+        </BlackLayer>
+      )}
+      {popupState.installmentsPopup.isOpen && (
+        <BlackLayer onClick={() => closePopup("installmentsPopup")}>
+          <InstallmentsPopUp />
         </BlackLayer>
       )}
     </>

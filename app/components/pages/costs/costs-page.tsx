@@ -24,7 +24,7 @@ export default function CostsPage() {
   return (
     <>
       <div className="px-mainxs relative">
-        <CostsTable data={data} />
+        <CostsTable data={data} title="فواتير التكاليف" />
       </div>
     </>
   );

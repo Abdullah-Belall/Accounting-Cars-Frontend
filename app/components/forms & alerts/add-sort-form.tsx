@@ -1,13 +1,16 @@
 "use client";
 import { TextField, Button } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import { sameTextField, unCountedMessage } from "@/app/utils/base";
 import {
   ADD_SORT_REQ,
   CLIENT_COLLECTOR_REQ,
+  GET_ALL_SUPPLIERS_REQ,
   UPDATE_SORT_REQ,
 } from "@/app/utils/requests/client-side.requests";
+import SelectList from "../common/select-list";
+import styles from "@/app/styles/drop-down.module.css";
 
 export default function AddSortForm({
   id,
@@ -24,6 +27,7 @@ export default function AddSortForm({
     qty: string;
     unit_price: string;
     note: string;
+    supplier: string;
   };
 }) {
   const [loading, setLoading] = useState(false);
@@ -35,6 +39,7 @@ export default function AddSortForm({
     cost?: string | number;
     unit_price: string | number;
     note: string;
+    supplier: string;
   }>({
     name: isForEdit ? isForEdit.name : "",
     color: isForEdit ? isForEdit.color : "",
@@ -43,7 +48,11 @@ export default function AddSortForm({
     cost: "",
     unit_price: isForEdit ? isForEdit.unit_price : "",
     note: isForEdit ? isForEdit.note : "",
+    supplier: isForEdit ? isForEdit.supplier : "",
   });
+  const [suppliers, setSuppliers] = useState([]);
+  const [dropDown, setDropDown] = useState(false);
+
   const { openPopup } = usePopup();
   const openSnakeBar = (message: string) => {
     openPopup("snakeBarPopup", { message });
@@ -52,7 +61,11 @@ export default function AddSortForm({
     setData({ ...data, [key]: value });
   };
   const vaildation = () => {
-    const { name, size, qty, cost, unit_price } = data;
+    const { name, size, qty, cost, unit_price, supplier } = data;
+    if (supplier === "") {
+      openSnakeBar("يجب تحديد اسم المورد للمتابعة.");
+      return false;
+    }
     if (name === "") {
       openSnakeBar("يجب تحديد اسم للصنف للمتابعة.");
       return false;
@@ -90,10 +103,11 @@ export default function AddSortForm({
     if (loading) return;
     if (!vaildation()) return;
     setLoading(true);
-    const editObj = {
+    const editObj: any = {
       id: isForEdit?.sort_id,
       data: { ...data },
     };
+    delete editObj.data.supplier;
     const addObj: any = {
       id,
       ...data,
@@ -116,6 +130,15 @@ export default function AddSortForm({
       openSnakeBar(response?.message || unCountedMessage);
     }
   };
+  const getAllSuppliers = async () => {
+    const response = await CLIENT_COLLECTOR_REQ(GET_ALL_SUPPLIERS_REQ);
+    if (response.done) {
+      setSuppliers(response.data.suppliers);
+    }
+  };
+  useEffect(() => {
+    getAllSuppliers();
+  }, []);
   return (
     <div className="w-full min-[540px]:w-[540px] px-mainxs">
       <div className="rounded-md shadow-md bg-myLight p-mainxl">
@@ -123,6 +146,37 @@ export default function AddSortForm({
           {isForEdit ? `تعديل بيانات صنف ${isForEdit.name}` : "اضافة صنف جديد"}
         </h2>
         <div className="space-y-4 flex flex-col gap-[15px]">
+          <SelectList
+            placeHolder="المورد"
+            select={data.supplier !== "" ? data.supplier : "المورد"}
+            onClick={() => setDropDown(true)}
+            onBlur={() => setDropDown(false)}
+            dropDown={dropDown}
+          >
+            {dropDown && (
+              <>
+                <ul
+                  className={
+                    styles.list +
+                    " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
+                  }
+                >
+                  {suppliers.map((e: any) => (
+                    <li
+                      key={e.user_name}
+                      onClick={() => {
+                        handleData("supplier", e.user_name);
+                        setDropDown(false);
+                      }}
+                      className="p-mainxs text-center border-b border-myLight cursor-pointer"
+                    >
+                      {e.user_name}
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </SelectList>
           <TextField
             id="Glu"
             dir="rtl"

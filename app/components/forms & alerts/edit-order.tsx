@@ -30,6 +30,7 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
     down_payment: deliveryData.down_payment,
     installment: deliveryData.installment,
   });
+  console.log(deliveryData);
   const [dropDown, setDropDown] = useState({
     tax: false,
     payment_method: false,

@@ -64,6 +64,7 @@ export interface PaymentInterface {
   installment_type?: string;
   down_payment?: number;
   installment?: number;
+  next_payment_date?: Date;
   created_at?: Date;
 }
 
@@ -170,6 +171,15 @@ export interface ClientInterface {
   addresses_count?: number;
   salary?: number;
 }
+export interface SuppliersInterface {
+  index: number;
+  id: string;
+  user_name: string;
+  unpaid_total: number;
+  bills?: any;
+  created_at: Date;
+  updated_at?: Date;
+}
 export interface WorkersInterface {
   id: string;
   user_name: string;
@@ -198,6 +208,7 @@ export interface CostsInterface {
   sort: SortInterface;
   qty: number;
   price: number;
+  is_paid: boolean;
   created_at: Date;
   updated_at?: Date;
 }
@@ -301,4 +312,12 @@ export interface GraphDataInterface {
   year: number;
   month?: string;
   day?: number;
+}
+
+export interface InstallmentInterface {
+  index: number;
+  id: string;
+  amount: number;
+  created_at: Date;
+  updated_at: Date;
 }
