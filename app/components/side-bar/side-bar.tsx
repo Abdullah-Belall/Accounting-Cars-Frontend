@@ -140,10 +140,6 @@ const sideBarItems = [
         title: "كل الموردين",
         link: "/suppliers?searchin=suppliers",
       },
-      {
-        title: "اضافة مورد",
-        link: "/suppliers/add-supplier",
-      },
     ],
   },
   {
