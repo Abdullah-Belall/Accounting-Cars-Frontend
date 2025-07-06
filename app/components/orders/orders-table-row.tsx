@@ -58,6 +58,9 @@ export default function OrdersTableRow({
   if (discount) {
     totalPriceAfter -= discount;
   }
+  if (additional_fees) {
+    totalPriceAfter += Number(additional_fees);
+  }
   const { openPopup } = usePopup();
   const paymentMethodSlug = (method: string) => {
     return methodsArray.find((e) => e.value === method)?.label;

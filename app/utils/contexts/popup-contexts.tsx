@@ -21,6 +21,7 @@ interface PopupContextState {
   editOrderPopup: PopupState;
   returnsItemsPopup: PopupState;
   installmentsPopup: PopupState;
+  suppliersBills: PopupState;
 }
 
 interface PopupContextType {
@@ -49,6 +50,7 @@ export const PopupProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     snakeBarPopup: { isOpen: false, data: { message: "" } },
     returnsItemsPopup: { isOpen: false, data: null },
     installmentsPopup: { isOpen: false, data: null },
+    suppliersBills: { isOpen: false, data: null },
   });
 
   const openPopup = (popupName: keyof PopupContextState, data: any) => {

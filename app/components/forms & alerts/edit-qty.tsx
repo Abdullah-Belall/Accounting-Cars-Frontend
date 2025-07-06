@@ -2,7 +2,13 @@
 import { sameTextField } from "@/app/utils/base";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import { Button, TextField } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import SelectList from "../common/select-list";
+import styles from "@/app/styles/drop-down.module.css";
+import {
+  CLIENT_COLLECTOR_REQ,
+  GET_ALL_SUPPLIERS_REQ,
+} from "@/app/utils/requests/client-side.requests";
 
 export default function EditQtyPopup({
   OnConfirm,
@@ -12,6 +18,7 @@ export default function EditQtyPopup({
   latest_cost_unit_price: number;
 }) {
   const [loading, setLoading] = useState(false);
+  const [dropDown, setDropDown] = useState(false);
   const { popupState, openPopup } = usePopup();
   const openSnakeBar = (message: string) => {
     openPopup("snakeBarPopup", { message });
@@ -20,7 +27,9 @@ export default function EditQtyPopup({
     oldQty: popupState.editQtyPopup.data?.currQty,
     newQty: "",
     costPrice: "",
+    supplier: "",
   });
+  const [suppliers, setSuppliers] = useState([]);
 
   const handleData = (key: keyof typeof data, value: string) => {
     setData({ ...data, [key]: value });
@@ -46,9 +55,19 @@ export default function EditQtyPopup({
     await OnConfirm({
       qty: Number(total),
       costPrice: Number(data.costPrice) * Math.abs(Number(data.newQty)),
+      supplier: data.supplier,
     });
     setLoading(false);
   };
+  const getAllSuppliers = async () => {
+    const response = await CLIENT_COLLECTOR_REQ(GET_ALL_SUPPLIERS_REQ);
+    if (response.done) {
+      setSuppliers(response.data.suppliers);
+    }
+  };
+  useEffect(() => {
+    getAllSuppliers();
+  }, []);
   const total = (Number(data?.oldQty) ?? 0) + (Number(data.newQty) ?? 0);
   return (
     <div className="w-full min-[365px]:w-[365px] px-mainxs">
@@ -57,7 +76,7 @@ export default function EditQtyPopup({
           تعديل كمية صنف {popupState.editQtyPopup.data?.title}
         </h2>
 
-        <div className="space-y-4 flex flex-col gap-[15px]">
+        <div className="flex flex-col gap-[8px]">
           <TextField
             id="Glu"
             dir="rtl"
@@ -69,17 +88,38 @@ export default function EditQtyPopup({
             onChange={(e) => handleData("oldQty", e.target.value)}
             disabled
           />
+          <SelectList
+            placeHolder="المورد"
+            select={data.supplier !== "" ? data.supplier : "المورد"}
+            onClick={() => setDropDown(true)}
+            onBlur={() => setDropDown(false)}
+            dropDown={dropDown}
+          >
+            {dropDown && (
+              <>
+                <ul
+                  className={
+                    styles.list +
+                    " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
+                  }
+                >
+                  {suppliers.map((e: any) => (
+                    <li
+                      key={e.user_name}
+                      onClick={() => {
+                        handleData("supplier", e.user_name);
+                        setDropDown(false);
+                      }}
+                      className="p-mainxs text-center border-b border-myLight cursor-pointer"
+                    >
+                      {e.user_name}
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </SelectList>
           <div className="flex gap-2 w-full m-0">
-            <TextField
-              id="Glu"
-              dir="rtl"
-              label="التكلفة للوحدة"
-              variant="filled"
-              className="w-full"
-              sx={sameTextField}
-              value={data.costPrice ?? ""}
-              onChange={(e) => handleData("costPrice", e.target.value.replace(/[^0-9.]/g, ""))}
-            />
             <TextField
               id="Glu"
               dir="rtl"
@@ -95,11 +135,21 @@ export default function EditQtyPopup({
                 }
               }}
             />
+            <TextField
+              id="Glu"
+              dir="rtl"
+              label="التكلفة للوحدة"
+              variant="filled"
+              className="w-full"
+              sx={sameTextField}
+              value={data.costPrice ?? ""}
+              onChange={(e) => handleData("costPrice", e.target.value.replace(/[^0-9.]/g, ""))}
+            />
           </div>
           <TextField
             id="Glu"
             dir="rtl"
-            label="اخر تكلفة لهذا الصنف"
+            label="اخر سعر تكلفة لهذا الصنف"
             variant="filled"
             className="w-full"
             sx={sameTextField}

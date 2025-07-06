@@ -130,21 +130,18 @@ export default function AddOrderForm() {
         openSnakeBar("لا يمكن ان يكون المقدم اكبر من او يساوي اجمالي السعر بعد الضريبة والخصم.");
         return false;
       }
-      if (formData.installment === "" || +formData.installment <= 0) {
+      if (installmentValue === "" || +installmentValue <= 0) {
         openSnakeBar("يجب تحديد قيمة قسط للمتابعة.");
         return false;
       }
-      if (
-        formData.installment !== "" &&
-        +formData.installment > Number(totalPriceAfter.toFixed(2))
-      ) {
+      if (installmentValue !== "" && +installmentValue > Number(totalPriceAfter.toFixed(2))) {
         openSnakeBar("لا يمكن ان يكون قيمة القسط اكبر من اجمالي السعر بعد الضريبة والخصم.");
         return false;
       }
       if (
         formData.down_payment !== "" &&
-        formData.installment !== "" &&
-        +formData.down_payment + +formData.installment > Number(totalPriceAfter.toFixed(2))
+        installmentValue !== "" &&
+        +formData.down_payment + +installmentValue >= Number(totalPriceAfter.toFixed(2))
       ) {
         openSnakeBar(
           "لا يمكن ان يكون مجموع المقدم وقيمة القسط اكبر من اجمالي السعر بعد الضريبة والخصم."
@@ -173,6 +170,7 @@ export default function AddOrderForm() {
       product_sorts: JSON.stringify(popupState.makeOrderPopup.data.product_sorts),
       ...formData,
     };
+    finalObj.installment = installmentValue;
     if (finalObj.discount !== "") {
       finalObj.discount = +finalObj.discount;
     } else {
@@ -235,7 +233,7 @@ export default function AddOrderForm() {
           paid_status: getSlug(paidStatusArray, data?.payment.status),
           installment_type: getSlug(periodsArray, formData.installment_type),
           down_payment: formData.down_payment,
-          installment: formData.installment,
+          installment: installmentValue,
           payment_method: getSlug(methodsArray, data?.payment?.payment_method),
           created_at: data?.created_at,
         },
@@ -246,6 +244,13 @@ export default function AddOrderForm() {
       openSnakeBar(response.message);
     }
   };
+  const installmentValue = formData.installment
+    ? Number(
+        (Number(totalPriceAfter.toFixed(2)) -
+          (formData.down_payment ? Number(formData.down_payment) : 0)) /
+          Number(formData.installment)
+      ).toFixed()
+    : "";
   return (
     <div className="w-full sm:w-[640px] px-mainxs">
       <div className="relative rounded-xl shadow-md bg-myLight p-mainxs flex flex-col items-center">
@@ -346,13 +351,34 @@ export default function AddOrderForm() {
             <TextField
               id="Glu"
               dir="rtl"
-              label="قيمة القسط"
+              label="عدد الأقساط"
               variant="filled"
               sx={sameTextField}
               onChange={(e) =>
                 handleFormData("installment", e.target.value.replace(/[^0-9.]/g, ""))
               }
-              value={formData.installment}
+              value={formData.installment ? Math.ceil(Number(formData.installment)) : ""}
+              className="w-full"
+            />
+            <TextField
+              id="Glu"
+              dir="rtl"
+              label="قيمة القسط"
+              variant="filled"
+              sx={sameTextField}
+              onChange={(e) =>
+                handleFormData(
+                  "installment",
+                  e.target.value
+                    ? (
+                        (Number(totalPriceAfter.toFixed(2)) -
+                          (formData.down_payment ? Number(formData.down_payment) : 0)) /
+                        Number(e.target.value.replace(/[^0-9.]/g, ""))
+                      ).toString()
+                    : ""
+                )
+              }
+              value={installmentValue}
               className="w-full"
             />
           </div>

@@ -3,6 +3,9 @@ import { CostsInterface } from "@/app/utils/types/interfaces";
 import MainTable from "./main-table";
 import CostsTableRows from "../products/costs-table-rows";
 import NoData from "../common/no-data";
+import BlackLayer from "../common/black-layer";
+import SuppliersBillsPopUp from "../suppliers/suppliers-bills-popup";
+import { usePopup } from "@/app/utils/contexts/popup-contexts";
 
 export default function CostsTable({ data, title }: { data: CostsInterface[]; title: string }) {
   const columns = [
@@ -12,6 +15,8 @@ export default function CostsTable({ data, title }: { data: CostsInterface[]; ti
     { name: "sort.color", slug: "لون الصنف" },
     { name: "sort.size", slug: "مقاس الصنف" },
   ];
+  const { popupState, closePopup } = usePopup();
+
   return (
     <>
       <MainTable
@@ -44,6 +49,11 @@ export default function CostsTable({ data, title }: { data: CostsInterface[]; ti
         ))}
       </MainTable>
       {data?.length === 0 && <NoData />}
+      {popupState.suppliersBills.isOpen && (
+        <BlackLayer onClick={() => closePopup("suppliersBills")}>
+          <SuppliersBillsPopUp />
+        </BlackLayer>
+      )}
     </>
   );
 }

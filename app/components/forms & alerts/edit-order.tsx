@@ -143,7 +143,7 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
             variant="filled"
             className="w-full"
             sx={sameTextField}
-            value={data.additional_fees !== "0" ? data.additional_fees : ""}
+            value={data.additional_fees}
             onChange={(e) => handleData("additional_fees", e.target.value.replace(/[^0-9.]/g, ""))}
           />
           <TextField

@@ -29,6 +29,7 @@ export default function InstallmentsPopUp() {
     fetchData();
   }, []);
   const payInstallment = async () => {
+    if (installment == "0") return;
     if (loading) return;
     setLoading(true);
     const response = await CLIENT_COLLECTOR_REQ(PAY_INSTALLMENT_REQ, {
@@ -95,7 +96,7 @@ export default function InstallmentsPopUp() {
                 label="الاقساط المتبقية"
                 variant="filled"
                 sx={sameTextField}
-                value={Math.ceil(due / installment)}
+                value={due && installment ? Math.ceil(due / installment) : "0"}
                 className="w-full"
                 disabled
               />
@@ -139,28 +140,26 @@ export default function InstallmentsPopUp() {
               />
             </div>
           </div>
-          {installment != "0" && (
-            <div className="flex gap-2 items-stretch w-full min-[400px]:w-[50%]">
-              <TextField
-                id="Glu"
-                dir="rtl"
-                label="القسط"
-                variant="filled"
-                sx={sameTextField}
-                onChange={(e) => setInstallment(e.target.value.replace(/[^0-9.]/g, ""))}
-                value={installment}
-                className="w-full"
-              />
-              <Button
-                onClick={payInstallment}
-                sx={{ fontFamily: "cairo" }}
-                className="!bg-mdDark text-nowrap"
-                variant="contained"
-              >
-                دفع القسط
-              </Button>
-            </div>
-          )}
+          <div className="flex gap-2 items-stretch w-full min-[400px]:w-[50%]">
+            <TextField
+              id="Glu"
+              dir="rtl"
+              label="القسط"
+              variant="filled"
+              sx={sameTextField}
+              onChange={(e) => setInstallment(e.target.value.replace(/[^0-9.]/g, ""))}
+              value={installment}
+              className="w-full"
+            />
+            <Button
+              onClick={payInstallment}
+              sx={{ fontFamily: "cairo" }}
+              className="!bg-mdDark text-nowrap"
+              variant="contained"
+            >
+              دفع القسط
+            </Button>
+          </div>
         </div>
       </div>
     </div>

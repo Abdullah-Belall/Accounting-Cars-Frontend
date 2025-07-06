@@ -1085,6 +1085,69 @@ const PAY_SALARIES_REQ = async (data: any) => {
     };
   }
 };
+const GET_SUPPLIERS_BILLS_REQ = async ({ cost_id }: { cost_id: string }) => {
+  try {
+    const response: any = await axios.get(`${BASE_URL}/suppliers/bills/${cost_id}`, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    return response?.data.bills
+      ? { done: true, data: response?.data }
+      : { done: false, message: unCountedMessage, status: response.status };
+  } catch (error: any) {
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const PAY_SUPPLIERS_REQ = async (data: { cost_id: string; installment: number; note?: string }) => {
+  try {
+    const response: any = await axios.post(`${BASE_URL}/suppliers/pay`, data, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const GET_ONE_COST_REQ = async ({ id }: { id: string }) => {
+  try {
+    const response: any = await axios.get(`${BASE_URL}/products/cost/${id}`, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    return response?.data.id
+      ? { done: true, data: response?.data }
+      : { done: false, message: unCountedMessage, status: response.status };
+  } catch (error: any) {
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
 //! BOSS REQS
 const CREATE_NEW_TENANT_REQ = async (data: { tenant_domain: string; phone?: string }) => {
   try {
@@ -1582,4 +1645,7 @@ export {
   GET_ALL_SUPPLIERS_REQ,
   GET_ONE_SUPPLIER_REQ,
   ADD_SUPPLIER_REQ,
+  GET_SUPPLIERS_BILLS_REQ,
+  PAY_SUPPLIERS_REQ,
+  GET_ONE_COST_REQ,
 };

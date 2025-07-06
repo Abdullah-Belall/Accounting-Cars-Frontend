@@ -140,28 +140,14 @@ export default function AddProductForm({
             onChange={(e) => handleData("name", e.target.value)}
           />
           <TextField
-            id="Glu"
-            dir="rtl"
+            id="filled-multiline-static"
             label="وصف المنتج"
-            variant="filled"
-            sx={{
-              ...sameTextField,
-              "& .MuiFilledInput-root": {
-                fontFamily: "cairo",
-                height: "120px !important",
-                "&:before": {
-                  borderBottomColor: "#495057",
-                },
-                "&:hover:not(.Mui-disabled):before": {
-                  borderBottomColor: "#495057",
-                },
-                "&:after": {
-                  borderBottomColor: "#495057",
-                },
-              },
-            }}
+            multiline
+            rows={4}
+            sx={sameTextField}
             value={data.desc}
             onChange={(e) => handleData("desc", e.target.value)}
+            variant="filled"
           />
           {!isForEdit && (
             <SelectList

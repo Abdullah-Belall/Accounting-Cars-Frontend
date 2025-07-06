@@ -10,7 +10,7 @@ import {
 } from "@/app/utils/requests/client-side.requests";
 import { ClientInterface, OrderInterface, PhoneInterface } from "@/app/utils/types/interfaces";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CiEdit } from "react-icons/ci";
 
 export default function Client() {
@@ -39,9 +39,26 @@ export default function Client() {
     handleClose();
     fetchData();
   };
+  const allDepts = useMemo(() => {
+    if (!data?.orders) return;
+    const installmentOrders = data.orders.filter((e) => e.payment.status === "installments");
+    let depts = 0;
+    for (const order of installmentOrders) {
+      const totalPriceAfter =
+        Number(order.total_price) *
+          (order.tax && order.tax !== "0" ? Number(order.tax.slice(0, 2)) / 100 + 1 : 1) -
+        (order.discount ? Number(order.discount) : 0) +
+        (order.additional_fees ? Number(order.additional_fees) : 0);
+      const paid =
+        (order.payment.down_payment || 0) +
+        (order.payment.installments?.reduce((acc, curr) => acc + curr.amount, 0) || 0);
+      depts += totalPriceAfter - paid;
+    }
+    return Number(Number(depts).toFixed(2)).toLocaleString();
+  }, [data?.orders]);
   return (
     <>
-      <div className="flex flex-col items-center px-mainxs gap-mainxs w-full ml-auto !gap-[40px]">
+      <div className="flex flex-col items-center px-mainxs gap-mainxs w-full ml-auto !gap-[40px] mb-mainxl">
         <div className="w-full max-w-[600px] flex flex-col bg-myHover border border-mdLight text-white rounded-lg p-6 shadow-lg">
           <h2 className="text-lg font-semibold mb-4 text-myDark">المعلومات الشخصية للعميل</h2>
           <div className="relative w-full flex items-center space-x-4 mb-6">
@@ -55,6 +72,7 @@ export default function Client() {
               <p className="text-mdDark mt-2">
                 الرقم الضريبي: {data?.tax_num && data?.tax_num !== "" ? data?.tax_num : "لا يوجد"}
               </p>
+              <p className="text-mdDark mt-2">اجمالي الديون: {allDepts} ج.م</p>
             </div>
             <CiEdit
               onClick={() => setEdit(true)}

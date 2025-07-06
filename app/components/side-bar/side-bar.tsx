@@ -117,7 +117,6 @@ const sideBarItems = [
       },
     ],
   },
-
   {
     title: "العملاء",
     icon: <FaPerson className={sameClass} />,

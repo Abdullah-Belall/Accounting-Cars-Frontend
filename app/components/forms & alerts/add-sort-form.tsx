@@ -34,7 +34,7 @@ export default function AddSortForm({
   const [data, setData] = useState<{
     name: string;
     color: string;
-    size: string;
+    size?: string;
     qty?: string | number;
     cost?: string | number;
     unit_price: string | number;
@@ -61,7 +61,7 @@ export default function AddSortForm({
     setData({ ...data, [key]: value });
   };
   const vaildation = () => {
-    const { name, size, qty, cost, unit_price, supplier } = data;
+    const { name, qty, cost, unit_price, supplier } = data;
     if (supplier === "") {
       openSnakeBar("يجب تحديد اسم المورد للمتابعة.");
       return false;
@@ -72,10 +72,6 @@ export default function AddSortForm({
     }
     if (name.length < 2) {
       openSnakeBar("لا يمكن ان يكون اسم الصنف اقل من حرفين.");
-      return false;
-    }
-    if (!size) {
-      openSnakeBar("يجب تحديد المقاس للمتابعة.");
       return false;
     }
     if (Number(qty) <= 0) {
@@ -112,6 +108,14 @@ export default function AddSortForm({
       id,
       ...data,
     };
+    if (data.size === "") {
+      delete editObj.size;
+      delete addObj.size;
+    }
+    if (data.color === "") {
+      delete editObj.color;
+      delete addObj.color;
+    }
     editObj.data.unit_price = Number(editObj.data.unit_price);
     addObj.qty = Number(addObj.qty);
     addObj.unit_price = Number(addObj.unit_price);
@@ -145,38 +149,40 @@ export default function AddSortForm({
         <h2 className="text-lg text-center font-semibold mb-4">
           {isForEdit ? `تعديل بيانات صنف ${isForEdit.name}` : "اضافة صنف جديد"}
         </h2>
-        <div className="space-y-4 flex flex-col gap-[15px]">
-          <SelectList
-            placeHolder="المورد"
-            select={data.supplier !== "" ? data.supplier : "المورد"}
-            onClick={() => setDropDown(true)}
-            onBlur={() => setDropDown(false)}
-            dropDown={dropDown}
-          >
-            {dropDown && (
-              <>
-                <ul
-                  className={
-                    styles.list +
-                    " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
-                  }
-                >
-                  {suppliers.map((e: any) => (
-                    <li
-                      key={e.user_name}
-                      onClick={() => {
-                        handleData("supplier", e.user_name);
-                        setDropDown(false);
-                      }}
-                      className="p-mainxs text-center border-b border-myLight cursor-pointer"
-                    >
-                      {e.user_name}
-                    </li>
-                  ))}
-                </ul>
-              </>
-            )}
-          </SelectList>
+        <div className="space-y-4 flex flex-col gap-[8px]">
+          {!isForEdit && (
+            <SelectList
+              placeHolder="المورد"
+              select={data.supplier !== "" ? data.supplier : "المورد"}
+              onClick={() => setDropDown(true)}
+              onBlur={() => setDropDown(false)}
+              dropDown={dropDown}
+            >
+              {dropDown && (
+                <>
+                  <ul
+                    className={
+                      styles.list +
+                      " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
+                    }
+                  >
+                    {suppliers.map((e: any) => (
+                      <li
+                        key={e.user_name}
+                        onClick={() => {
+                          handleData("supplier", e.user_name);
+                          setDropDown(false);
+                        }}
+                        className="p-mainxs text-center border-b border-myLight cursor-pointer"
+                      >
+                        {e.user_name}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+            </SelectList>
+          )}
           <TextField
             id="Glu"
             dir="rtl"

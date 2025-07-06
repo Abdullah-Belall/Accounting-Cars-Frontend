@@ -7,8 +7,7 @@ export const formatDate = (input: string | Date) => {
   let date: Date;
 
   if (typeof input === "string") {
-    // نحذف الميكروثواني ونحول التاريخ لصيغة متوافقة مع JS
-    const fixedString = input.replace(" ", "T").split(".")[0];
+    const fixedString = input.replace(" ", "T"); // مع الـ offset
     date = new Date(fixedString);
   } else {
     date = new Date(input);

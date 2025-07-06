@@ -62,6 +62,7 @@ export interface PaymentInterface {
   payment_method: string;
   status: string;
   installment_type?: string;
+  installments?: InstallmentInterface[];
   down_payment?: number;
   installment?: number;
   next_payment_date?: Date;
@@ -155,6 +156,14 @@ export interface PhoneInterface {
   is_main: boolean;
   created_at: Date;
   updated_at: Date;
+}
+export interface SuppliersBillsInterface {
+  index?: number;
+  id: string;
+  amount: number;
+  note: string | null;
+  created_at: Date;
+  updated_at?: Date;
 }
 export interface ClientInterface {
   id: string;

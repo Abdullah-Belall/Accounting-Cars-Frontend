@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 
 export default function CostsTableRows({
   short_id,
+  id,
   sort,
   qty,
   price,
@@ -55,6 +56,7 @@ export default function CostsTableRows({
         </td>
         <td className="px-4 py-2 text-center">
           <button
+            onClick={() => openPopup("suppliersBills", { id, short_id })}
             className={`${statusColor} cursor-pointer w-fit text-nowrap mx-auto px-2 py-1 rounded-[4px] text-center`}
           >
             {is_paid ? "مسددة" : "لم تسدد"}
