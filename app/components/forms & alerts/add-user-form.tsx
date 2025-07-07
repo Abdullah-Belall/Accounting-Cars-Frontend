@@ -45,7 +45,7 @@ export default function AddUserForm({
   const handleData = (keyName: keyof typeof data, value: string) => {
     setData({ ...data, [keyName]: value });
     if (keyName === "role") {
-      setDropDownSlug(value === "admin" ? "موظف" : "مالك");
+      setDropDownSlug(value === "admin" ? "موظف" : value === "owner" ? "مالك" : "مراقب");
       setDropDown(false);
     }
   };

@@ -269,7 +269,7 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
         >
           <div className="w-full">
             <h2 className="text-lg text-center font-semibold mb-1">انشاء طلب جديد</h2>
-            <UsersTable type="client" forOrder={true} data={data} />
+            <UsersTable type="client" forOrder={true} data={data} isPopup={true} />
           </div>
           <div className="w-full flex gap-2 items-center mt-2.5">
             <SelectList

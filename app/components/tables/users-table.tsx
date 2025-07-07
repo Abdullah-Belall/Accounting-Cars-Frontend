@@ -9,11 +9,13 @@ export default function UsersTable({
   forOrder,
   data,
   paySalaries,
+  isPopup,
 }: {
   type: "worker" | "client";
   forOrder?: boolean;
   data: ClientInterface[];
   paySalaries?: boolean;
+  isPopup?: boolean;
 }) {
   const headers = [
     "*",
@@ -42,7 +44,7 @@ export default function UsersTable({
         filter={[!forOrder, `${type}s`, columns]}
         title={title}
         headers={headers}
-        isPopup={true}
+        isPopup={isPopup}
       >
         {data?.map((row, index) => (
           <UsersTableRows
