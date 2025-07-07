@@ -62,7 +62,7 @@ export default function SortsPage() {
       {openOrder && (
         <>
           <BlackLayer onClick={() => setOpenOrder(false)}>
-            <AddOrderForm />
+            <AddOrderForm closePopup={() => setOpenOrder(false)} />
           </BlackLayer>
         </>
       )}

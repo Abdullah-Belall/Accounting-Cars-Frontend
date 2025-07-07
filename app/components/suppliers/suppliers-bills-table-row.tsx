@@ -10,9 +10,9 @@ export default function SuppliersBillsTableRow({
   return (
     <>
       <tr>
-        <td className="px-4 py-2 text-center">{index}</td>
+        <td className="px-4 py-2 text-center">{(index as number) + 1}</td>
         <td className="px-4 py-2 text-center">{amount}</td>
-        <td className="px-4 py-2 text-center">{note ?? "لا يوجد"}</td>
+        <td className="px-4 py-2 text-center">{note && note !== "" ? note : "لا يوجد"}</td>
         <td className="px-4 py-2 text-center">{formatDate(created_at)}</td>
       </tr>
     </>

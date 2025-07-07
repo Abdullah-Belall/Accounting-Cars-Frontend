@@ -16,6 +16,7 @@ import {
 import AddProductForm from "../forms & alerts/add-product-form";
 import NoData from "../common/no-data";
 import DeleteAlert from "../forms & alerts/delete-alert";
+import { TbCircleXFilled } from "react-icons/tb";
 
 export default function ProductsTable({
   title,
@@ -137,6 +138,15 @@ export default function ProductsTable({
           >
             <div className="w-full px-mainxs md:w-[768px]">
               <div className="relative rounded-xl shadow-md bg-myLight p-mainxl">
+                <button
+                  onClick={() => {
+                    closePopup("sortsPopup");
+                    closePopup("addSortPopup");
+                  }}
+                  className="flex justify-center items-center w-[25px] h-[25px] bg-background rounded-[50%] z-[5] cursor-pointer absolute right-[-10px] top-[-10px] "
+                >
+                  <TbCircleXFilled className="min-w-[30px] min-h-[30px]" />
+                </button>
                 <SortsTable
                   title={popupState.sortsPopup.data.name}
                   id={popupState.sortsPopup.data.id}

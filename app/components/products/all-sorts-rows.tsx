@@ -42,7 +42,7 @@ export default function AllSortsTableRows({
         <td className="px-4 py-2 text-center max-w-[69px]">
           <input
             placeholder="الكمية"
-            className="rounded-md placeholder:text-[12px] outline-0 border border-myDark max-w-[45px] h-[35] mr-2 text-center"
+            className={`${qty == 0 && "opacity-[.4]"} rounded-md placeholder:text-[12px] outline-0 border border-myDark max-w-[45px] h-[35] mr-2 text-center`}
             value={inputValue?.qty ?? ""}
             onChange={(e) =>
               +e.target.value > +qty

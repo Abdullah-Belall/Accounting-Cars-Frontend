@@ -13,6 +13,7 @@ import { useState } from "react";
 import SelectList from "../common/select-list";
 import styles from "@/app/styles/drop-down.module.css";
 import { CLIENT_COLLECTOR_REQ, UPDATE_ORDER_REQ } from "@/app/utils/requests/client-side.requests";
+import { TbCircleXFilled } from "react-icons/tb";
 
 export default function EditOrderPopup({ refetch }: { refetch: any }) {
   const { popupState, openPopup, closePopup } = usePopup();
@@ -130,7 +131,13 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
     (data.discount ? Number(data.discount) : 0) +
     (data.additional_fees ? Number(data.additional_fees) : 0);
   return (
-    <div className="rounded-md shadow-md w-full min-[400px]:w-[384px] mx-mainxs bg-myLight p-mainxl">
+    <div className="relative rounded-md shadow-md w-full min-[400px]:w-[384px] mx-mainxs bg-myLight p-mainxl">
+      <button
+        onClick={() => closePopup("editOrderPopup")}
+        className="flex justify-center items-center w-[25px] h-[25px] bg-background rounded-[50%] z-[5] cursor-pointer absolute right-[-10px] top-[-10px] "
+      >
+        <TbCircleXFilled className="min-w-[30px] min-h-[30px]" />
+      </button>
       <h2 className="text-lg text-center font-semibold mb-4">
         تعديل الفاتورة {deliveryData.index}
       </h2>

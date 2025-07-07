@@ -20,9 +20,9 @@ import {
 } from "@/app/utils/base";
 import { useRouter } from "next/navigation";
 import { useBills } from "@/app/utils/contexts/bills-contexts";
-import styles2 from "@/app/styles/drop-down.module.css";
+import { TbCircleXFilled } from "react-icons/tb";
 
-export default function AddOrderForm() {
+export default function AddOrderForm({ closePopup }: { closePopup: () => void }) {
   const router = useRouter();
   const [data, setData] = useState([]);
   const { openPopup, popupState, closeOrderPopup } = usePopup();
@@ -245,220 +245,234 @@ export default function AddOrderForm() {
     }
   };
   const installmentValue = formData.installment
-    ? Number(
-        (Number(totalPriceAfter.toFixed(2)) -
-          (formData.down_payment ? Number(formData.down_payment) : 0)) /
-          Number(formData.installment)
-      ).toFixed()
+    ? Math.ceil(
+        Number(
+          (Math.ceil(Number(totalPriceAfter)) -
+            (formData.down_payment ? Number(formData.down_payment) : 0)) /
+            Number(formData.installment)
+        )
+      ).toString()
     : "";
   return (
     <div className="w-full sm:w-[640px] px-mainxs">
-      <div className="relative rounded-xl shadow-md bg-myLight p-mainxs flex flex-col items-center">
-        <h2 className="text-lg text-center font-semibold mb-1">انشاء طلب جديد</h2>
-        <div className={styles2.list + " w-full max-h-[190px] overflow-y-scroll"}>
-          <UsersTable type="client" forOrder={true} data={data} />
-        </div>
-        <div className="w-full flex gap-2 items-center mt-2.5">
-          <SelectList
-            placeHolder="وسيلة الدفع"
-            select={
-              formData.payment_method !== ""
-                ? getSlug(methodsArray, formData.payment_method)
-                : "وسيلة الدفع"
-            }
-            onClick={() => handleOpenDropDown("payment_method", true)}
-            onBlur={() => handleOpenDropDown("payment_method", false)}
-            dropDown={openDropDown.payment_method}
-          >
-            {openDropDown.payment_method && (
-              <>
-                <ul
-                  className={
-                    styles.list +
-                    " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
-                  }
-                >
-                  {DropDownOptions(methodsArray, "payment_method")}
-                </ul>
-              </>
-            )}
-          </SelectList>
-          <SelectList
-            placeHolder="حالة الدفع"
-            select={
-              formData.paid_status !== ""
-                ? getSlug(paidStatusArray, formData.paid_status)
-                : "حالة الدفع"
-            }
-            onClick={() => handleOpenDropDown("paid_status", true)}
-            onBlur={() => handleOpenDropDown("paid_status", false)}
-            dropDown={openDropDown.paid_status}
-          >
-            {openDropDown.paid_status && (
-              <>
-                <ul
-                  className={
-                    styles.list +
-                    " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
-                  }
-                >
-                  {DropDownOptions(paidStatusArray, "paid_status")}
-                </ul>
-              </>
-            )}
-          </SelectList>
-        </div>
+      <div className={"relative bg-myLight rounded-xl shadow-md p-mainxs"}>
+        <button
+          onClick={closePopup}
+          className="flex justify-center items-center w-[25px] h-[25px] bg-background rounded-[50%] z-[5] cursor-pointer absolute right-[-10px] top-[-10px] "
+        >
+          <TbCircleXFilled className="min-w-[30px] min-h-[30px]" />
+        </button>
         <div
-          className={`${formData.paid_status === "installments" ? "h-[114px] md:h-[53px] mt-1.5 overflow-visible" : "h-[0] overflow-hidden"} duration-[.3s] transition-[margin height] w-full flex flex-col md:flex-row gap-2 items-center`}
+          className={
+            "hiddenScrollbar relative flex flex-col items-center max-h-[calc(100dvh-120px)] overflow-y-scroll md:overflow-y-visible"
+          }
         >
-          <SelectList
-            placeHolder="نوع القسط"
-            select={
-              formData.installment_type !== ""
-                ? getSlug(periodsArray, formData.installment_type)
-                : "نوع القسط"
-            }
-            onClick={() => handleOpenDropDown("installment_type", true)}
-            onBlur={() => handleOpenDropDown("installment_type", false)}
-            dropDown={openDropDown.installment_type}
+          <div className="w-full">
+            <h2 className="text-lg text-center font-semibold mb-1">انشاء طلب جديد</h2>
+            <UsersTable type="client" forOrder={true} data={data} />
+          </div>
+          <div className="w-full flex gap-2 items-center mt-2.5">
+            <SelectList
+              placeHolder="وسيلة الدفع"
+              select={
+                formData.payment_method !== ""
+                  ? getSlug(methodsArray, formData.payment_method)
+                  : "وسيلة الدفع"
+              }
+              onClick={() => handleOpenDropDown("payment_method", true)}
+              onBlur={() => handleOpenDropDown("payment_method", false)}
+              dropDown={openDropDown.payment_method}
+            >
+              {openDropDown.payment_method && (
+                <>
+                  <ul
+                    className={
+                      styles.list +
+                      " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
+                    }
+                  >
+                    {DropDownOptions(methodsArray, "payment_method")}
+                  </ul>
+                </>
+              )}
+            </SelectList>
+            <SelectList
+              placeHolder="حالة الدفع"
+              select={
+                formData.paid_status !== ""
+                  ? getSlug(paidStatusArray, formData.paid_status)
+                  : "حالة الدفع"
+              }
+              onClick={() => handleOpenDropDown("paid_status", true)}
+              onBlur={() => handleOpenDropDown("paid_status", false)}
+              dropDown={openDropDown.paid_status}
+            >
+              {openDropDown.paid_status && (
+                <>
+                  <ul
+                    className={
+                      styles.list +
+                      " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
+                    }
+                  >
+                    {DropDownOptions(paidStatusArray, "paid_status")}
+                  </ul>
+                </>
+              )}
+            </SelectList>
+          </div>
+          <div
+            className={`${formData.paid_status === "installments" ? "h-[114px] md:h-[53px] mt-1.5 overflow-visible" : "h-[0] overflow-hidden"} duration-[.3s] transition-[margin height] w-full flex flex-col md:flex-row gap-2 items-center`}
           >
-            {openDropDown.installment_type && (
-              <>
-                <ul
-                  className={
-                    styles.list +
-                    " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
-                  }
-                >
-                  {DropDownOptions(periodsArray, "installment_type")}
-                </ul>
-              </>
-            )}
-          </SelectList>
-          <div className="flex gap-2 items-center w-full">
+            <SelectList
+              placeHolder="نوع القسط"
+              select={
+                formData.installment_type !== ""
+                  ? getSlug(periodsArray, formData.installment_type)
+                  : "نوع القسط"
+              }
+              onClick={() => handleOpenDropDown("installment_type", true)}
+              onBlur={() => handleOpenDropDown("installment_type", false)}
+              dropDown={openDropDown.installment_type}
+            >
+              {openDropDown.installment_type && (
+                <>
+                  <ul
+                    className={
+                      styles.list +
+                      " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
+                    }
+                  >
+                    {DropDownOptions(periodsArray, "installment_type")}
+                  </ul>
+                </>
+              )}
+            </SelectList>
+            <div className="flex gap-2 items-center w-full">
+              <TextField
+                id="Glu"
+                dir="rtl"
+                label="المقدم"
+                variant="filled"
+                sx={sameTextField}
+                onChange={(e) =>
+                  handleFormData("down_payment", e.target.value.replace(/[^0-9.]/g, ""))
+                }
+                value={formData.down_payment}
+                className="w-full"
+              />
+              <TextField
+                id="Glu"
+                dir="rtl"
+                label="عدد الأقساط"
+                variant="filled"
+                sx={sameTextField}
+                onChange={(e) =>
+                  handleFormData("installment", e.target.value.replace(/[^0-9.]/g, ""))
+                }
+                value={formData.installment ? Math.ceil(Number(formData.installment)) : ""}
+                className="w-full"
+              />
+              <TextField
+                id="Glu"
+                dir="rtl"
+                label="قيمة القسط"
+                variant="filled"
+                sx={sameTextField}
+                onChange={(e) =>
+                  handleFormData(
+                    "installment",
+                    e.target.value
+                      ? (
+                          (Math.ceil(Number(totalPriceAfter)) -
+                            (formData.down_payment ? Number(formData.down_payment) : 0)) /
+                          Number(e.target.value.replace(/[^0-9.]/g, ""))
+                        ).toString()
+                      : ""
+                  )
+                }
+                value={installmentValue}
+                className="w-full"
+              />
+            </div>
+          </div>
+          <div className="w-full flex flex-col sm:flex-row gap-2 items-center mt-1.5">
+            <SelectList
+              placeHolder="ضريبة القيمة المضافة"
+              select={getSlug(taxArray, formData.tax as string) ?? "ضريبة القيمة المضافة"}
+              onClick={() => handleOpenDropDown("tax", true)}
+              onBlur={() => handleOpenDropDown("tax", false)}
+              dropDown={openDropDown.tax}
+            >
+              {openDropDown.tax && (
+                <>
+                  <ul
+                    className={
+                      styles.list +
+                      " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
+                    }
+                  >
+                    {DropDownOptions(taxArray, "tax")}
+                  </ul>
+                </>
+              )}
+            </SelectList>
+            <div className="w-full flex gap-2 items-center">
+              <TextField
+                id="Glu"
+                dir="rtl"
+                label="الخصم بالجنية"
+                variant="filled"
+                sx={sameTextField}
+                value={formData.discount}
+                onChange={(e) => handleFormData("discount", e.target.value.replace(/[^0-9.]/g, ""))}
+                className="w-full"
+              />
+              <TextField
+                id="Glu"
+                dir="rtl"
+                label="مصاريف اضافية"
+                variant="filled"
+                sx={sameTextField}
+                value={formData.additional_fees}
+                onChange={(e) =>
+                  handleFormData("additional_fees", e.target.value.replace(/[^0-9.]/g, ""))
+                }
+                className="w-full"
+              />
+            </div>
+          </div>
+          <div className="w-full flex gap-2 items-center mt-1.5">
             <TextField
               id="Glu"
               dir="rtl"
-              label="المقدم"
+              label="اجمالي السعر"
               variant="filled"
               sx={sameTextField}
-              onChange={(e) =>
-                handleFormData("down_payment", e.target.value.replace(/[^0-9.]/g, ""))
-              }
-              value={formData.down_payment}
+              value={Number(totalPrice.toFixed(2)).toLocaleString()}
               className="w-full"
+              disabled
             />
             <TextField
               id="Glu"
               dir="rtl"
-              label="عدد الأقساط"
+              label="اجمالي السعر بعد الضريبة والخصم"
               variant="filled"
               sx={sameTextField}
-              onChange={(e) =>
-                handleFormData("installment", e.target.value.replace(/[^0-9.]/g, ""))
-              }
-              value={formData.installment ? Math.ceil(Number(formData.installment)) : ""}
+              value={Number(totalPriceAfter.toFixed(2)).toLocaleString()}
               className="w-full"
-            />
-            <TextField
-              id="Glu"
-              dir="rtl"
-              label="قيمة القسط"
-              variant="filled"
-              sx={sameTextField}
-              onChange={(e) =>
-                handleFormData(
-                  "installment",
-                  e.target.value
-                    ? (
-                        (Number(totalPriceAfter.toFixed(2)) -
-                          (formData.down_payment ? Number(formData.down_payment) : 0)) /
-                        Number(e.target.value.replace(/[^0-9.]/g, ""))
-                      ).toString()
-                    : ""
-                )
-              }
-              value={installmentValue}
-              className="w-full"
+              disabled
             />
           </div>
-        </div>
-        <div className="w-full flex flex-col sm:flex-row gap-2 items-center mt-1.5">
-          <SelectList
-            placeHolder="ضريبة القيمة المضافة"
-            select={getSlug(taxArray, formData.tax as string) ?? "ضريبة القيمة المضافة"}
-            onClick={() => handleOpenDropDown("tax", true)}
-            onBlur={() => handleOpenDropDown("tax", false)}
-            dropDown={openDropDown.tax}
+          <Button
+            onClick={handleDone}
+            sx={{ fontFamily: "cairo" }}
+            className="!bg-mdDark !mt-3 w-fit"
+            variant="contained"
           >
-            {openDropDown.tax && (
-              <>
-                <ul
-                  className={
-                    styles.list +
-                    " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
-                  }
-                >
-                  {DropDownOptions(taxArray, "tax")}
-                </ul>
-              </>
-            )}
-          </SelectList>
-          <div className="w-full flex gap-2 items-center">
-            <TextField
-              id="Glu"
-              dir="rtl"
-              label="الخصم بالجنية"
-              variant="filled"
-              sx={sameTextField}
-              value={formData.discount}
-              onChange={(e) => handleFormData("discount", e.target.value.replace(/[^0-9.]/g, ""))}
-              className="w-full"
-            />
-            <TextField
-              id="Glu"
-              dir="rtl"
-              label="مصاريف اضافية"
-              variant="filled"
-              sx={sameTextField}
-              value={formData.additional_fees}
-              onChange={(e) =>
-                handleFormData("additional_fees", e.target.value.replace(/[^0-9.]/g, ""))
-              }
-              className="w-full"
-            />
-          </div>
+            تأكيد الفاتورة
+          </Button>
         </div>
-        <div className="w-full flex gap-2 items-center mt-1.5">
-          <TextField
-            id="Glu"
-            dir="rtl"
-            label="اجمالي السعر"
-            variant="filled"
-            sx={sameTextField}
-            value={Number(totalPrice.toFixed(2)).toLocaleString()}
-            className="w-full"
-            disabled
-          />
-          <TextField
-            id="Glu"
-            dir="rtl"
-            label="اجمالي السعر بعد الضريبة والخصم"
-            variant="filled"
-            sx={sameTextField}
-            value={Number(totalPriceAfter.toFixed(2)).toLocaleString()}
-            className="w-full"
-            disabled
-          />
-        </div>
-        <Button
-          onClick={handleDone}
-          sx={{ fontFamily: "cairo" }}
-          className="!bg-mdDark !mt-3 w-fit"
-          variant="contained"
-        >
-          تأكيد الفاتورة
-        </Button>
       </div>
     </div>
   );

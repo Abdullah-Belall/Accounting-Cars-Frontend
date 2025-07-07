@@ -37,8 +37,13 @@ export default function UsersTable({
   }
   const title = type === "client" ? (forOrder ? "" : "كل العملاء") : "كل الموظفين";
   return (
-    <div className="px-mainxs">
-      <MainTable filter={[!forOrder, `${type}s`, columns]} title={title} headers={headers}>
+    <>
+      <MainTable
+        filter={[!forOrder, `${type}s`, columns]}
+        title={title}
+        headers={headers}
+        isPopup={true}
+      >
         {data?.map((row, index) => (
           <UsersTableRows
             key={row.id}
@@ -59,6 +64,6 @@ export default function UsersTable({
         ))}
       </MainTable>
       {data?.length === 0 && <NoData />}
-    </div>
+    </>
   );
 }

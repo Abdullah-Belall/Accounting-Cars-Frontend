@@ -11,9 +11,10 @@ import { SuppliersBillsInterface } from "@/app/utils/types/interfaces";
 import { Button, TextField } from "@mui/material";
 import { sameTextField } from "@/app/utils/base";
 import SuppliersBillsTable from "../tables/suppliers-bills-table";
+import { TbCircleXFilled } from "react-icons/tb";
 
 export default function SuppliersBillsPopUp() {
-  const { openPopup, popupState } = usePopup();
+  const { openPopup, popupState, closePopup } = usePopup();
   const delvData = popupState.suppliersBills.data;
   const [data, setData] = useState<SuppliersBillsInterface[]>([]);
   const [cost, setCost] = useState<any>();
@@ -62,9 +63,12 @@ export default function SuppliersBillsPopUp() {
   return (
     <div className="px-mainxs w-full md:w-[752px]">
       <div className="relative rounded-md shadow-md bg-myLight p-mainxl flex flex-col gap-[10px]">
-        <h1 className="mb-2 w-fit text-lg font-semibold text-myDark text-nowrap ml-auto">
-          فاتورة تكاليف {delvData.short_id}
-        </h1>
+        <button
+          onClick={() => closePopup("suppliersBills")}
+          className="flex justify-center items-center w-[25px] h-[25px] bg-background rounded-[50%] z-[5] cursor-pointer absolute right-[-10px] top-[-10px] "
+        >
+          <TbCircleXFilled className="min-w-[30px] min-h-[30px]" />
+        </button>
         <SuppliersBillsTable data={data} refetch={fetchData} />
         <div className="w-full flex flex-col items-center mt-4 gap-2">
           <div className="flex gap-1 w-full">

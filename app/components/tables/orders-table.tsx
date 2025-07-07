@@ -85,6 +85,10 @@ export default function OrdersTable({
             refetchOrders={refetch}
             index={popupState.ordersPopup.data.index}
             id={popupState.ordersPopup.data.id}
+            onClose={() => {
+              closePopup("ordersPopup");
+              closeReturns();
+            }}
           />
         </BlackLayer>
       )}

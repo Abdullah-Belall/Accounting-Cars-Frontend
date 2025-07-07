@@ -47,7 +47,7 @@ export default function SuppliersPage() {
             <AddSupplierForm
               onSupplierAdded={() => {
                 openPopup("snakeBarPopup", {
-                  message: "تم انشاء فئة جديدة بنجاح.",
+                  message: "تم اضافة مورد جديدة بنجاح.",
                   type: "success",
                 });
                 setAdd(false);

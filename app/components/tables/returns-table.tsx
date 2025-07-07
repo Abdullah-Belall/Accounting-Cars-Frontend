@@ -3,6 +3,9 @@ import { ReturnDataInterface } from "@/app/utils/types/interfaces";
 import MainTable from "./main-table";
 import NoData from "../common/no-data";
 import ReturnsTableRows from "../orders/return-table-rows";
+import { usePopup } from "@/app/utils/contexts/popup-contexts";
+import BlackLayer from "../common/black-layer";
+import ReturnsItemsPopup from "../orders/returns-items-popup";
 
 export default function ReturnsTable({
   data,
@@ -13,6 +16,7 @@ export default function ReturnsTable({
   title: string;
   isMainTable: boolean;
 }) {
+  const { popupState, closePopup } = usePopup();
   const calcTotalPrice = () => {
     let totalPrice = 0;
     for (const item of data) {
@@ -62,6 +66,13 @@ export default function ReturnsTable({
         })}
       </MainTable>
       {data?.length === 0 && <NoData />}
+      {popupState?.returnsItemsPopup.isOpen && (
+        <>
+          <BlackLayer onClick={() => closePopup("returnsItemsPopup")}>
+            <ReturnsItemsPopup returnId={popupState.returnsItemsPopup.data?.returnId} />
+          </BlackLayer>
+        </>
+      )}
     </>
   );
 }

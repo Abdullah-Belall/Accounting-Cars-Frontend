@@ -11,6 +11,7 @@ import { BiCategory } from "react-icons/bi";
 import { FiCodesandbox } from "react-icons/fi";
 import Link from "next/link";
 import { RiBillLine } from "react-icons/ri";
+import styles from "@/app/styles/tables-scroll.module.css";
 
 export default function SideBar({ open, onClose }: { open: boolean; onClose: () => void }) {
   const path = usePathname();
@@ -30,7 +31,10 @@ export default function SideBar({ open, onClose }: { open: boolean; onClose: () 
 
   return (
     <aside
-      className={`${open ? "right-0" : "right-[-250px]"} duration-[.3s] z-30 md:z-[1] md:right-0 overflow-y-scroll flex flex-col gap-2 px-mainxs pb-[20px] pt-[80px] fixed top-0 w-[240px] h-dvh bg-myLight border-l-3 border-[#eee]`}
+      className={
+        styles.list +
+        ` ${open ? "right-0" : "right-[-250px]"} duration-[.3s] z-30 md:z-[1] md:right-0 overflow-y-scroll flex flex-col gap-2 px-mainxs pb-[20px] pt-[80px] fixed top-0 w-[240px] h-dvh bg-myLight border-l-3 border-[#eee]`
+      }
     >
       <Link className="w-full" onClick={onClose} href={"/"}>
         <Button

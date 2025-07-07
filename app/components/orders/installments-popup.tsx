@@ -10,9 +10,10 @@ import { useEffect, useState } from "react";
 import { InstallmentInterface } from "@/app/utils/types/interfaces";
 import { Button, TextField } from "@mui/material";
 import { formatDate, getSlug, periodsArray, sameTextField } from "@/app/utils/base";
+import { TbCircleXFilled } from "react-icons/tb";
 
 export default function InstallmentsPopUp() {
-  const { openPopup, popupState } = usePopup();
+  const { openPopup, popupState, closePopup } = usePopup();
   const delvData = popupState.installmentsPopup.data;
   const [data, setData] = useState<InstallmentInterface[]>([]);
   const [installment, setInstallment] = useState(delvData?.installment ?? "");
@@ -25,9 +26,10 @@ export default function InstallmentsPopUp() {
       openPopup("snakeBarPopup", { message: response.message });
     }
   };
+  console.log(delvData);
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [delvData]);
   const payInstallment = async () => {
     if (installment == "0") return;
     if (loading) return;
@@ -52,6 +54,12 @@ export default function InstallmentsPopUp() {
   return (
     <div className="px-mainxs w-full md:w-[752px]">
       <div className="relative rounded-md shadow-md bg-myLight p-mainxl flex flex-col gap-[10px]">
+        <button
+          onClick={() => closePopup("installmentsPopup")}
+          className="flex justify-center items-center w-[25px] h-[25px] bg-background rounded-[50%] z-[5] cursor-pointer absolute right-[-10px] top-[-10px] "
+        >
+          <TbCircleXFilled className="min-w-[30px] min-h-[30px]" />
+        </button>
         <InstalmentTable
           title={`اقساط فاتورة ${delvData?.short_id}`}
           data={data}

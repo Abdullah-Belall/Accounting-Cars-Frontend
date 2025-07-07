@@ -36,7 +36,7 @@ export default function Header({ logo }: { logo: string }) {
     setList(false);
   }, [path]);
   return (
-    <header className="fixed z-20 left-0 top-0 bg-myLight w-full border-b border-b-mdLight shadow-b-md flex flex-row-reverse justify-between items-center">
+    <header className="fixed z-[21] left-0 top-0 bg-myLight w-full border-b border-b-mdLight shadow-b-md flex flex-row-reverse justify-between items-center">
       {list && (
         <>
           <TransparentLayer onClick={handleClose} />
