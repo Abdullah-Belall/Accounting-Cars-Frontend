@@ -2,7 +2,7 @@
 import "./globals.css";
 import { cairo } from "./utils/fonts/main.font";
 import SideBar from "./components/side-bar/side-bar";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { PopupProvider } from "./utils/contexts/popup-contexts";
 import CustomSnackbar from "./components/common/custom-snakebar";
 import { UserProvider } from "./utils/contexts/UserContext";
@@ -10,7 +10,11 @@ import { useEffect, useState } from "react";
 import { ReturnsProvider } from "./utils/contexts/returns-contexts";
 import { BillesProvider } from "./utils/contexts/bills-contexts";
 import { SearchProvider } from "./utils/contexts/search-results-contexts";
-import { GET_TENANT_VARS_REQ } from "./utils/requests/client-side.requests";
+import {
+  CLIENT_COLLECTOR_REQ,
+  GET_TENANT_VARS_REQ,
+  SIGN_OUT_REQ,
+} from "./utils/requests/client-side.requests";
 import Header from "./components/header/header";
 import { BaseLogosUrl } from "./utils/base";
 import { PiListBold } from "react-icons/pi";
@@ -22,6 +26,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const router = useRouter();
   const pathname = usePathname();
   const [openSidebar, setOpenSidebar] = useState(false);
   const [tenantsVars, setTenantsVars] = useState<{
@@ -30,10 +35,22 @@ export default function RootLayout({
   }>();
   const isLoginRoute = pathname === "/log-in";
   useEffect(() => {
+    const lastUsedDomain = window.localStorage.getItem("last_used_domain");
+    const currentDomain = window.location.hostname;
+    if (!lastUsedDomain) {
+      window.localStorage.setItem("last_used_domain", currentDomain);
+    }
+    if (currentDomain !== lastUsedDomain) {
+      const signOut = async () => {
+        await CLIENT_COLLECTOR_REQ(SIGN_OUT_REQ);
+      };
+      signOut();
+      router.replace("/log-in");
+    }
     const fetchData = async () => {
+      console.log(process.env.NODE_ENV);
       const response = await GET_TENANT_VARS_REQ({
-        tenant_domain:
-          process.env.NODE_ENV === "development" ? "localhost.com" : window.location.hostname,
+        tenant_domain: process.env.NODE_ENV === "development" ? "localhost.com" : currentDomain,
       });
       if (response.done) {
         setTenantsVars(response.data);
@@ -68,7 +85,7 @@ export default function RootLayout({
           ></div>
           <div
             onClick={() => setOpenSidebar(!openSidebar)}
-            className={`${openSidebar ? "right-[240px]" : "right-0"} ${isLoginRoute && "hidden"} z-30 duration-[.3s] fixed md:hidden z-10 top-[25%] text-lg cursor-pointer rounded-l-md bg-myLight p-2 text-myDark shadow-lg`}
+            className={`!shadow-2xl ${openSidebar ? "right-[240px] !bg-white !text-mdDark" : "right-0"} ${isLoginRoute && "hidden"} z-30 backdrop-blur-[5px] duration-[.3s] fixed md:hidden z-10 top-[25%] text-lg cursor-pointer rounded-l-md bg-[#4950575d] p-2 text-myLight`}
           >
             <PiListBold />
           </div>

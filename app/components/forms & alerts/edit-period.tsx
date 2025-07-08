@@ -50,7 +50,7 @@ export default function EditPeriodPopup({ OnConfirm }: { OnConfirm: any }) {
     setLoading(false);
   };
 
-  const dropDownOpthions = periodsArray.map((e, i, arr) => (
+  const dropDownOpthions = periodsArray.slice(1).map((e, i, arr) => (
     <li
       key={i}
       onClick={() => {

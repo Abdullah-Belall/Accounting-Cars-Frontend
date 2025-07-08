@@ -191,6 +191,7 @@ export interface SuppliersInterface {
 }
 export interface WorkersInterface {
   id: string;
+  tenant_id?: string;
   user_name: string;
   role: string;
   is_banned: boolean;
@@ -305,14 +306,10 @@ export interface ReturnsItemsInterface {
 export interface CalcsInterface {
   totalCostsPrice: number;
   totalSortsPrices: number;
-  totalReturnsPrices: number;
-  countTotalReturnsPrices: number;
-  paidOrders: number;
-  countPaidOrders: number;
-  notPaidOrders: number;
-  countNotPaidOrders: number;
-  period: string;
+  clientsDepts: number;
+  myDepts: number;
   balance: number;
+  period: string;
 }
 
 export interface GraphDataInterface {

@@ -951,7 +951,7 @@ const GET_CALCS_REQ = async () => {
     const response: any = await axios.get(`${BASE_URL}/common/calcs`, {
       headers: { Authorization: `Bearer ${getCookie("access_token")}` },
     });
-
+    console.log(response);
     return typeof response?.data.totalCostsPrice === "number"
       ? { done: true, data: response?.data }
       : { done: false, message: unCountedMessage, status: response.status };

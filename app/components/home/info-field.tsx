@@ -12,7 +12,7 @@ export default function InfoField({
   return (
     <div
       dir="rtl"
-      className="flex flex-col bg-myHover border border-mdLight rounded-md w-full px-[15px] py-[30px] shadow-md"
+      className="flex flex-col bg-myHover border border-mdLight rounded-md w-full px-[15px] py-[20px] shadow-md"
     >
       <h1 className="font-semibold">
         {formattedTotal} {uom ?? ""}

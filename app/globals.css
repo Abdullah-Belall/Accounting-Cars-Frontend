@@ -7,7 +7,7 @@
   --myLight: #f8f9fa;
   --secLight: #e9ecef;
   --myHover: #f1f1f1;
-  --myOpacity: #f1f1f1b2;
+  --myOpacity: #f1f1f1;
 }
 @theme inline {
   --color-background: var(--background);

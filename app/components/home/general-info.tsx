@@ -18,19 +18,7 @@ export default function GeneralInfo({ data }: { data: CalcsInterface }) {
     <>
       <section className="w-full flex flex-col">
         <h1 className="font-bold mb-[15px]">التحاليل العامة</h1>
-        <div className="w-full flex flex-col md:flex-row gap-[10px] justify-center items-center">
-          <InfoField
-            title={"اجمالي تكاليف بضاعة المخزون الحالية"}
-            total={isForTrail ? 125500 : data?.totalCostsPrice}
-            uom={`ج.م`}
-          />
-          <InfoField
-            title={"اجمالي اسعار بضاعة المخزون الحالية"}
-            total={isForTrail ? 165000 : data?.totalSortsPrices}
-            uom={`ج.م`}
-          />
-        </div>
-        <div className="relative w-full mt-[13px]">
+        <div className="relative w-full mt-[8px]">
           <InfoField
             title={`رصيد بداية الفترة المحاسبية (${getSlug(periodsArray, data?.period) ?? "غير محدد"})`}
             total={isForTrail ? 95000 : (data?.balance ?? 0)}
@@ -46,6 +34,22 @@ export default function GeneralInfo({ data }: { data: CalcsInterface }) {
               تعديل
             </Button>
           )}
+        </div>
+        <div className="w-full flex flex-col md:flex-row gap-[6px] justify-center items-center">
+          <InfoField
+            title={"اجمالي تكاليف بضاعة المخزون الحالية"}
+            total={isForTrail ? 125500 : data?.totalCostsPrice}
+            uom={`ج.م`}
+          />
+          <InfoField
+            title={"اجمالي اسعار بضاعة المخزون الحالية"}
+            total={isForTrail ? 165000 : data?.totalSortsPrices}
+            uom={`ج.م`}
+          />
+        </div>
+        <div className="w-full mt-[8px] flex flex-col md:flex-row gap-[6px] justify-center items-center">
+          <InfoField title={"اجمالي ديون الزبائن"} total={data?.clientsDepts} uom={`ج.م`} />
+          <InfoField title={"اجمالي ديونك للموردين"} total={data?.myDepts} uom={`ج.م`} />
         </div>
       </section>
       {editBalance && (
