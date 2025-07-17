@@ -21,21 +21,25 @@ export default function ReturnsItemsTableRows({
   order_item,
   order,
 }: CusReturnsItemsInterface) {
-  // const totalLose =
-  //   qty *
-  //   (Number(unit_price) *
-  //     (order?.tax && order.tax !== "0" && order?.tax !== "" ? Number(order?.tax) / 100 + 1 : 1));
-  const colorl =
+  const sortName =
+    order_item?.sort?.name && order_item?.sort?.name !== "" ? order_item?.sort?.name : "لا يوجد";
+  const sortColor =
     order_item?.sort?.color && order_item?.sort?.color !== "" ? order_item?.sort?.color : "لا يوجد";
+  const sortSize =
+    order_item?.sort?.size && order_item?.sort?.size !== "" ? order_item?.sort?.size : "لا يوجد";
+  const proMaterial =
+    order_item?.sort?.product?.material && order_item?.sort?.product?.material !== ""
+      ? order_item?.sort?.product?.material
+      : "لا يوجد";
   return (
     <tr>
       <td className="px-4 py-2 text-center">{index}</td>
-      <td className="px-4 py-2 text-center">{order?.short_id?.slice(4)}</td>
+      <td className="px-4 py-2 text-center">{order?.short_id}</td>
       <td className="px-4 py-2 text-center">{order_item?.sort?.product?.name}</td>
-      <td className="px-4 py-2 text-center">{order_item?.sort?.name}</td>
-      <td className="px-4 py-2 text-center">{colorl}</td>
-      <td className="px-4 py-2 text-center">{order_item?.sort?.size}</td>
-      <td className="px-4 py-2 text-center">{order_item?.sort?.product?.material}</td>
+      <td className="px-4 py-2 text-center">{sortName}</td>
+      <td className="px-4 py-2 text-center">{sortColor}</td>
+      <td className="px-4 py-2 text-center">{sortSize}</td>
+      <td className="px-4 py-2 text-center">{proMaterial}</td>
       <td className="px-4 py-2 text-center">{order_item?.qty}</td>
       <td className="px-4 py-2 text-center">{qty}</td>
       <td className="px-4 py-2 text-center">{Number(unit_price).toLocaleString()} ج.م</td>

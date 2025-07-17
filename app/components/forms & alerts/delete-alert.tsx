@@ -8,7 +8,7 @@ export default function DeleteAlert({
 }: {
   name: string;
   action: string;
-  onConfirm: any;
+  onConfirm: () => void;
 }) {
   return (
     <div className="rounded-md shadow-md w-full min-[316px]:w-[300px] mx-mainxs bg-myLight p-mainxl">

@@ -72,17 +72,14 @@ export interface PaymentInterface {
 export interface OrderInterface {
   id: string;
   short_id: string;
-  total_price: string;
+  total_price_after: string;
   created_at: Date;
   payment: PaymentInterface;
   tax: string;
   discount: number;
   additional_fees?: number;
   order_items?: OrderItemInterface[];
-  client: {
-    id: string;
-    user_name: string;
-  };
+  car: CarsInterface;
 }
 export interface OrderItemInterface {
   id: string;
@@ -172,13 +169,44 @@ export interface ClientInterface {
   created_at: Date;
   updated_at: Date;
   role?: string;
-  orders?: OrderInterface[];
+  cars: CarsInterface[];
+  cars_count?: number;
   shipping_addresses?: AddressInterface[];
   contacts?: PhoneInterface[];
   orders_count?: number;
   contacts_count?: number;
   addresses_count?: number;
   salary?: number;
+}
+export enum CarType {
+  SEDAN = "Sedan",
+  HATCHBACK = "Hatchback",
+  SUV = "SUV",
+  CROSSOVER = "Crossover",
+  COUPE = "Coupe",
+  CONVERTIBLE = "Convertible",
+  PICKUP = "Pickup",
+  MINIVAN = "Minivan",
+  VAN = "Van",
+  STATION_WAGON = "StationWagon",
+  TRUCK = "Truck",
+  OFFROAD = "OffRoad",
+  ELECTRIC = "Electric",
+}
+export interface CarsInterface {
+  id: string;
+  index: number;
+  client?: ClientInterface;
+  orders?: OrderInterface[];
+  mark: string;
+  type: CarType;
+  plate: string;
+  chassis: string;
+  color: string;
+  model: number;
+  category: number;
+  created_at: Date;
+  updated_at?: Date;
 }
 export interface SuppliersInterface {
   index: number;
@@ -267,10 +295,7 @@ export interface ReturnDataInterface {
     id: string;
     tax: string;
     short_id: string;
-    client: {
-      id: string;
-      user_name: string;
-    };
+    car: CarsInterface;
   };
   returns_items?: ReturnsItemsInterface[];
   returns_items_count: number;

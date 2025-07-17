@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import GraphTemplet from "../graph-templet/graph-templet";
 import { GraphDataInterface } from "@/app/utils/types/interfaces";
 import {
@@ -7,28 +7,28 @@ import {
   GET_GRAPH_DATA_REQ,
 } from "@/app/utils/requests/client-side.requests";
 
-const monthsArr = [
-  "يناير",
-  "فبراير",
-  "مارس",
-  "أبريل",
-  "مايو",
-  "يونيو",
-  "يوليو",
-  "أغسطس",
-  "سبتمبر",
-  "أكتوبر",
-  "نوفمبر",
-  "ديسمبر",
-];
+// const monthsArr = [
+//   "يناير",
+//   "فبراير",
+//   "مارس",
+//   "أبريل",
+//   "مايو",
+//   "يونيو",
+//   "يوليو",
+//   "أغسطس",
+//   "سبتمبر",
+//   "أكتوبر",
+//   "نوفمبر",
+//   "ديسمبر",
+// ];
 
 export default function AllGraphs() {
-  const [isForTrail, setIsForTrail] = useState(false);
   const [data, setData] = useState({
     years: [],
     months: [],
     days: [],
   });
+  console.log(data.days);
   const handleData = (key: keyof typeof data, value: GraphDataInterface[]) => {
     setData((prev) => ({
       ...prev,
@@ -47,12 +47,12 @@ export default function AllGraphs() {
     fetchData("months");
     fetchData("years");
   }, []);
-  const editedMonths = useMemo(() => {
-    return data.months.map((e: any) => ({
-      ...e,
-      month: monthsArr[e.month - 1],
-    }));
-  }, [data.months]);
+  // const editedMonths = useMemo(() => {
+  //   return data.months.map((e: any) => ({
+  //     ...e,
+  //     month: monthsArr[e.month - 1],
+  //   }));
+  // }, [data.months]);
   const months = [
     { totalEarning: 15200, netProfit: 4300, year: 2025, month: "يناير" },
     { totalEarning: 17400, netProfit: 5200, year: 2025, month: "فبراير" },
@@ -104,25 +104,18 @@ export default function AllGraphs() {
     { totalEarning: 25500, netProfit: 11000, year: 2024 },
     { totalEarning: 20500, netProfit: 7000, year: 2025 },
   ];
-  useEffect(() => {
-    const cond = ["localhost", "wolf-jet.vercel.app"].includes(window.location.hostname);
-    setIsForTrail(cond);
-  }, []);
   return (
     <div dir="ltr" className="w-full flex flex-col gap-10">
       <div className="w-full flex flex-col gap-12 lg:gap-3 lg:flex-row">
         <div className="w-full h-[300px]">
-          <GraphTemplet
-            data={isForTrail ? months : editedMonths}
-            title={`تحاليل أشهر السنة الحالية`}
-          />
+          <GraphTemplet data={months} title={`تحاليل أشهر السنة الحالية`} />
         </div>
         <div className="w-full h-[300px]">
-          <GraphTemplet data={isForTrail ? days : data.days} title={`تحاليل أيام الشهر الحالي`} />
+          <GraphTemplet data={days} title={`تحاليل أيام الشهر الحالي`} />
         </div>
       </div>
       <div className="w-full h-[300px]">
-        <GraphTemplet data={isForTrail ? years : data.years} title={`تحاليل السنوات`} />
+        <GraphTemplet data={years} title={`تحاليل السنوات`} />
       </div>
     </div>
   );

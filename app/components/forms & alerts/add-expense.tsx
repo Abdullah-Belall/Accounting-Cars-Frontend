@@ -6,6 +6,7 @@ import { sameTextField } from "@/app/utils/base";
 import {
   CLIENT_COLLECTOR_REQ,
   CREATE_EXPENSE_REQ,
+  UPDATE_EXPENSE_REQ,
 } from "@/app/utils/requests/client-side.requests";
 
 export default function ExpenseForm({
@@ -52,13 +53,20 @@ export default function ExpenseForm({
     setLoading(true);
     const dataReady = { ...data };
     dataReady.amount = Number(dataReady.amount);
-    if (!data.note || data.note === "") {
-      delete dataReady.note;
-    }
-    const response = await CLIENT_COLLECTOR_REQ(CREATE_EXPENSE_REQ, dataReady);
+    const updateObj = {
+      id: isForEdit?.id,
+      data: dataReady,
+    };
+    const response = await CLIENT_COLLECTOR_REQ(
+      isForEdit ? UPDATE_EXPENSE_REQ : CREATE_EXPENSE_REQ,
+      isForEdit ? updateObj : dataReady
+    );
     setLoading(false);
     if (response.done) {
-      openPopup("snakeBarPopup", { message: "تم انشاء مصروف جديد بنجاح.", type: "success" });
+      openPopup("snakeBarPopup", {
+        message: isForEdit ? "تم تعديل المصروف بنجاح." : "تم انشاء مصروف جديد بنجاح.",
+        type: "success",
+      });
       onDone();
     } else {
       openSnakeBar(response.message);

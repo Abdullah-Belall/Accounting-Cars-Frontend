@@ -85,18 +85,13 @@ export default function OrderItemsTable({
     setBills({
       type: "order",
       bill_id: data?.short_id,
-      client: {
-        name: data?.client.user_name,
-        id: data?.client?.id,
-      },
+      car: data?.car,
       data: sortsData,
       totals: {
-        totalPrice: (
-          data?.total_price * (data?.tax && data?.tax !== "" ? Number(data?.tax) / 100 + 1 : 1) -
-          (data?.discount === "" ? 0 : Number(data?.discount))
-        ).toString(),
+        totalPrice: data?.total_price_after,
         tax: data?.tax + "%",
         discount: data?.discount,
+        additional_fees: data?.additional_fees,
         paid_status: getSlug(paidStatusArray, data?.payment.status),
         payment_method: getSlug(methodsArray, data?.payment?.payment_method),
         created_at: data?.created_at,

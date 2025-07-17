@@ -25,12 +25,7 @@ export default function OrdersPage() {
   }, []);
   return (
     <div className="px-mainxs">
-      <OrdersTable
-        data={getSearch("orders").results}
-        tableFor="overview"
-        title="فواتير المبيعات"
-        refetch={fetchData}
-      />
+      <OrdersTable data={getSearch("orders").results} title="فواتير المبيعات" refetch={fetchData} />
     </div>
   );
 }

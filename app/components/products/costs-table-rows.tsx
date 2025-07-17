@@ -20,7 +20,7 @@ export default function CostsTableRows({
   return (
     <>
       <tr>
-        <td className="px-4 py-2 text-center">{short_id.slice(4)}</td>
+        <td className="px-4 py-2 text-center">{short_id}</td>
         <td className="px-4 py-2">
           <p
             onClick={() => {
@@ -40,13 +40,15 @@ export default function CostsTableRows({
             }}
             className="w-fit mx-auto font-semibold hover:no-underline underline cursor-pointer"
           >
-            {sort?.name ?? "لا يوجد"}
+            {sort?.name && sort?.name !== "" ? sort?.name : "لا يوجد"}
           </p>
         </td>
         <td className={`px-4 py-2 text-center max-w-[120px]`}>
-          {!sort?.color || sort?.color === "" ? "لا يوجد" : sort.color}
+          {sort?.color && sort?.color !== "" ? sort?.color : "لا يوجد"}
         </td>
-        <td className={`px-4 py-2 text-center max-w-[120px]`}>{sort?.size ?? "لا يوجد"}</td>
+        <td className={`px-4 py-2 text-center max-w-[120px]`}>
+          {sort?.size && sort?.size !== "" ? sort?.size : "لا يوجد"}
+        </td>
         <td className={`px-4 py-2 text-center`}>{qty}</td>
         <td className="px-4 py-2 text-center">
           {Math.abs(Number(price) / Number(qty)).toLocaleString()} ج.م
@@ -56,7 +58,7 @@ export default function CostsTableRows({
         </td>
         <td className="px-4 py-2 text-center">
           <button
-            onClick={() => openPopup("suppliersBills", { id, short_id: short_id.slice(4) })}
+            onClick={() => openPopup("suppliersBills", { id, short_id: short_id })}
             className={`${statusColor} cursor-pointer w-fit text-nowrap mx-auto px-2 py-1 rounded-[4px] text-center`}
           >
             {is_paid ? "مسددة" : "لم تسدد"}

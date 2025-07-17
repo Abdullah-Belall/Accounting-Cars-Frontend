@@ -12,13 +12,19 @@ export default function OrderPrint() {
   };
   return (
     <div className="print-content relative mx-auto flex flex-col items-center max-w-[637px] justify-center w-full px-mainxs">
-      <h1 className="font-bold">
-        فاتورة {bills?.type === "order" ? "مبيعات" : "مرتجعات"} {bills?.bill_id?.slice(4)}
-      </h1>
+      <h1 className="font-bold">فاتورة مبيعات {bills?.bill_id}</h1>
       <div dir="rtl" className="flex flex-col w-full mt-3">
-        <h2>العميل: {bills?.client?.name}</h2>
+        <h2>العميل: {bills?.car?.client?.user_name}</h2>
+        <h2>السيارة: {bills?.car?.mark}</h2>
         <h2>ضريبة القيمة المضافة: {bills?.totals.tax}</h2>
         <h2>الخصم: {bills?.totals.discount} ج.م</h2>
+        <h2>
+          مصنعية:{" "}
+          {bills?.totals.additional_fees
+            ? Number(Number(bills?.totals.additional_fees).toFixed(2)).toLocaleString()
+            : 0}{" "}
+          ج.م
+        </h2>
         <h2>
           اجمالي السعر: {Number(Number(bills?.totals.totalPrice).toFixed(2)).toLocaleString()} ج.م
         </h2>

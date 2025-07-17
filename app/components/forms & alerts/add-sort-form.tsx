@@ -61,17 +61,9 @@ export default function AddSortForm({
     setData({ ...data, [key]: value });
   };
   const vaildation = () => {
-    const { name, qty, cost, unit_price, supplier } = data;
+    const { qty, cost, unit_price, supplier } = data;
     if (supplier === "") {
       openSnakeBar("يجب تحديد اسم المورد للمتابعة.");
-      return false;
-    }
-    if (name === "") {
-      openSnakeBar("يجب تحديد اسم للصنف للمتابعة.");
-      return false;
-    }
-    if (name.length < 2) {
-      openSnakeBar("لا يمكن ان يكون اسم الصنف اقل من حرفين.");
       return false;
     }
     if (Number(qty) <= 0) {

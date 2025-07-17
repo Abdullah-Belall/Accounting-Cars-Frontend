@@ -15,7 +15,7 @@ export default function ReturnsTableRows({
   const { openPopup } = usePopup();
   return (
     <tr>
-      <td className="px-4 py-2 text-center">{short_id?.slice(4)}</td>
+      <td className="px-4 py-2 text-center">{short_id}</td>
       <td className="px-4 py-2">
         <p
           onClick={() => openPopup("returnsItemsPopup", { returnId: id })}
@@ -26,13 +26,13 @@ export default function ReturnsTableRows({
       </td>
       <td className="px-4 py-2 text-center font-semibold hover:no-underline underline cursor-pointer">
         <Link
-          href={`/clients/${order?.client?.id}`}
+          href={`/clients/${order?.car?.client?.id}`}
           className="w-fit mx-auto font-semibold hover:no-underline underline cursor-pointer"
         >
-          {order?.client?.user_name}
+          {order?.car?.client?.user_name}
         </Link>
       </td>
-      <td className="px-4 py-2 text-center">{order?.short_id?.slice(4)}</td>
+      <td className="px-4 py-2 text-center">{order?.short_id}</td>
       <td className="px-4 py-2 text-center">{returns_items_count}</td>
       <td className="px-4 py-2 text-center">
         ج.م{" "}

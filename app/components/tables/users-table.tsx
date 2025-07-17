@@ -21,7 +21,7 @@ export default function UsersTable({
     "*",
     "الاسم",
     "الرقم الضريبي",
-    "عدد الفواتير المكتملة",
+    "عدد السيارات",
     "عدد جهات الاتصال",
     "تاريخ الاضافة",
   ];
@@ -54,7 +54,7 @@ export default function UsersTable({
             id={row.id}
             name={row.user_name}
             tax_num={row?.tax_num}
-            completed_orders={row.orders_count as number}
+            cars_count={row.cars_count as number}
             date={row.created_at}
             addresses_count={row.addresses_count as number}
             phone_count={row.contacts_count as number}

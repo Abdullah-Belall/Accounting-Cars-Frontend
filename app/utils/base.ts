@@ -1,4 +1,9 @@
-import { DropDownsInterface, PaidStatusEnum, PaymentMethodsEnum } from "./types/interfaces";
+import {
+  CarType,
+  DropDownsInterface,
+  PaidStatusEnum,
+  PaymentMethodsEnum,
+} from "./types/interfaces";
 
 export const BaseWebsiteUrl = process.env.NEXT_PUBLIC_BASE_WEBSITE_URL || "http://localhost:3000";
 export const BaseLogosUrl = `https://res.cloudinary.com/doy0la086/image/upload/`;
@@ -92,6 +97,22 @@ export const taxArray = [
     value: "14%",
     label: "14%",
   },
+];
+
+export const carTypesArray = [
+  { value: CarType.SEDAN, label: "سيدان" },
+  { value: CarType.HATCHBACK, label: "هاتشباك" },
+  { value: CarType.SUV, label: "دفع رباعي (SUV)" },
+  { value: CarType.CROSSOVER, label: "كروس أوفر" },
+  { value: CarType.COUPE, label: "كوبيه" },
+  { value: CarType.CONVERTIBLE, label: "قابلة للكشف" },
+  { value: CarType.PICKUP, label: "بيك أب" },
+  { value: CarType.MINIVAN, label: "ميني فان" },
+  { value: CarType.VAN, label: "فان" },
+  { value: CarType.STATION_WAGON, label: "ستيشن واغن" },
+  { value: CarType.TRUCK, label: "شاحنة" },
+  { value: CarType.OFFROAD, label: "للطرق الوعرة" },
+  { value: CarType.ELECTRIC, label: "كهربائية" },
 ];
 export const methodsArray: DropDownsInterface[] = [
   { value: PaymentMethodsEnum.CASH, label: "كاش" },

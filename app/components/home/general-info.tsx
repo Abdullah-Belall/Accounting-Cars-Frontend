@@ -1,27 +1,26 @@
 "use client";
 import { CalcsInterface } from "@/app/utils/types/interfaces";
 import InfoField from "./info-field";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getSlug, periodsArray } from "@/app/utils/base";
 import { Button } from "@mui/material";
 import BlackLayer from "../common/black-layer";
 import EditPeriodPopup from "../forms & alerts/edit-period";
 
 export default function GeneralInfo({ data }: { data: CalcsInterface }) {
-  const [isForTrail, setIsForTrail] = useState(false);
   const [editBalance, setEditBalance] = useState(false);
-  useEffect(() => {
-    const cond = ["localhost", "wolf-jet.vercel.app"].includes(window.location.hostname);
-    setIsForTrail(cond);
-  }, []);
+  console.log(editBalance);
   return (
     <>
       <section className="w-full flex flex-col">
         <h1 className="font-bold mb-[15px]">التحاليل العامة</h1>
         <div className="relative w-full mt-[8px]">
           <InfoField
-            title={`رصيد بداية الفترة المحاسبية (${getSlug(periodsArray, data?.period) ?? "غير محدد"})`}
-            total={isForTrail ? 95000 : (data?.balance ?? 0)}
+            title={`رصيد بداية الفترة المحاسبية (${
+              getSlug(periodsArray, data?.period) ?? "غير محدد"
+            })`}
+            // total={data?.balance ?? 0}
+            total={"تجريبي" as any}
             uom={`ج.م`}
           />
           {!data?.period && (
@@ -35,24 +34,36 @@ export default function GeneralInfo({ data }: { data: CalcsInterface }) {
             </Button>
           )}
         </div>
-        <div className="w-full flex flex-col md:flex-row gap-[6px] justify-center items-center">
+        <div className="w-full flex flex-col md:flex-row gap-[6px] justify-center items-center mt-2">
           <InfoField
             title={"اجمالي تكاليف بضاعة المخزون الحالية"}
-            total={isForTrail ? 125500 : data?.totalCostsPrice}
+            // total={data?.totalCostsPrice ?? 0}
+            total={"تجريبي" as any}
             uom={`ج.م`}
           />
           <InfoField
             title={"اجمالي اسعار بضاعة المخزون الحالية"}
-            total={isForTrail ? 165000 : data?.totalSortsPrices}
+            // total={data?.totalSortsPrices ?? 0}
+            total={"تجريبي" as any}
             uom={`ج.م`}
           />
         </div>
         <div className="w-full mt-[8px] flex flex-col md:flex-row gap-[6px] justify-center items-center">
-          <InfoField title={"اجمالي ديون الزبائن"} total={data?.clientsDepts} uom={`ج.م`} />
-          <InfoField title={"اجمالي ديونك للموردين"} total={data?.myDepts} uom={`ج.م`} />
+          <InfoField
+            title={"اجمالي ديون الزبائن"}
+            //  total={data?.clientsDepts}
+            total={"تجريبي" as any}
+            uom={`ج.م`}
+          />
+          <InfoField
+            title={"اجمالي ديونك للموردين"}
+            // total={data?.myDepts}
+            total={"تجريبي" as any}
+            uom={`ج.م`}
+          />
         </div>
       </section>
-      {editBalance && (
+      {false && (
         <>
           <BlackLayer onClick={() => setEditBalance(false)}>
             <EditPeriodPopup

@@ -30,9 +30,9 @@ export default function SortsTableRows({
     <>
       <tr>
         <td className="px-4 py-2 text-center">{index}</td>
-        <td className="px-4 py-2 text-center">{name ?? "لا يوجد"}</td>
-        <td className="px-4 py-2 text-center">{color ?? "لا يوجد"}</td>
-        <td className="px-4 py-2 text-center">{size ?? "لا يوجد"}</td>
+        <td className="px-4 py-2 text-center">{name && name !== "" ? name : "لا يوجد"}</td>
+        <td className="px-4 py-2 text-center">{color && color !== "" ? color : "لا يوجد"}</td>
+        <td className="px-4 py-2 text-center">{size && size !== "" ? size : "لا يوجد"}</td>
         <td
           onClick={() =>
             openPopup("editQtyPopup", {

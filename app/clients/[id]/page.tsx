@@ -1,25 +1,33 @@
 "use client";
 import BlackLayer from "@/app/components/common/black-layer";
+import AddCarForm from "@/app/components/forms & alerts/add-car-form";
 import AddUserForm from "@/app/components/forms & alerts/add-user-form";
-import OrdersTable from "@/app/components/tables/orders-table";
+import DeleteAlert from "@/app/components/forms & alerts/delete-alert";
+import CarsTable from "@/app/components/tables/cars-table";
 import PhonesTable from "@/app/components/tables/phones.table";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import {
+  ADD_CAR_REQ,
   CLIENT_COLLECTOR_REQ,
+  DELETE_CAR_REQ,
+  EDIT_CAR_REQ,
   GET_CLIENT_PROFILE_REQ,
 } from "@/app/utils/requests/client-side.requests";
-import { ClientInterface, OrderInterface, PhoneInterface } from "@/app/utils/types/interfaces";
+import { CarsInterface, ClientInterface, PhoneInterface } from "@/app/utils/types/interfaces";
+import { Button } from "@mui/material";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { CiEdit } from "react-icons/ci";
 
 export default function Client() {
   const router = useRouter();
   const params = useParams();
-  const { openPopup } = usePopup();
+  const { openPopup, popupState, closePopup } = usePopup();
   const id = params.id;
   const [edit, setEdit] = useState(false);
   const [data, setData] = useState<ClientInterface>();
+  const [addCar, setAddCar] = useState(false);
+
   const handleClose = () => {
     setEdit(false);
   };
@@ -39,23 +47,6 @@ export default function Client() {
     handleClose();
     fetchData();
   };
-  const allDepts = useMemo(() => {
-    if (!data?.orders) return;
-    const installmentOrders = data.orders.filter((e) => e.payment.status === "installments");
-    let depts = 0;
-    for (const order of installmentOrders) {
-      const totalPriceAfter =
-        Number(order.total_price) *
-          (order.tax && order.tax !== "0" ? Number(order.tax.slice(0, 2)) / 100 + 1 : 1) -
-        (order.discount ? Number(order.discount) : 0) +
-        (order.additional_fees ? Number(order.additional_fees) : 0);
-      const paid =
-        (order.payment.down_payment || 0) +
-        (order.payment.installments?.reduce((acc, curr) => acc + curr.amount, 0) || 0);
-      depts += totalPriceAfter - paid;
-    }
-    return Number(Number(depts).toFixed(2)).toLocaleString();
-  }, [data?.orders]);
   return (
     <>
       <div className="flex flex-col items-center px-mainxs gap-mainxs w-full ml-auto !gap-[40px] mb-mainxl">
@@ -72,7 +63,7 @@ export default function Client() {
               <p className="text-mdDark mt-2">
                 الرقم الضريبي: {data?.tax_num && data?.tax_num !== "" ? data?.tax_num : "لا يوجد"}
               </p>
-              <p className="text-mdDark mt-2">اجمالي الديون: {allDepts} ج.م</p>
+              {/* <p className="text-mdDark mt-2">اجمالي الديون: {allDepts} ج.م</p> */}
             </div>
             <CiEdit
               onClick={() => setEdit(true)}
@@ -88,13 +79,18 @@ export default function Client() {
             refetch={fetchData}
           />
         </div>
-        <div className="w-full">
-          <OrdersTable
-            refetch={fetchData}
-            data={data?.orders as OrderInterface[]}
-            tableFor="client"
-            title="الفواتير المسجلة للعميل"
-          />
+        <div className="w-full relative">
+          <CarsTable data={data?.cars as CarsInterface[]} title="سيارات العميل" />
+          <div className="!absolute left-[5px] top-[-5px] flex gap-2 items-center">
+            <Button
+              onClick={() => setAddCar(true)}
+              sx={{ fontFamily: "cairo" }}
+              className="bg-mdDark!"
+              variant="contained"
+            >
+              اضافة سيارة جديدة
+            </Button>
+          </div>
         </div>
       </div>
       {edit && (
@@ -112,6 +108,61 @@ export default function Client() {
             />
           </BlackLayer>
         </>
+      )}
+      {popupState.carForm.isOpen && (
+        <BlackLayer onClick={() => closePopup("carForm")}>
+          <AddCarForm
+            onAdded={async (obj: any) => {
+              const response = await CLIENT_COLLECTOR_REQ(EDIT_CAR_REQ, obj);
+              if (response.done) {
+                openPopup("snakeBarPopup", { message: "تم تعديل السيارة بنجاح.", type: "success" });
+                closePopup("carForm");
+                fetchData();
+              } else {
+                openPopup("snakeBarPopup", { message: response.message });
+              }
+            }}
+            isForEdit={popupState.carForm.data}
+            client_id={data?.id as string}
+          />
+        </BlackLayer>
+      )}
+      {addCar && (
+        <BlackLayer onClick={() => setAddCar(false)}>
+          <AddCarForm
+            onAdded={async (obj: any) => {
+              const response = await CLIENT_COLLECTOR_REQ(ADD_CAR_REQ, obj);
+              if (response.done) {
+                openPopup("snakeBarPopup", { message: "تم اضافة السيارة بنجاح.", type: "success" });
+                setAddCar(false);
+                fetchData();
+              } else {
+                openPopup("snakeBarPopup", { message: response.message });
+              }
+            }}
+            client_id={data?.id as string}
+          />
+        </BlackLayer>
+      )}
+      {popupState.deleteAlertPopup.isOpen && (
+        <BlackLayer onClick={() => closePopup("deleteAlertPopup")}>
+          <DeleteAlert
+            name={popupState.deleteAlertPopup.data?.mark}
+            action="حذف"
+            onConfirm={async () => {
+              const response = await CLIENT_COLLECTOR_REQ(DELETE_CAR_REQ, {
+                id: popupState.deleteAlertPopup.data?.id,
+              });
+              if (response.done) {
+                openPopup("snakeBarPopup", { message: "تم حذف السيارة بنجاح.", type: "success" });
+                closePopup("deleteAlertPopup");
+                fetchData();
+              } else {
+                openPopup("snakeBarPopup", { message: response.message });
+              }
+            }}
+          />
+        </BlackLayer>
       )}
     </>
   );

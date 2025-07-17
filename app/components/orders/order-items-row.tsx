@@ -22,7 +22,7 @@ export default function OrderItemsTableRow({
     name: string;
   };
   name: string;
-  size: number;
+  size: string;
   color: string | null;
   qty: number;
   unit_price: number;
@@ -75,9 +75,9 @@ export default function OrderItemsTableRow({
             {product.name}
           </p>
         </td>
-        <td className="px-4 py-2 text-center">{name}</td>
-        <td className="px-4 py-2 text-center">{size}</td>
-        <td className="px-4 py-2 text-center">{color ?? "لا يوجد"}</td>
+        <td className="px-4 py-2 text-center">{name && name !== "" ? name : "لا يوجد"}</td>
+        <td className="px-4 py-2 text-center">{size && size !== "" ? size : "لا يوجد"}</td>
+        <td className="px-4 py-2 text-center">{color && color !== "" ? color : "لا يوجد"}</td>
         <td className="px-4 py-2 text-center">{qty}</td>
         <td className="px-4 py-2 text-center">{formattedUnitPrice} ج.م</td>
         <td className="px-4 py-2 text-center">{formattedEarnig} ج.م</td>

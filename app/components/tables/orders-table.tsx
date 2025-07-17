@@ -11,12 +11,10 @@ import InstallmentsPopUp from "../orders/installments-popup";
 
 export default function OrdersTable({
   title,
-  tableFor,
   data,
   refetch,
 }: {
   title: string;
-  tableFor: "client" | "overview";
   data: OrderInterface[];
   refetch?: any;
 }) {
@@ -25,43 +23,39 @@ export default function OrdersTable({
   const headers = [
     "*",
     "العميل",
+    "السيارة",
     "الطلبات",
-    "الفاتورة",
     "ضريبة القيمة المضافة",
     "الخصم",
-    "المصروف الاضافي",
-    "الفاتورة بعد الضريبة والخصم",
+    "المصنعية",
+    "الفاتورة",
     "طريقة الدفع",
     "حالة الدفع",
     "التاريخ",
     "العمليات",
   ];
-  if (tableFor === "client") {
-    headers.splice(1, 1);
-  }
-  const columns = [
-    { name: "order.short_id", slug: "رقم الفاتورة" },
-    { name: "client.user_name", slug: "العميل" },
-  ];
+  // const columns = [
+  //   { name: "order.short_id", slug: "رقم الفاتورة" },
+  //   { name: "client.user_name", slug: "العميل" },
+  // ];
   console.log(data);
   return (
     <>
-      <MainTable
-        title={title}
-        headers={headers}
-        filter={[tableFor === "client" ? false : true, "orders", columns]}
-      >
+      <MainTable title={title} headers={headers}>
         {data?.map((row, index) => (
           <OrdersTableRow
             key={index}
             id={row.id}
-            client={{ client_id: row?.client?.id, name: row?.client?.user_name }}
+            client={{
+              client_id: row?.car?.client?.id as string,
+              name: row?.car?.client?.user_name as string,
+            }}
+            car={row?.car}
             index={index + 1}
-            earning={+row.total_price}
+            earning={+row.total_price_after}
             payment_method={row.payment.payment_method}
             payment_status={row.payment.status}
             date={row.created_at}
-            tableFor={tableFor}
             tax={row.tax}
             additional_fees={row.additional_fees}
             discount={row.discount}

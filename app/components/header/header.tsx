@@ -12,12 +12,12 @@ import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { BaseLogosUrl } from "@/app/utils/base";
-import axios from "axios";
+// import axios from "axios";
 
 export default function Header({ logo }: { logo: string }) {
   const router = useRouter();
   const [list, setList] = useState(false);
-  const [isAllowed, setIsAllowd] = useState(true);
+  // const [isAllowed, setIsAllowd] = useState(true);
   const { user, setUser } = useUser();
   const path = usePathname();
   const handleClose = () => {
@@ -34,26 +34,26 @@ export default function Header({ logo }: { logo: string }) {
     };
     fetchData();
   }, []);
-  useEffect(() => {
-    const isAllowed: any = async () => {
-      const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL + "/api";
-      try{
-        const response = await axios.post(BASE_URL + '/tenants/check-independent-tenant', {tenant_id: user?.tenant_id})
-        setIsAllowd(response.data?.allowed)
-      } catch (err) {
-        console.error(err);
-        setIsAllowd(false)
-      }
-    }
-    if(window.location.hostname === 'localhost' && user) {
-      isAllowed()
-  }
-  }, [user])
-  useEffect(() => {
-    if(!isAllowed) {
-      router.replace('log-in')
-    }
-  }, [isAllowed]);
+  // useEffect(() => {
+  //   const isAllowed: any = async () => {
+  //     const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL + "/api";
+  //     try{
+  //       const response = await axios.post(BASE_URL + '/tenants/check-independent-tenant', {tenant_id: user?.tenant_id})
+  //       setIsAllowd(response.data?.allowed)
+  //     } catch (err) {
+  //       console.error(err);
+  //       setIsAllowd(false)
+  //     }
+  //   }
+  //   if(window.location.hostname === 'localhost' && user) {
+  //     isAllowed()
+  // }
+  // }, [user])
+  // useEffect(() => {
+  //   if(!isAllowed) {
+  //     router.replace('log-in')
+  //   }
+  // }, [isAllowed]);
   useEffect(() => {
     setList(false);
   }, [path]);

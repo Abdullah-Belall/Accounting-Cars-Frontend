@@ -42,7 +42,9 @@ export default function AllSortsTableRows({
         <td className="px-4 py-2 text-center max-w-[69px]">
           <input
             placeholder="الكمية"
-            className={`${qty == 0 && "opacity-[.4]"} rounded-md placeholder:text-[12px] outline-0 border border-myDark max-w-[45px] h-[35] mr-2 text-center`}
+            className={`${
+              qty == 0 && "opacity-[.4]"
+            } rounded-md placeholder:text-[12px] outline-0 border border-myDark max-w-[45px] h-[35] mr-2 text-center`}
             value={inputValue?.qty ?? ""}
             onChange={(e) =>
               +e.target.value > +qty
@@ -53,10 +55,12 @@ export default function AllSortsTableRows({
           />
         </td>
         <td className="px-4 py-2 text-center">{product?.name}</td>
-        <td className="px-4 py-2 text-center">{name}</td>
-        <td className="px-4 py-2 text-center">{color ?? "لا يوجد"}</td>
-        <td className="px-4 py-2 text-center">{product?.material}</td>
-        <td className="px-4 py-2 text-center">{size ?? "لا يوجد"}</td>
+        <td className="px-4 py-2 text-center">{name && name !== "" ? name : "لا يوجد"}</td>
+        <td className="px-4 py-2 text-center">{color && color !== "" ? color : "لا يوجد"}</td>
+        <td className="px-4 py-2 text-center">
+          {product?.material && product?.material !== "" ? product?.material : "لا يوجد"}
+        </td>
+        <td className="px-4 py-2 text-center">{size && size !== "" ? size : "لا يوجد"}</td>
         <td className="px-4 py-2 text-center">{qty}</td>
         <td className="px-4 py-2 text-center">
           {Number(Number(unit_price).toFixed(2)).toLocaleString()} ج.م

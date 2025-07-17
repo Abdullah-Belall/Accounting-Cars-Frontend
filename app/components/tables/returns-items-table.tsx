@@ -7,7 +7,7 @@ export default function ReturnsItemsTable({ data }: { data: ReturnDataInterface 
   return (
     <>
       <MainTable
-        title={`عناصر المرتجع رقم ${data?.short_id?.slice(4)}`}
+        title={`عناصر المرتجع رقم ${data?.short_id}`}
         headers={[
           "*",
           "رقم المبيعات",
@@ -34,7 +34,7 @@ export default function ReturnsItemsTable({ data }: { data: ReturnDataInterface 
             order_item={row.order_item}
             created_at={row?.created_at}
             updated_at={row?.updated_at}
-            order={data?.order}
+            order={data?.order as any}
           />
         ))}
       </MainTable>

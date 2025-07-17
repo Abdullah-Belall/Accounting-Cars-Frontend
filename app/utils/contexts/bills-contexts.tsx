@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, ReactNode } from "react";
+import { CarsInterface } from "../types/interfaces";
 
 export type BillsDataType = {
   color: string | null;
@@ -20,15 +21,13 @@ export type BillsDataType = {
 type BillsValueType = {
   type: "order" | "return" | null;
   bill_id: string | null;
-  client: {
-    name: string | null;
-    id: string | null;
-  };
+  car: CarsInterface | null;
   data?: BillsDataType[];
   totals: {
     totalPrice: string;
     tax: string;
     discount: string;
+    additional_fees: number;
     paid_status: string;
     installment_type?: string;
     down_payment?: string;
@@ -50,14 +49,12 @@ export const BillesProvider = ({ children }: { children: ReactNode }) => {
   const [bills, setBills] = useState<BillsValueType>({
     type: null,
     bill_id: null,
-    client: {
-      name: null,
-      id: null,
-    },
+    car: null,
     data: [],
     totals: {
       totalPrice: "",
       tax: "",
+      additional_fees: 0,
       discount: "",
       paid_status: "",
       installment_type: "",
@@ -70,14 +67,12 @@ export const BillesProvider = ({ children }: { children: ReactNode }) => {
     setBills({
       type: null,
       bill_id: null,
-      client: {
-        name: null,
-        id: null,
-      },
+      car: null,
       data: [],
       totals: {
         totalPrice: "",
         tax: "",
+        additional_fees: 0,
         discount: "",
         paid_status: "",
         installment_type: "",

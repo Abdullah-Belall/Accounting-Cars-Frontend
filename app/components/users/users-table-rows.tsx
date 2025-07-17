@@ -11,7 +11,7 @@ export default function UsersTableRows({
   id,
   name,
   tax_num,
-  completed_orders,
+  cars_count,
   date,
   phone_count,
   type,
@@ -24,7 +24,7 @@ export default function UsersTableRows({
   id: string;
   name: string;
   tax_num: string;
-  completed_orders: number;
+  cars_count: number;
   phone_count: number;
   addresses_count: number;
   date: Date;
@@ -40,7 +40,7 @@ export default function UsersTableRows({
 
   const HandleUi = () => {
     if (isForOrder) {
-      if (popupState.makeOrderPopup.data.client?.id === id) {
+      if (popupState.makeOrderPopup.data.car?.id === id) {
         return (
           <Radio
             checked
@@ -125,7 +125,7 @@ export default function UsersTableRows({
             {!tax_num || tax_num === "" ? "لا يوجد" : tax_num}
           </td>
         )}
-        {type === "client" && <td className="px-4 py-2 text-center">{completed_orders}</td>}
+        {type === "client" && <td className="px-4 py-2 text-center">{cars_count}</td>}
         {type === "worker" && <td className="px-4 py-2 text-center">{role}</td>}
         {type === "worker" && (
           <td className="px-4 py-2 text-center">{salary ? `ج.م ${salary}` : "غير محدد"}</td>

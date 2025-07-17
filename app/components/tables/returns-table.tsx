@@ -17,16 +17,17 @@ export default function ReturnsTable({
   isMainTable: boolean;
 }) {
   const { popupState, closePopup } = usePopup();
-  const calcTotalPrice = () => {
-    let totalPrice = 0;
-    for (const item of data) {
-      totalPrice +=
-        item?.returns_items?.reduce(
-          (acc, curr) => acc + Number(curr.qty) * Number(curr.unit_price),
-          0
-        ) || 0;
-    }
-    return totalPrice;
+  const calcTotalPrice = (
+    returns_items: {
+      id: string;
+      qty: number;
+      unit_price: number;
+    }[]
+  ) => {
+    return returns_items?.reduce(
+      (acc, curr) => acc + Number(curr.qty) * Number(curr.unit_price),
+      0
+    );
   };
   return (
     <>
@@ -56,11 +57,11 @@ export default function ReturnsTable({
               key={index}
               id={row?.id}
               order={row?.order}
-              totalPrice={calcTotalPrice()}
+              totalPrice={calcTotalPrice(row?.returns_items)}
               returns_items_count={row?.returns_items_count}
               created_at={row?.created_at}
               updated_at={row?.updated_at}
-              short_id={row.short_id}
+              short_id={row?.short_id}
             />
           );
         })}

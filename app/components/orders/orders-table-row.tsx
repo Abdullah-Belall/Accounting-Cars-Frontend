@@ -6,6 +6,7 @@ import {
   CLIENT_COLLECTOR_REQ,
   GET_ORDER_ITEMS_REQ,
 } from "@/app/utils/requests/client-side.requests";
+import { CarsInterface } from "@/app/utils/types/interfaces";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { CiEdit } from "react-icons/ci";
@@ -16,7 +17,6 @@ export default function OrdersTableRow({
   payment_method,
   payment_status,
   date,
-  tableFor,
   id,
   tax,
   discount,
@@ -27,6 +27,7 @@ export default function OrdersTableRow({
   down_payment,
   installment,
   next_payment_date,
+  car,
 }: {
   index: number;
   id: string;
@@ -34,7 +35,6 @@ export default function OrdersTableRow({
   payment_method: string;
   payment_status: string;
   date: Date;
-  tableFor: "client" | "overview";
   client: {
     client_id: string;
     name: string;
@@ -47,20 +47,12 @@ export default function OrdersTableRow({
   down_payment?: number;
   installment?: number;
   next_payment_date?: Date;
+  car: CarsInterface;
 }) {
   const router = useRouter();
   const { setBills } = useBills();
   const formattedEarnig = earning.toLocaleString();
-  let totalPriceAfter = earning;
-  if (tax != "0") {
-    totalPriceAfter = (totalPriceAfter * Number(tax)) / 100 + totalPriceAfter;
-  }
-  if (discount) {
-    totalPriceAfter -= discount;
-  }
-  if (additional_fees) {
-    totalPriceAfter += Number(additional_fees);
-  }
+  const totalPriceAfter = earning;
   const { openPopup } = usePopup();
   const paymentMethodSlug = (method: string) => {
     return methodsArray.find((e) => e.value === method)?.label;
@@ -89,17 +81,12 @@ export default function OrdersTableRow({
       setBills({
         type: "order",
         bill_id: data?.short_id,
-        client: {
-          name: data?.client.user_name,
-          id: data?.client?.id,
-        },
+        car: data?.car,
         data: sortsData,
         totals: {
-          totalPrice: (
-            data?.total_price * (data?.tax && data?.tax !== "" ? Number(data?.tax) / 100 + 1 : 1) -
-            (data?.discount === "" ? 0 : Number(data?.discount))
-          ).toString(),
+          totalPrice: data?.total_price_after,
           tax: data?.tax + "%",
+          additional_fees: data?.additional_fees,
           discount: data?.discount,
           paid_status: getSlug(paidStatusArray, data?.payment.status),
           payment_method: getSlug(methodsArray, data?.payment?.payment_method),
@@ -113,35 +100,43 @@ export default function OrdersTableRow({
     payment_status === "paid"
       ? "bg-green-900 text-green-300"
       : payment_status === "installments"
-        ? "bg-yellow-900 text-yellow-300"
-        : "bg-red-900 text-red-300";
+      ? "bg-yellow-900 text-yellow-300"
+      : "bg-red-900 text-red-300";
 
   console.log(installment);
   console.log(installment_type);
   return (
     <>
       <tr>
-        <td className="px-4 py-2 text-center">{short_id.slice(4)}</td>
-        {tableFor === "overview" && (
-          <td className="px-4 py-2 text-center cursor-pointer font-semibold hover:no-underline underline">
+        <td className="px-4 py-2 text-center">{short_id}</td>
+        <td className="px-4 py-2">
+          <p className="cursor-pointer font-semibold hover:no-underline underline w-fit mx-auto">
             <Link href={`/clients/${client_id}`}>{name}</Link>
-          </td>
-        )}
+          </p>
+        </td>
+        <td className="px-4 py-2 text-center">
+          {car?.mark && car?.mark !== "" ? (
+            <p className="cursor-pointer font-semibold hover:no-underline underline w-fit mx-auto">
+              <Link href={`/clients/${client_id}/car/${car?.id}?client=${name}&car=${car?.mark}`}>
+                {car?.mark}
+              </Link>
+            </p>
+          ) : (
+            "لا يوجد"
+          )}
+        </td>
         <td className="px-4 py-2">
           <p
-            onClick={() => openPopup("ordersPopup", { id, index: short_id.slice(4) })}
+            onClick={() => openPopup("ordersPopup", { id, index: short_id })}
             className="cursor-pointer text-nowrap font-semibold hover:no-underline underline w-fit mx-auto"
           >
             عرض الكل
           </p>
         </td>
-        <td className="px-4 py-2 text-center">{formattedEarnig} ج.م</td>
         <td className="px-4 py-2 text-center">{tax}%</td>
         <td className="px-4 py-2 text-center">{discount} ج.م</td>
         <td className="px-4 py-2 text-center">ج.م {additional_fees ?? 0}</td>
-        <td className="px-4 py-2 text-center">
-          {totalPriceAfter > 0 ? totalPriceAfter.toLocaleString() : 0} ج.م
-        </td>
+        <td className="px-4 py-2 text-center">{formattedEarnig} ج.م</td>
         <td className="px-4 py-2 text-center">{paymentMethodSlug(payment_method)}</td>
         <td className="px-4 py-2 text-center">
           <button
@@ -149,7 +144,7 @@ export default function OrdersTableRow({
               payment_status === "installments"
                 ? openPopup("installmentsPopup", {
                     id,
-                    short_id: short_id.slice(4),
+                    short_id: short_id,
                     installment,
                     installment_type,
                     down_payment,
@@ -158,7 +153,9 @@ export default function OrdersTableRow({
                   })
                 : null
             }
-            className={`${statusColor} ${payment_status === "installments" && "cursor-pointer"} w-fit text-nowrap mx-auto px-2 py-1 rounded-[4px] text-center`}
+            className={`${statusColor} ${
+              payment_status === "installments" && "cursor-pointer"
+            } w-fit text-nowrap mx-auto px-2 py-1 rounded-[4px] text-center`}
           >
             {paymentStatusSlug(payment_status)}
           </button>
@@ -178,10 +175,11 @@ export default function OrdersTableRow({
                   id,
                   tax: `${tax}%`,
                   discount,
+                  additional_fees,
                   earning,
                   payment_method,
                   payment_status,
-                  index: short_id.slice(4),
+                  index: short_id,
                   installment_type,
                   down_payment,
                   installment,

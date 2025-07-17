@@ -1556,6 +1556,145 @@ const ADD_SUPPLIER_REQ = async (data: { user_name: string }) => {
     };
   }
 };
+//?==============================
+const ADD_CAR_REQ = async ({ id, data }: { id: string; data: any }) => {
+  try {
+    const response: any = await axios.post(`${BASE_URL}/cars/${id}`, data, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const EDIT_CAR_REQ = async ({ id, data }: { id: string; data: any }) => {
+  try {
+    const response: any = await axios.patch(`${BASE_URL}/cars/${id}`, data, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const GET_CAR_REQ = async ({ id }: { id: string }) => {
+  try {
+    const response: any = await axios.get(`${BASE_URL}/cars/${id}`, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const DELETE_CAR_REQ = async ({ id }: { id: string }) => {
+  try {
+    const response: any = await axios.delete(`${BASE_URL}/cars/${id}`, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const GET_ALL_CAR_REQ = async () => {
+  try {
+    const response: any = await axios.get(`${BASE_URL}/cars`, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.cars) {
+      return { done: true, data: response?.data };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const GET_CAR_ORDERS_REQ = async ({ id }: { id: string }) => {
+  try {
+    const response: any = await axios.get(`${BASE_URL}/orders/car/${id}`, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.orders) {
+      return { done: true, data: response?.data };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
 //* MAIN FUNCTION (USED FOR ALL REQUESTS THAT NEED ACCESS_TOKEN)
 const CLIENT_COLLECTOR_REQ = async (varFunction: any, dataBody?: any) => {
   const access_token = getCookie("access_token");
@@ -1582,6 +1721,11 @@ const getCookie = (keyName: string): string | null => {
 };
 
 export {
+  GET_CAR_ORDERS_REQ,
+  ADD_CAR_REQ,
+  EDIT_CAR_REQ,
+  GET_CAR_REQ,
+  DELETE_CAR_REQ,
   LOGIN_REQ,
   CLIENT_COLLECTOR_REQ,
   GET_CATEGORIES_REQ,
@@ -1648,4 +1792,5 @@ export {
   GET_SUPPLIERS_BILLS_REQ,
   PAY_SUPPLIERS_REQ,
   GET_ONE_COST_REQ,
+  GET_ALL_CAR_REQ,
 };

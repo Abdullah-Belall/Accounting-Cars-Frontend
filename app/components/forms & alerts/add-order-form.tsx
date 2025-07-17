@@ -3,12 +3,11 @@ import { TextField, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import SelectList from "../common/select-list";
 import styles from "@/app/styles/drop-down.module.css";
-import UsersTable from "../tables/users-table";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import {
   ADD_ORDER_REQ,
   CLIENT_COLLECTOR_REQ,
-  GET_ALL_CLIENTS_REQ,
+  GET_ALL_CAR_REQ,
 } from "@/app/utils/requests/client-side.requests";
 import {
   getSlug,
@@ -21,6 +20,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useBills } from "@/app/utils/contexts/bills-contexts";
 import { TbCircleXFilled } from "react-icons/tb";
+import CarsTable from "../tables/cars-table";
 
 export default function AddOrderForm({ closePopup }: { closePopup: () => void }) {
   const router = useRouter();
@@ -85,9 +85,9 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
   };
 
   const fetchData = async () => {
-    const response = await CLIENT_COLLECTOR_REQ(GET_ALL_CLIENTS_REQ);
+    const response = await CLIENT_COLLECTOR_REQ(GET_ALL_CAR_REQ);
     if (response.done) {
-      setData(response.data.clients);
+      setData(response.data.cars);
     }
   };
   useEffect(() => {
@@ -103,9 +103,8 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
       (formData.tax && formData.tax !== "" ? Number(formData.tax.slice(0, 2)) / 100 + 1 : 1) -
     (formData.discount === "" ? 0 : Number(formData.discount)) +
     (formData.additional_fees === "" ? 0 : Number(formData.additional_fees));
-
   const validation = () => {
-    if (!popupState.makeOrderPopup.data.client) {
+    if (!popupState.makeOrderPopup.data.car) {
       openSnakeBar("يجب اختيار عميل للمتابعة.");
       return false;
     }
@@ -166,7 +165,7 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
   const handleDone = async () => {
     if (!validation()) return;
     const finalObj: any = {
-      client_id: popupState.makeOrderPopup.data.client?.id,
+      car_id: popupState.makeOrderPopup.data.car?.id,
       product_sorts: JSON.stringify(popupState.makeOrderPopup.data.product_sorts),
       ...formData,
     };
@@ -195,7 +194,7 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
       delete finalObj.installment_type;
     }
     const response = await CLIENT_COLLECTOR_REQ(ADD_ORDER_REQ, {
-      client_id: popupState.makeOrderPopup.data.client?.id,
+      car_id: popupState.makeOrderPopup.data.car?.id,
       ...finalObj,
     });
     if (response.done) {
@@ -218,17 +217,12 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
       setBills({
         type: "order",
         bill_id: data?.short_id,
-        client: {
-          name: data?.client.user_name,
-          id: data?.client?.id,
-        },
+        car: data.car,
         data: sortsData,
         totals: {
-          totalPrice: (
-            data?.total_price * (data?.tax && data?.tax !== "" ? Number(data?.tax) / 100 + 1 : 1) -
-            (data?.discount === "" ? 0 : Number(data?.discount))
-          ).toString(),
+          totalPrice: data?.total_price_after,
           tax: data?.tax + "%",
+          additional_fees: data?.additional_fees,
           discount: data?.discount,
           paid_status: getSlug(paidStatusArray, data?.payment.status),
           installment_type: getSlug(periodsArray, formData.installment_type),
@@ -239,7 +233,8 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
         },
       });
       closeOrderPopup("makeOrderPopup");
-      router.push("/bill");
+      const rabi3 = ["localhost", "alrabi3-trail.nabdtech.store"];
+      router.push(rabi3.includes(window.location.hostname) ? "/rabi3-bill" : "bill");
     } else {
       openSnakeBar(response.message);
     }
@@ -269,7 +264,7 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
         >
           <div className="w-full">
             <h2 className="text-lg text-center font-semibold mb-1">انشاء طلب جديد</h2>
-            <UsersTable type="client" forOrder={true} data={data} isPopup={true} />
+            <CarsTable title={"حدد السيارة"} data={data} order={true} />
           </div>
           <div className="w-full flex gap-2 items-center mt-2.5">
             <SelectList
@@ -322,7 +317,11 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
             </SelectList>
           </div>
           <div
-            className={`${formData.paid_status === "installments" ? "h-[114px] md:h-[53px] mt-1.5 overflow-visible" : "h-[0] overflow-hidden"} duration-[.3s] transition-[margin height] w-full flex flex-col md:flex-row gap-2 items-center`}
+            className={`${
+              formData.paid_status === "installments"
+                ? "h-[114px] md:h-[53px] mt-1.5 overflow-visible"
+                : "h-[0] overflow-hidden"
+            } duration-[.3s] transition-[margin height] w-full flex flex-col md:flex-row gap-2 items-center`}
           >
             <SelectList
               placeHolder="نوع القسط"
@@ -431,7 +430,7 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
               <TextField
                 id="Glu"
                 dir="rtl"
-                label="مصاريف اضافية"
+                label="مصنعية"
                 variant="filled"
                 sx={sameTextField}
                 value={formData.additional_fees}
