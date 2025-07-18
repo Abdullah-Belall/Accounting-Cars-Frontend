@@ -255,6 +255,30 @@ const ADD_ORDER_REQ = async (data: AddOrderInterface) => {
     };
   }
 };
+const ADD_ORDER_NOSORTS_REQ = async (data: AddOrderInterface) => {
+  try {
+    const response: any = await axios.post(`${BASE_URL}/orders/no-sorts`, data, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+
+    if (response?.data?.done) {
+      return { done: true, data: response.data.order };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
 const ADD_PRODUCT_REQ = async (data: AddProductInterface) => {
   try {
     const response: any = await axios.post(`${BASE_URL}/products`, data, {
@@ -1793,4 +1817,5 @@ export {
   PAY_SUPPLIERS_REQ,
   GET_ONE_COST_REQ,
   GET_ALL_CAR_REQ,
+  ADD_ORDER_NOSORTS_REQ,
 };

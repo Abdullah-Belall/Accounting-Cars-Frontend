@@ -72,7 +72,7 @@ export default function OrderItemsTable({
       color: item?.sort?.color,
       index: index + 1,
       id: item?.sort?.id,
-      name: item?.sort?.name,
+      name: item?.sort?.name || item?.additional_band,
       size: item?.sort?.size,
       qty: item?.qty,
       unit_price: item?.unit_price,
@@ -112,11 +112,11 @@ export default function OrderItemsTable({
             index={index + 1}
             id={row.id}
             product={row?.sort?.product}
-            name={row?.sort.name}
-            size={row?.sort.size}
-            color={row?.sort.color !== "" ? row?.sort.color : null}
-            qty={row.qty}
-            unit_price={+row.unit_price}
+            name={row?.sort?.name || row?.additional_band}
+            size={row?.sort?.size}
+            color={row?.sort?.color !== "" ? row?.sort?.color : null}
+            qty={row?.qty}
+            unit_price={+row?.unit_price}
           />
         ))}
       </MainTable>

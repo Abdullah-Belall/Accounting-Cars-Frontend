@@ -1,5 +1,5 @@
 "use client";
-import { formatDate } from "@/app/utils/base";
+import { formatDate, shortIdGenerator } from "@/app/utils/base";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import { CostsInterface } from "@/app/utils/types/interfaces";
 import { useRouter } from "next/navigation";
@@ -20,7 +20,7 @@ export default function CostsTableRows({
   return (
     <>
       <tr>
-        <td className="px-4 py-2 text-center">{short_id}</td>
+        <td className="px-4 py-2 text-center">{shortIdGenerator(short_id)}</td>
         <td className="px-4 py-2">
           <p
             onClick={() => {

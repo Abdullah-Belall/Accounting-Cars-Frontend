@@ -48,7 +48,7 @@ export default function OrderItemsTableRow({
     <>
       <tr>
         <td className="text-center">
-          {returns?.isActive ? (
+          {returns?.isActive && product?.name ? (
             <input
               placeholder="الكمية"
               className="rounded-md placeholder:text-[10px] outline-0 border border-myDark max-w-[40px] h-[30] mr-2 text-center"
@@ -65,15 +65,19 @@ export default function OrderItemsTableRow({
           )}
         </td>
         <td className="px-4 py-2 text-center">
-          <p
-            onClick={() => {
-              router.push(`/products`);
-              openPopup("sortsPopup", { id: product.id, name: product.name });
-            }}
-            className="cursor-pointer font-semibold underline hover:no-underline w-fit mx-auto"
-          >
-            {product.name}
-          </p>
+          {product?.name ? (
+            <p
+              onClick={() => {
+                router.push(`/products`);
+                openPopup("sortsPopup", { id: product?.id, name: product?.name });
+              }}
+              className="cursor-pointer font-semibold underline hover:no-underline w-fit mx-auto"
+            >
+              {product?.name}
+            </p>
+          ) : (
+            "لا يوجد"
+          )}
         </td>
         <td className="px-4 py-2 text-center">{name && name !== "" ? name : "لا يوجد"}</td>
         <td className="px-4 py-2 text-center">{size && size !== "" ? size : "لا يوجد"}</td>

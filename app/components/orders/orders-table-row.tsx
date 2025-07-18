@@ -1,5 +1,12 @@
 "use client";
-import { formatDate, getSlug, methodsArray, paidStatusArray } from "@/app/utils/base";
+import {
+  formatDate,
+  getBillHref,
+  getSlug,
+  methodsArray,
+  paidStatusArray,
+  shortIdGenerator,
+} from "@/app/utils/base";
 import { useBills } from "@/app/utils/contexts/bills-contexts";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import {
@@ -42,7 +49,7 @@ export default function OrdersTableRow({
   tax: string;
   discount: number;
   additional_fees?: number;
-  short_id: string;
+  short_id: number;
   installment_type?: string;
   down_payment?: number;
   installment?: number;
@@ -62,13 +69,14 @@ export default function OrdersTableRow({
   };
   const dataForPrint = async () => {
     const response: any = await CLIENT_COLLECTOR_REQ(GET_ORDER_ITEMS_REQ, { id });
+    console.log(response);
     if (response.done) {
       const data = response.data;
       const sortsData = data?.order_items?.map((item: any, index: number) => ({
         color: item?.sort?.color,
         index: index + 1,
         id: item?.sort?.id,
-        name: item?.sort?.name,
+        name: item?.sort?.name ?? item?.additional_band,
         size: item?.sort?.size,
         qty: item?.qty,
         unit_price: item?.unit_price,
@@ -93,7 +101,7 @@ export default function OrdersTableRow({
           created_at: data?.created_at,
         },
       });
-      router.push("/bill");
+      router.push(getBillHref(window.location.hostname));
     }
   };
   const statusColor =
@@ -108,7 +116,7 @@ export default function OrdersTableRow({
   return (
     <>
       <tr>
-        <td className="px-4 py-2 text-center">{short_id}</td>
+        <td className="px-4 py-2 text-center">{shortIdGenerator(short_id)}</td>
         <td className="px-4 py-2">
           <p className="cursor-pointer font-semibold hover:no-underline underline w-fit mx-auto">
             <Link href={`/clients/${client_id}`}>{name}</Link>

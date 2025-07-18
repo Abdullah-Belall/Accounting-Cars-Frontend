@@ -5,11 +5,13 @@ import SelectList from "../common/select-list";
 import styles from "@/app/styles/drop-down.module.css";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import {
+  ADD_ORDER_NOSORTS_REQ,
   ADD_ORDER_REQ,
   CLIENT_COLLECTOR_REQ,
   GET_ALL_CAR_REQ,
 } from "@/app/utils/requests/client-side.requests";
 import {
+  getBillHref,
   getSlug,
   methodsArray,
   paidStatusArray,
@@ -38,6 +40,7 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
     installment: string;
     down_payment: string;
     additional_fees: string | null;
+    additional_band: string | null;
   }>({
     payment_method: "",
     installment_type: "",
@@ -47,6 +50,7 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
     installment: "",
     down_payment: "",
     additional_fees: "",
+    additional_band: "",
   });
   const handleFormData = (key: keyof typeof formData, value: string) => {
     setFormData({ ...formData, [key]: value });
@@ -93,7 +97,7 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
   useEffect(() => {
     fetchData();
   }, []);
-  const totalPrice = popupState.makeOrderPopup.data.product_sorts.reduce(
+  const totalPrice = popupState.makeOrderPopup.data?.product_sorts.reduce(
     (acc: number, curr: { unit_price: number; qty: number }) =>
       acc + Number(curr.unit_price) * curr.qty,
     0
@@ -104,8 +108,9 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
     (formData.discount === "" ? 0 : Number(formData.discount)) +
     (formData.additional_fees === "" ? 0 : Number(formData.additional_fees));
   const validation = () => {
-    if (!popupState.makeOrderPopup.data.car) {
-      openSnakeBar("يجب اختيار عميل للمتابعة.");
+    const proSorts = popupState.makeOrderPopup.data?.product_sorts;
+    if (!popupState.makeOrderPopup.data?.car) {
+      openSnakeBar("يجب اختيار سيارة للمتابعة.");
       return false;
     }
     if (formData.payment_method === "") {
@@ -160,13 +165,34 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
       openSnakeBar("لا يمكن ان يكون الخصم اكبر من اجمالي السعر.");
       return false;
     }
+    if (formData.additional_band !== "" && formData.additional_fees === "") {
+      openSnakeBar("يجب تحديد قيمة بند المصنعية للمتابعة.");
+      return false;
+    }
+    if (formData.additional_band === "" && formData.additional_fees !== "") {
+      openSnakeBar("يجب تحديد اسم بند المصنعية للمتابعة.");
+      return false;
+    }
+    if (
+      (!proSorts || proSorts.length === 0) &&
+      formData.additional_band === "" &&
+      formData.additional_fees === ""
+    ) {
+      openSnakeBar("يجب تحديد اسم وقيمة بند المصنعية للمتابعة.");
+      return false;
+    }
     return true;
   };
   const handleDone = async () => {
     if (!validation()) return;
+    const product_sorts = [...popupState.makeOrderPopup.data?.product_sorts];
+    if (formData.additional_band) {
+      product_sorts.push({ product_id: formData.additional_band, qty: formData.additional_fees });
+      product_sorts.push("band");
+    }
     const finalObj: any = {
-      car_id: popupState.makeOrderPopup.data.car?.id,
-      product_sorts: JSON.stringify(popupState.makeOrderPopup.data.product_sorts),
+      car_id: popupState.makeOrderPopup.data?.car?.id,
+      product_sorts: JSON.stringify(product_sorts),
       ...formData,
     };
     finalObj.installment = installmentValue;
@@ -193,10 +219,25 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
       delete finalObj.down_payment;
       delete finalObj.installment_type;
     }
-    const response = await CLIENT_COLLECTOR_REQ(ADD_ORDER_REQ, {
-      car_id: popupState.makeOrderPopup.data.car?.id,
-      ...finalObj,
-    });
+    delete finalObj.additional_band;
+    let response;
+    if (
+      popupState.makeOrderPopup.data?.product_sorts &&
+      popupState.makeOrderPopup.data?.product_sorts?.length > 0
+    ) {
+      response = await CLIENT_COLLECTOR_REQ(ADD_ORDER_REQ, {
+        car_id: popupState.makeOrderPopup.data?.car?.id,
+        ...finalObj,
+      });
+    } else {
+      delete finalObj.product_sorts;
+      finalObj.additional_band = formData.additional_band;
+      finalObj.additional_fees = formData.additional_fees?.toString();
+      response = await CLIENT_COLLECTOR_REQ(ADD_ORDER_NOSORTS_REQ, {
+        car_id: popupState.makeOrderPopup.data?.car?.id,
+        ...finalObj,
+      });
+    }
     if (response.done) {
       openPopup("snakeBarPopup", { message: "تم انشاء الفاتورة بنجاح.", type: "success" });
       const data = response.data;
@@ -204,7 +245,7 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
         color: item?.sort?.color,
         index: index + 1,
         id: item?.sort?.id,
-        name: item?.sort?.name,
+        name: item?.sort?.name || item?.additional_band,
         size: item?.sort?.size,
         qty: item?.qty,
         price: item?.unit_price,
@@ -217,7 +258,7 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
       setBills({
         type: "order",
         bill_id: data?.short_id,
-        car: data.car,
+        car: data?.car,
         data: sortsData,
         totals: {
           totalPrice: data?.total_price_after,
@@ -225,16 +266,15 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
           additional_fees: data?.additional_fees,
           discount: data?.discount,
           paid_status: getSlug(paidStatusArray, data?.payment.status),
-          installment_type: getSlug(periodsArray, formData.installment_type),
-          down_payment: formData.down_payment,
+          installment_type: getSlug(periodsArray, formData?.installment_type),
+          down_payment: formData?.down_payment,
           installment: installmentValue,
           payment_method: getSlug(methodsArray, data?.payment?.payment_method),
           created_at: data?.created_at,
         },
       });
       closeOrderPopup("makeOrderPopup");
-      const rabi3 = ["localhost", "alrabi3-trail.nabdtech.store"];
-      router.push(rabi3.includes(window.location.hostname) ? "/rabi3-bill" : "bill");
+      router.push(getBillHref(window.location.hostname));
     } else {
       openSnakeBar(response.message);
     }
@@ -259,7 +299,7 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
         </button>
         <div
           className={
-            "hiddenScrollbar relative flex flex-col items-center max-h-[calc(100dvh-120px)] overflow-y-scroll md:overflow-y-visible"
+            "hiddenScrollbar relative flex flex-col items-center max-h-[calc(100dvh-120px)] overflow-y-scroll"
           }
         >
           <div className="w-full">
@@ -416,30 +456,40 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
                 </>
               )}
             </SelectList>
-            <div className="w-full flex gap-2 items-center">
-              <TextField
-                id="Glu"
-                dir="rtl"
-                label="الخصم بالجنية"
-                variant="filled"
-                sx={sameTextField}
-                value={formData.discount}
-                onChange={(e) => handleFormData("discount", e.target.value.replace(/[^0-9.]/g, ""))}
-                className="w-full"
-              />
-              <TextField
-                id="Glu"
-                dir="rtl"
-                label="مصنعية"
-                variant="filled"
-                sx={sameTextField}
-                value={formData.additional_fees}
-                onChange={(e) =>
-                  handleFormData("additional_fees", e.target.value.replace(/[^0-9.]/g, ""))
-                }
-                className="w-full"
-              />
-            </div>
+            <TextField
+              id="Glu"
+              dir="rtl"
+              label="الخصم بالجنية"
+              variant="filled"
+              sx={sameTextField}
+              value={formData.discount}
+              onChange={(e) => handleFormData("discount", e.target.value.replace(/[^0-9.]/g, ""))}
+              className="w-full"
+            />
+          </div>
+          <div className="w-full flex gap-2 items-center mt-1.5">
+            <TextField
+              id="Glu"
+              dir="rtl"
+              label="اسم البند المصنعية"
+              variant="filled"
+              sx={sameTextField}
+              value={formData.additional_band}
+              onChange={(e) => handleFormData("additional_band", e.target.value)}
+              className="w-full"
+            />
+            <TextField
+              id="Glu"
+              dir="rtl"
+              label="قيمة المصنعية"
+              variant="filled"
+              sx={sameTextField}
+              value={formData.additional_fees}
+              onChange={(e) =>
+                handleFormData("additional_fees", e.target.value.replace(/[^0-9.]/g, ""))
+              }
+              className="w-full"
+            />
           </div>
           <div className="w-full flex gap-2 items-center mt-1.5">
             <TextField

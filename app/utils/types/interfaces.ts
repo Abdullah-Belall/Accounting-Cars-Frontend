@@ -71,7 +71,7 @@ export interface PaymentInterface {
 
 export interface OrderInterface {
   id: string;
-  short_id: string;
+  short_id: number;
   total_price_after: string;
   created_at: Date;
   payment: PaymentInterface;
@@ -242,7 +242,7 @@ export interface DropDownsInterface {
 }
 export interface CostsInterface {
   id: string;
-  short_id: string;
+  short_id: number;
   sort: SortInterface;
   qty: number;
   price: number;
@@ -289,7 +289,7 @@ export interface SidebarItemInterface {
 
 export interface ReturnDataInterface {
   id: string;
-  short_id: string;
+  short_id: number;
   totalPrice?: number;
   order?: {
     id: string;

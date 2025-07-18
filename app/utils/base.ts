@@ -98,7 +98,19 @@ export const taxArray = [
     label: "14%",
   },
 ];
-
+const billUi = [
+  {
+    domain: "localhost",
+    href: "/rabi3-bill",
+  },
+  {
+    domain: "alrabi3-trail.nabdtech.store",
+    href: "/rabi3-bill",
+  },
+];
+export const getBillHref = (domain: string) => {
+  return billUi.find((e) => e.domain === domain)?.href ?? "/bill";
+};
 export const carTypesArray = [
   { value: CarType.SEDAN, label: "سيدان" },
   { value: CarType.HATCHBACK, label: "هاتشباك" },
@@ -138,3 +150,13 @@ export const periodsArray = [
   { value: "halfyear", label: "نصف سنوي" },
   { value: "year", label: "سنوي" },
 ];
+
+export const shortIdGenerator = (shortId: number) => {
+  const rest = 6 - shortId.toString().length;
+  const shortIdArr = [];
+  for (let i = 0; i < rest; i++) {
+    shortIdArr.push(0);
+  }
+  shortIdArr.push(shortId);
+  return shortIdArr.join("");
+};

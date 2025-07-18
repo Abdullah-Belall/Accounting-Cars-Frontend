@@ -61,9 +61,13 @@ export default function AddSortForm({
     setData({ ...data, [key]: value });
   };
   const vaildation = () => {
-    const { qty, cost, unit_price, supplier } = data;
+    const { name, qty, cost, unit_price, supplier } = data;
     if (supplier === "") {
       openSnakeBar("يجب تحديد اسم المورد للمتابعة.");
+      return false;
+    }
+    if (name?.trim() === "") {
+      openSnakeBar("يجب تحديد اسم للصنف للمتابعة.");
       return false;
     }
     if (Number(qty) <= 0) {

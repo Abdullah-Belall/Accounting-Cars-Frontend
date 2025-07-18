@@ -1,5 +1,5 @@
 "use client";
-import { formatDate } from "@/app/utils/base";
+import { formatDate, shortIdGenerator } from "@/app/utils/base";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import { ReturnDataInterface } from "@/app/utils/types/interfaces";
 import Link from "next/link";
@@ -15,7 +15,7 @@ export default function ReturnsTableRows({
   const { openPopup } = usePopup();
   return (
     <tr>
-      <td className="px-4 py-2 text-center">{short_id}</td>
+      <td className="px-4 py-2 text-center">{shortIdGenerator(short_id)}</td>
       <td className="px-4 py-2">
         <p
           onClick={() => openPopup("returnsItemsPopup", { returnId: id })}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { formatDate } from "../utils/base";
+import { carTypesArray, formatDate, getSlug } from "../utils/base";
 import { useBills } from "../utils/contexts/bills-contexts";
 import { Button } from "@mui/material";
 
@@ -13,15 +13,17 @@ export default function RabiaBill() {
   };
   // {bills?.data}
   const items = useMemo(() => {
-    return bills?.data?.map((e: any) => (
-      <ul key={e?.id} className="w-full flex border-b-2 border-[#888]">
+    return bills?.data?.map((e: any, i) => (
+      <ul key={e?.id + i.toString()} className="w-full flex border-b-2 border-[#888]">
         <li className="w-[35%] py-3 text-center">
           {e?.product?.name} {e?.name} {e?.size}
         </li>
         <li className="w-[calc(65%/3)] py-3 text-center">{e?.qty}</li>
-        <li className="w-[calc(65%/3)] py-3 text-center">{Number(e?.price).toLocaleString()}</li>
         <li className="w-[calc(65%/3)] py-3 text-center">
-          {(Number(e?.price) * Number(e?.qty)).toLocaleString()}
+          {Number(e?.price ?? e?.unit_price).toLocaleString()}
+        </li>
+        <li className="w-[calc(65%/3)] py-3 text-center">
+          {(Number(e?.price ?? e?.unit_price) * Number(e?.qty)).toLocaleString()}
         </li>
       </ul>
     ));
@@ -66,10 +68,18 @@ export default function RabiaBill() {
               {bills?.car?.client?.contacts ? bills?.car?.client?.contacts[0].phone : "لا يوجد"}
             </li>
             <li>
+              السيارة: {bills?.car?.mark && bills?.car?.mark !== "" ? bills?.car?.mark : "غير مسجل"}
+            </li>
+            <li>
               رقم السيارة:{" "}
               {bills?.car?.plate && bills?.car?.plate !== "" ? bills?.car?.plate : "غير مسجل"}
             </li>
-            <li>نوع السيارة: {bills?.car?.mark}</li>
+            <li>
+              نوع السيارة:{" "}
+              {bills?.car?.type && (bills?.car?.type as any) !== ""
+                ? getSlug(carTypesArray, bills?.car?.type)
+                : "غير مسجل"}
+            </li>
           </ul>
         </div>
       </div>
