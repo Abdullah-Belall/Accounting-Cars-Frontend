@@ -12,6 +12,7 @@ import { FiCodesandbox } from "react-icons/fi";
 import Link from "next/link";
 import { RiBillLine } from "react-icons/ri";
 import styles from "@/app/styles/tables-scroll.module.css";
+import { GiSewingMachine } from "react-icons/gi";
 
 export default function SideBar({ open, onClose }: { open: boolean; onClose: () => void }) {
   const path = usePathname();
@@ -33,7 +34,9 @@ export default function SideBar({ open, onClose }: { open: boolean; onClose: () 
     <aside
       className={
         styles.list +
-        ` ${open ? "right-0" : "right-[-250px]"} duration-[.3s] z-30 md:z-[1] md:right-0 overflow-y-scroll flex flex-col gap-2 px-mainxs pb-[20px] pt-[80px] fixed top-0 w-[240px] h-dvh bg-myLight border-l-3 border-[#eee]`
+        ` ${
+          open ? "right-0" : "right-[-250px]"
+        } duration-[.3s] z-30 md:z-[1] md:right-0 overflow-y-scroll flex flex-col gap-2 px-mainxs pb-[20px] pt-[80px] fixed top-0 w-[240px] h-dvh bg-myLight border-l-3 border-[#eee]`
       }
     >
       <Link className="w-full" onClick={onClose} href={"/"}>
@@ -58,6 +61,30 @@ export default function SideBar({ open, onClose }: { open: boolean; onClose: () 
         >
           <BiCategory className="opacity-50 group-hover:opacity-100" />
           الفئات
+        </Button>
+      </Link>
+      <Link className="w-full" onClick={onClose} href={"/suppliers?searchin=suppliers"}>
+        <Button
+          className={`${
+            path === "/suppliers" ? "!bg-[#f1f1f1]" : ""
+          } group w-full !rounded-md !text-end !px-mainxs !flex !gap-[5px] !items-center !justify-start !text-secDark !text-[16px] !font-[500] !py-1 hover:bg-myHover!`}
+          variant="text"
+          sx={{ fontFamily: cairo.style.fontFamily }}
+        >
+          <FaPeopleCarryBox className={sameClass} />
+          الموردين
+        </Button>
+      </Link>
+      <Link className="w-full" onClick={onClose} href={"/equipments?searchin=equipments"}>
+        <Button
+          className={`${
+            path === "/equipments" ? "!bg-[#f1f1f1]" : ""
+          } group w-full !rounded-md !text-end !px-mainxs !flex !gap-[5px] !items-center !justify-start !text-secDark !text-[16px] !font-[500] !py-1 hover:bg-myHover!`}
+          variant="text"
+          sx={{ fontFamily: cairo.style.fontFamily }}
+        >
+          <GiSewingMachine className={sameClass} />
+          المعدات
         </Button>
       </Link>
       {dataItems}
@@ -102,8 +129,12 @@ const sideBarItems = [
         link: "/stock-checks?searchin=stock-checks",
       },
       {
-        title: "انشاء جرد",
-        link: "/stock-checks/add",
+        title: "انشاء جرد اصناف",
+        link: "/stock-checks/sorts",
+      },
+      {
+        title: "انشاء جرد معدات",
+        link: "/stock-checks/equipments",
       },
     ],
   },
@@ -135,16 +166,7 @@ const sideBarItems = [
       },
     ],
   },
-  {
-    title: "الموردين",
-    icon: <FaPeopleCarryBox className={sameClass} />,
-    affiliateLinks: [
-      {
-        title: "كل الموردين",
-        link: "/suppliers?searchin=suppliers",
-      },
-    ],
-  },
+
   {
     title: "الموظفين",
     icon: <FaIdCardAlt className={sameClass} />,

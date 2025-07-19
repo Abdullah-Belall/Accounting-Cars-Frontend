@@ -1388,7 +1388,7 @@ const GET_ALL_EXPENSES_REQ = async () => {
     };
   }
 };
-const CREATE_STOCK_CHECKS_REQ = async (data: { note?: string; data: any }) => {
+const CREATE_STOCK_CHECKS_REQ = async (data: { note?: string; data: any; type: string }) => {
   try {
     const response: any = await axios.post(`${BASE_URL}/stock-checks`, data, {
       headers: { Authorization: `Bearer ${getCookie("access_token")}` },
@@ -1719,6 +1719,75 @@ const GET_CAR_ORDERS_REQ = async ({ id }: { id: string }) => {
     };
   }
 };
+const ADD_EQUIPMENT_REQ = async (data: any) => {
+  try {
+    const response: any = await axios.post(`${BASE_URL}/equipment`, data, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const UPDATE_EQUIPMENT_REQ = async ({ data, id }: any) => {
+  try {
+    const response: any = await axios.patch(`${BASE_URL}/equipment/${id}`, data, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const GET_ALL_EQUIPMENTS_REQ = async () => {
+  try {
+    const response: any = await axios.get(`${BASE_URL}/equipment`, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.equipments) {
+      return { done: true, data: response?.data };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
 //* MAIN FUNCTION (USED FOR ALL REQUESTS THAT NEED ACCESS_TOKEN)
 const CLIENT_COLLECTOR_REQ = async (varFunction: any, dataBody?: any) => {
   const access_token = getCookie("access_token");
@@ -1745,6 +1814,9 @@ const getCookie = (keyName: string): string | null => {
 };
 
 export {
+  ADD_EQUIPMENT_REQ,
+  UPDATE_EQUIPMENT_REQ,
+  GET_ALL_EQUIPMENTS_REQ,
   GET_CAR_ORDERS_REQ,
   ADD_CAR_REQ,
   EDIT_CAR_REQ,

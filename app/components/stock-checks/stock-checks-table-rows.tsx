@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 export default function StockChecksTableRows({
   index,
   id,
+  type,
   note,
   created_at,
 }: StockChecksInterface) {
@@ -15,11 +16,14 @@ export default function StockChecksTableRows({
       <tr>
         <td className="px-4 py-2 text-center">{index}</td>
         <td className="px-4 py-2 text-center">
+          {type === "equipments" ? "جرد معدات" : "جرد اصناف"}
+        </td>
+        <td className="px-4 py-2 text-center">
           <p
-            onClick={() => router.push(`stock-checks/${id}`)}
+            onClick={() => router.push(`stock-checks/${id}/${type}`)}
             className="w-fit mx-auto font-semibold hover:no-underline underline cursor-pointer"
           >
-            عرض الاصناف
+            عرض العناصر
           </p>
         </td>
         <td className="px-4 py-2 text-center">{note ?? "لا يوجد"}</td>

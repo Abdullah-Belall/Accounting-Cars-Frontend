@@ -33,10 +33,12 @@ export default function StockSortsTableRows({
           />
         </td>
         <td className="px-4 py-2 text-center">{product?.name}</td>
-        <td className="px-4 py-2 text-center">{name}</td>
-        <td className="px-4 py-2 text-center">{color ?? "لا يوجد"}</td>
-        <td className="px-4 py-2 text-center">{product?.material}</td>
-        <td className="px-4 py-2 text-center">{size ?? "لا يوجد"}</td>
+        <td className="px-4 py-2 text-center">{name && name !== "" ? name : "لا يوجد"}</td>
+        <td className="px-4 py-2 text-center">{color && color !== "" ? color : "لا يوجد"}</td>
+        <td className="px-4 py-2 text-center">
+          {product?.material && product?.material !== "" ? product?.material : "لا يوجد"}
+        </td>
+        <td className="px-4 py-2 text-center">{size && size !== "" ? size : "لا يوجد"}</td>
         <td className="px-4 py-2 text-center">{qty}</td>
         <td className="px-4 py-2 text-center">
           <Link className="hover:underline" href={`/categories/${product?.category?.id}`}>

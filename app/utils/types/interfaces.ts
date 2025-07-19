@@ -57,6 +57,16 @@ export interface AddSortInterface {
   cost: number;
   unit_price: number;
 }
+export interface EquipmentInterface {
+  index: number;
+  id: string;
+  tenant_id: string;
+  name: string;
+  qty: number;
+  unit_price: number;
+  created_at: Date;
+  updated_at: Date;
+}
 export interface PaymentInterface {
   id: string;
   payment_method: string;
@@ -262,6 +272,7 @@ export interface ExpensesInterface {
 }
 export interface StockChecksInterface {
   id: string;
+  type: "equipments" | "sorts";
   index: number;
   note?: string;
   created_at: Date;
@@ -269,7 +280,8 @@ export interface StockChecksInterface {
 export interface StockChecksItemsInterface {
   id: string;
   index: number;
-  sort: SortInterface;
+  sort?: SortInterface;
+  equipment?: EquipmentInterface;
   recorded_quantity: number;
   actual_quantity: number;
   difference: number;

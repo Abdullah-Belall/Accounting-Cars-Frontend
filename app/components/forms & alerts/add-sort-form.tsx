@@ -40,6 +40,7 @@ export default function AddSortForm({
     unit_price: string | number;
     note: string;
     supplier: string;
+    initial_amount: string;
   }>({
     name: isForEdit ? isForEdit.name : "",
     color: isForEdit ? isForEdit.color : "",
@@ -49,6 +50,7 @@ export default function AddSortForm({
     unit_price: isForEdit ? isForEdit.unit_price : "",
     note: isForEdit ? isForEdit.note : "",
     supplier: isForEdit ? isForEdit.supplier : "",
+    initial_amount: "",
   });
   const [suppliers, setSuppliers] = useState([]);
   const [dropDown, setDropDown] = useState(false);
@@ -57,7 +59,7 @@ export default function AddSortForm({
   const openSnakeBar = (message: string) => {
     openPopup("snakeBarPopup", { message });
   };
-  const handleData = (key: keyof typeof data, value: string) => {
+  const handleData = (key: keyof typeof data, value: string | number) => {
     setData({ ...data, [key]: value });
   };
   const vaildation = () => {
@@ -103,6 +105,7 @@ export default function AddSortForm({
     const addObj: any = {
       id,
       ...data,
+      initial_amount: Number(data.initial_amount),
     };
     if (data.size === "") {
       delete editObj.size;
@@ -139,6 +142,11 @@ export default function AddSortForm({
   useEffect(() => {
     getAllSuppliers();
   }, []);
+  useEffect(() => {
+    if (Number(data.qty) * Number(data.cost) < Number(data.initial_amount)) {
+      handleData("initial_amount", Number(data.qty) * Number(data.cost));
+    }
+  }, [data.initial_amount]);
   return (
     <div className="w-full min-[540px]:w-[540px] px-mainxs">
       <div className="rounded-md shadow-md bg-myLight p-mainxl">
@@ -248,6 +256,16 @@ export default function AddSortForm({
               onChange={(e) => handleData("unit_price", e.target.value.replace(/[^0-9.]/g, ""))}
             />
           </div>
+          <TextField
+            id="Glu"
+            dir="rtl"
+            label="دفعة للمورد"
+            variant="filled"
+            className="w-full"
+            sx={sameTextField}
+            value={data.initial_amount ?? ""}
+            onChange={(e) => handleData("initial_amount", e.target.value.replace(/[^0-9.]/g, ""))}
+          />
           <TextField
             id="Glu"
             dir="rtl"

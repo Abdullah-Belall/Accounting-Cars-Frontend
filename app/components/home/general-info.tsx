@@ -9,7 +9,6 @@ import EditPeriodPopup from "../forms & alerts/edit-period";
 
 export default function GeneralInfo({ data }: { data: CalcsInterface }) {
   const [editBalance, setEditBalance] = useState(false);
-  console.log(editBalance);
   return (
     <>
       <section className="w-full flex flex-col">
@@ -19,8 +18,8 @@ export default function GeneralInfo({ data }: { data: CalcsInterface }) {
             title={`رصيد بداية الفترة المحاسبية (${
               getSlug(periodsArray, data?.period) ?? "غير محدد"
             })`}
-            // total={data?.balance ?? 0}
-            total={"تجريبي" as any}
+            total={data?.balance ?? 0}
+            // total={"تجريبي" as any}
             uom={`ج.م`}
           />
           {!data?.period && (
@@ -37,33 +36,33 @@ export default function GeneralInfo({ data }: { data: CalcsInterface }) {
         <div className="w-full flex flex-col md:flex-row gap-[6px] justify-center items-center mt-2">
           <InfoField
             title={"اجمالي تكاليف بضاعة المخزون الحالية"}
-            // total={data?.totalCostsPrice ?? 0}
-            total={"تجريبي" as any}
+            total={data?.totalCostsPrice ?? 0}
+            // total={"تجريبي" as any}
             uom={`ج.م`}
           />
           <InfoField
             title={"اجمالي اسعار بضاعة المخزون الحالية"}
-            // total={data?.totalSortsPrices ?? 0}
-            total={"تجريبي" as any}
+            total={data?.totalSortsPrices ?? 0}
+            // total={"تجريبي" as any}
             uom={`ج.م`}
           />
         </div>
         <div className="w-full mt-[8px] flex flex-col md:flex-row gap-[6px] justify-center items-center">
           <InfoField
             title={"اجمالي ديون الزبائن"}
-            //  total={data?.clientsDepts}
-            total={"تجريبي" as any}
+            total={data?.clientsDepts}
+            // total={"تجريبي" as any}
             uom={`ج.م`}
           />
           <InfoField
             title={"اجمالي ديونك للموردين"}
-            // total={data?.myDepts}
-            total={"تجريبي" as any}
+            total={data?.myDepts}
+            // total={"تجريبي" as any}
             uom={`ج.م`}
           />
         </div>
       </section>
-      {false && (
+      {editBalance && (
         <>
           <BlackLayer onClick={() => setEditBalance(false)}>
             <EditPeriodPopup

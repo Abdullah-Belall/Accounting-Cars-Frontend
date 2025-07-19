@@ -16,7 +16,7 @@ export default function SortsStockChecksTable({ data }: { data: SortInterface[] 
             key={row.id}
             id={row.id}
             name={row.name}
-            color={row.color === "" || !row.color ? null : row.color}
+            color={row.color}
             size={row.size}
             qty={row.qty}
             unit_price={row.unit_price}

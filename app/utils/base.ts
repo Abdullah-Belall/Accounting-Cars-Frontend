@@ -160,3 +160,7 @@ export const shortIdGenerator = (shortId: number) => {
   shortIdArr.push(shortId);
   return shortIdArr.join("");
 };
+
+export const notFoundSlug = (value: any) => {
+  return value && value !== "" ? value : "لا يوجد";
+};

@@ -8,6 +8,6 @@ const StockChecksItemsPage = dynamic(
   }
 );
 export default function StockChecksPage() {
-  const id = useParams().id;
-  return <StockChecksItemsPage id={id as string} />;
+  const params = useParams();
+  return <StockChecksItemsPage id={params?.id as string} />;
 }
