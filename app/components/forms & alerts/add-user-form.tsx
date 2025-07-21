@@ -17,7 +17,7 @@ export default function AddUserForm({
   isForEdit,
   onDone,
 }: {
-  isForEdit?: { user_name: string; tax_num: string; id: string } | undefined;
+  isForEdit?: { user_name: string; tax_num: string; id: string; balance: number } | undefined;
   onDone: any;
   title: string;
   type: "worker" | "client";
@@ -28,12 +28,14 @@ export default function AddUserForm({
     password?: null | string;
     role?: null | string;
     salary?: null | string | number;
+    balance?: null | string | number;
   }>({
     user_name: isForEdit ? isForEdit.user_name : null,
     tax_num: isForEdit ? isForEdit.tax_num : null,
     password: null,
     role: null,
     salary: null,
+    balance: isForEdit ? isForEdit.balance : null,
   });
   const [dropDown, setDropDown] = useState(false);
   const [dropDownSlug, setDropDownSlug] = useState<null | string>(null);
@@ -82,11 +84,13 @@ export default function AddUserForm({
     if (!validation()) return;
     const finalObjWorker = { ...data };
     delete finalObjWorker.tax_num;
+    delete finalObjWorker.balance;
     finalObjWorker.salary = finalObjWorker.salary ? Number(finalObjWorker.salary) : null;
     const finalObjClient = { ...data };
     delete finalObjClient.password;
     delete finalObjClient.role;
     delete finalObjClient.salary;
+    finalObjClient.balance = Number(finalObjClient.balance);
     let finalObj;
     if (type === "worker") {
       finalObj = finalObjWorker;
@@ -124,17 +128,30 @@ export default function AddUserForm({
             onChange={(e) => handleData("user_name", e.target.value)}
           />
           {type === "client" && (
-            <TextField
-              id="Glu"
-              dir="rtl"
-              label="الرقم الضريبي"
-              type="text"
-              variant="filled"
-              className="w-full"
-              sx={sameTextField}
-              value={data.tax_num ?? ""}
-              onChange={(e) => handleData("tax_num", e.target.value)}
-            />
+            <>
+              <TextField
+                id="Glu"
+                dir="rtl"
+                label="الرقم الضريبي"
+                type="text"
+                variant="filled"
+                className="w-full"
+                sx={sameTextField}
+                value={data.tax_num ?? ""}
+                onChange={(e) => handleData("tax_num", e.target.value)}
+              />
+              <TextField
+                id="Glu"
+                dir="rtl"
+                label="الميزانية"
+                type="text"
+                variant="filled"
+                className="w-full"
+                sx={sameTextField}
+                value={data.balance ?? ""}
+                onChange={(e) => handleData("balance", e.target.value.replace(/[^0-9.]/g, ""))}
+              />
+            </>
           )}
           {type === "worker" && (
             <>

@@ -33,7 +33,7 @@ export default function PhonesTable({
   };
   const headers = ["*", "رقم الهاتف", "ملاحظات", "تاريخ الاضافة", "العمليات"];
   if (type === "الموظف") {
-    headers.splice(0, 2);
+    headers.splice(4, 1);
   }
   const closeEditPhonePopUp = () => {
     closePopup("editPhonePopup");

@@ -23,6 +23,8 @@ interface PopupContextState {
   installmentsPopup: PopupState;
   suppliersBills: PopupState;
   carForm: PopupState;
+  advanceForm: PopupState;
+  payAdvance: PopupState;
 }
 
 interface PopupContextType {
@@ -46,13 +48,21 @@ export const PopupProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     deleteAlertPopup: { isOpen: false, data: null },
     editProductPopup: { isOpen: false, data: null },
     editQtyPopup: { isOpen: false, data: null },
-    makeOrderPopup: { isOpen: false, data: { product_sorts: [], client: null } },
+    makeOrderPopup: {
+      isOpen: false,
+      data: {
+        product_sorts: [],
+        car: { id: null, client: { id: null, user_name: null, balance: null } },
+      },
+    },
     editPhonePopup: { isOpen: false, data: null },
     snakeBarPopup: { isOpen: false, data: { message: "" } },
     returnsItemsPopup: { isOpen: false, data: null },
     installmentsPopup: { isOpen: false, data: null },
     suppliersBills: { isOpen: false, data: null },
     carForm: { isOpen: false, data: null },
+    advanceForm: { isOpen: false, data: null },
+    payAdvance: { isOpen: false, data: null },
   });
 
   const openPopup = (popupName: keyof PopupContextState, data: any) => {

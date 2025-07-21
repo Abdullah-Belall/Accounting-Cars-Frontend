@@ -255,11 +255,24 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
           material: item?.sort?.product?.material,
         },
       }));
+      const balance = Number(popupState.makeOrderPopup.data?.car?.client?.balance);
+      const additional =
+        balance > 0
+          ? {
+              index: sortsData.length + 1,
+              name: "من ميزانية العميل",
+              qty: 1,
+              price:
+                Number(data?.total_price_after) > balance
+                  ? -Number(balance)
+                  : -Number(data?.total_price_after),
+            }
+          : undefined;
       setBills({
         type: "order",
         bill_id: data?.short_id,
         car: data?.car,
-        data: sortsData,
+        data: [...sortsData, additional],
         totals: {
           totalPrice: data?.total_price_after,
           tax: data?.tax + "%",
@@ -305,6 +318,12 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
           <div className="w-full">
             <h2 className="text-lg text-center font-semibold mb-1">انشاء طلب جديد</h2>
             <CarsTable title={"حدد السيارة"} data={data} order={true} />
+            {popupState.makeOrderPopup.data?.car?.client?.id && (
+              <div className="my-1 font-semibold">
+                ميزانية العميل:{" "}
+                {Number(popupState.makeOrderPopup.data?.car?.client?.balance)?.toLocaleString()} ج.م
+              </div>
+            )}
           </div>
           <div className="w-full flex gap-2 items-center mt-2.5">
             <SelectList

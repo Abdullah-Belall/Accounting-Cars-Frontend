@@ -180,6 +180,7 @@ export interface ClientInterface {
   updated_at: Date;
   role?: string;
   cars: CarsInterface[];
+  balance?: number;
   cars_count?: number;
   shipping_addresses?: AddressInterface[];
   contacts?: PhoneInterface[];
@@ -202,6 +203,16 @@ export enum CarType {
   TRUCK = "Truck",
   OFFROAD = "OffRoad",
   ELECTRIC = "Electric",
+}
+export interface AdvanceInterface {
+  id: string;
+  index: number;
+  worker?: WorkersInterface;
+  amount: number;
+  note: string | null;
+  is_paid: boolean;
+  created_at: Date;
+  updated_at?: Date;
 }
 export interface CarsInterface {
   id: string;
@@ -232,6 +243,7 @@ export interface WorkersInterface {
   tenant_id?: string;
   user_name: string;
   role: string;
+  advances?: AdvanceInterface[];
   is_banned: boolean;
   banned_reason: string;
   created_at: Date;

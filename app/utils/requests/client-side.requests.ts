@@ -1788,6 +1788,121 @@ const GET_ALL_EQUIPMENTS_REQ = async () => {
     };
   }
 };
+const MAKE_WORKER_ADVANCE_REQ = async ({ data, id }: { id: string; data: any }) => {
+  try {
+    const response: any = await axios.post(`${BASE_URL}/advances/${id}`, data, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const UPDATE_WORKER_ADVANCE_REQ = async ({ data, id }: any) => {
+  try {
+    const response: any = await axios.patch(`${BASE_URL}/advances/${id}`, data, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const PAY_WORKER_ADVANCE_REQ = async ({ data, id }: { id: string; data: any }) => {
+  try {
+    const response: any = await axios.post(`${BASE_URL}/advances/${id}/pay`, data, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const EDIT_PAY_WORKER_ADVANCE_REQ = async ({ data, id }: any) => {
+  try {
+    const response: any = await axios.patch(`${BASE_URL}/advances/${id}/edit-pay`, data, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const GET_ADVANCE_PAY_BILLS_REQ = async ({ id }: { id: string }) => {
+  try {
+    const response: any = await axios.get(`${BASE_URL}/advances/${id}/bills`, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.id) {
+      return { done: true, data: response?.data };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
 //* MAIN FUNCTION (USED FOR ALL REQUESTS THAT NEED ACCESS_TOKEN)
 const CLIENT_COLLECTOR_REQ = async (varFunction: any, dataBody?: any) => {
   const access_token = getCookie("access_token");
@@ -1814,6 +1929,11 @@ const getCookie = (keyName: string): string | null => {
 };
 
 export {
+  GET_ADVANCE_PAY_BILLS_REQ,
+  EDIT_PAY_WORKER_ADVANCE_REQ,
+  PAY_WORKER_ADVANCE_REQ,
+  MAKE_WORKER_ADVANCE_REQ,
+  UPDATE_WORKER_ADVANCE_REQ,
   ADD_EQUIPMENT_REQ,
   UPDATE_EQUIPMENT_REQ,
   GET_ALL_EQUIPMENTS_REQ,

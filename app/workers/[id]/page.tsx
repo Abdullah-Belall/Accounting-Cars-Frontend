@@ -1,15 +1,20 @@
 "use client";
+import AdvanceBillsPopUp from "@/app/components/advances/advance-bills-popup";
 import BlackLayer from "@/app/components/common/black-layer";
+import AddAdvanceForm from "@/app/components/forms & alerts/add-advance";
 import DeleteAlert from "@/app/components/forms & alerts/delete-alert";
 import UpdateWorkerForm from "@/app/components/forms & alerts/update-worker";
+import AdvanceTable from "@/app/components/tables/advance-table";
 import PhonesTable from "@/app/components/tables/phones.table";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import {
   BAN_USER_REQ,
   CLIENT_COLLECTOR_REQ,
   GET_WORKERS_PROFILE_REQ,
+  MAKE_WORKER_ADVANCE_REQ,
+  UPDATE_WORKER_ADVANCE_REQ,
 } from "@/app/utils/requests/client-side.requests";
-import { PhoneInterface, WorkersInterface } from "@/app/utils/types/interfaces";
+import { AdvanceInterface, PhoneInterface, WorkersInterface } from "@/app/utils/types/interfaces";
 import { Button, Chip } from "@mui/material";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -19,10 +24,11 @@ export default function Worker() {
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [update, setUpdate] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [addAdvance, setAddAdvance] = useState(false);
   const params = useParams();
   const id = params.id;
   const [data, setData] = useState<WorkersInterface | undefined>();
-  const { openPopup } = usePopup();
+  const { openPopup, popupState, closePopup } = usePopup();
   const openSnakeBar = (message: string) => {
     openPopup("snakeBarPopup", { message });
   };
@@ -101,7 +107,18 @@ export default function Worker() {
             </div>
           )}
         </div>
-        <div dir="ltr" className="w-full max-w-[600px] mx-auto mt-5">
+        <div className="relative w-full max-w-[600px] mx-auto mt-5">
+          <AdvanceTable title="السلف" data={data?.advances as AdvanceInterface[]} />
+          <Button
+            onClick={() => setAddAdvance(true)}
+            sx={{ fontFamily: "cairo" }}
+            className="!bg-mdDark !absolute !left-[3px] !top-0"
+            variant="contained"
+          >
+            سلفة جديدة
+          </Button>
+        </div>
+        <div className="w-full max-w-[600px] mx-auto mt-5">
           <PhonesTable
             type={"الموظف"}
             data={data?.contacts as PhoneInterface[]}
@@ -130,6 +147,54 @@ export default function Worker() {
             />
           </BlackLayer>
         </>
+      )}
+      {addAdvance && (
+        <BlackLayer onClick={() => setAddAdvance(false)}>
+          <AddAdvanceForm
+            onDone={async (data) => {
+              const response = await CLIENT_COLLECTOR_REQ(MAKE_WORKER_ADVANCE_REQ, {
+                ...data,
+                id,
+              });
+              if (response.done) {
+                openPopup("snakeBarPopup", {
+                  message: "تم تسجيل سلفة جديدة بنجاح.",
+                  type: "success",
+                });
+                fetchData();
+                setAddAdvance(false);
+              } else {
+                openPopup("snakeBarPopup", { message: response.message });
+              }
+            }}
+          />
+        </BlackLayer>
+      )}
+      {popupState.advanceForm.isOpen && (
+        <BlackLayer onClick={() => setAddAdvance(false)}>
+          <AddAdvanceForm
+            isForEdit={popupState.advanceForm.data}
+            onDone={async (data) => {
+              const response = await CLIENT_COLLECTOR_REQ(UPDATE_WORKER_ADVANCE_REQ, data);
+              if (response.done) {
+                openPopup("snakeBarPopup", {
+                  message: "تم تعديل السلفة بنجاح.",
+                  type: "success",
+                });
+                fetchData();
+                setAddAdvance(false);
+                closePopup("advanceForm");
+              } else {
+                openPopup("snakeBarPopup", { message: response.message });
+              }
+            }}
+          />
+        </BlackLayer>
+      )}
+      {popupState.payAdvance.isOpen && (
+        <BlackLayer onClick={() => closePopup("payAdvance")}>
+          <AdvanceBillsPopUp />
+        </BlackLayer>
       )}
     </>
   );

@@ -3,21 +3,20 @@ import { SuppliersBillsInterface } from "@/app/utils/types/interfaces";
 import MainTable from "./main-table";
 import NoData from "../common/no-data";
 import SuppliersBillsTableRow from "../suppliers/suppliers-bills-table-row";
-import { usePopup } from "@/app/utils/contexts/popup-contexts";
 
 export default function SuppliersBillsTable({
   data,
+  title,
 }: {
   data: SuppliersBillsInterface[];
   refetch: () => void;
+  title: string;
 }) {
-  const { popupState } = usePopup();
-  const delvData = popupState.suppliersBills.data;
   return (
     <>
       <section>
         <MainTable
-          title={`فاتورة تكاليف ${delvData.short_id}`}
+          title={title}
           headers={["*", "المبلغ", "ملاحظات", "تاريخ الاضافة"]}
           isPopup={true}
         >

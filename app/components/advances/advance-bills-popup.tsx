@@ -1,51 +1,49 @@
 "use client";
 import {
   CLIENT_COLLECTOR_REQ,
-  GET_ONE_COST_REQ,
-  GET_SUPPLIERS_BILLS_REQ,
-  PAY_SUPPLIERS_REQ,
+  GET_ADVANCE_PAY_BILLS_REQ,
+  PAY_WORKER_ADVANCE_REQ,
 } from "@/app/utils/requests/client-side.requests";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import { useEffect, useState } from "react";
 import { SuppliersBillsInterface } from "@/app/utils/types/interfaces";
 import { Button, TextField } from "@mui/material";
-import { sameTextField, shortIdGenerator } from "@/app/utils/base";
+import { sameTextField } from "@/app/utils/base";
 import SuppliersBillsTable from "../tables/suppliers-bills-table";
 import { TbCircleXFilled } from "react-icons/tb";
 
-export default function SuppliersBillsPopUp() {
+export default function AdvanceBillsPopUp() {
   const { openPopup, popupState, closePopup } = usePopup();
-  const delvData = popupState.suppliersBills.data;
+  const delvData = popupState.payAdvance.data;
   const [data, setData] = useState<SuppliersBillsInterface[]>([]);
-  const [cost, setCost] = useState<any>();
-  const [installment, setInstallment] = useState(delvData?.installment ?? "");
-  const [note, setNote] = useState(delvData?.installment ?? "");
+  const [formData, setFormData] = useState({
+    amount: "",
+    note: "",
+  });
   const [loading, setLoading] = useState(false);
+
+  const handleFormData = (key: keyof typeof formData, value: string) => {
+    setFormData((prev) => ({ ...prev, [key]: value }));
+  };
+
   const fetchData = async () => {
-    const response = await CLIENT_COLLECTOR_REQ(GET_SUPPLIERS_BILLS_REQ, { cost_id: delvData?.id });
+    const response = await CLIENT_COLLECTOR_REQ(GET_ADVANCE_PAY_BILLS_REQ, { id: delvData?.id });
     if (response.done) {
-      setData(response?.data?.bills);
+      setData(response?.data?.pay_bills);
     } else {
       openPopup("snakeBarPopup", { message: response.message });
-    }
-    const costResponse = await CLIENT_COLLECTOR_REQ(GET_ONE_COST_REQ, { id: delvData?.id });
-    if (costResponse.done) {
-      setCost(costResponse?.data);
-    } else {
-      openPopup("snakeBarPopup", { message: costResponse.message });
     }
   };
   useEffect(() => {
     fetchData();
   }, []);
-  const paySupplier = async () => {
-    if (installment == "0" || installment == "") return;
+  const pay = async () => {
+    if (formData.amount == "0" || formData.amount == "") return;
     if (loading) return;
     setLoading(true);
-    const response = await CLIENT_COLLECTOR_REQ(PAY_SUPPLIERS_REQ, {
-      cost_id: delvData?.id,
-      installment: Number(installment),
-      note: note ?? null,
+    const response = await CLIENT_COLLECTOR_REQ(PAY_WORKER_ADVANCE_REQ, {
+      id: delvData?.id,
+      data: { amount: Number(formData.amount), note: formData.note ?? null },
     });
     if (response.done) {
       openPopup("snakeBarPopup", { message: "تم التسديد بنجاح.", type: "success" });
@@ -56,15 +54,15 @@ export default function SuppliersBillsPopUp() {
     setLoading(false);
   };
   const paid = data.reduce((acc, curr) => curr.amount + acc, 0);
-  const due = cost?.price - paid;
-  if (installment > due) {
-    setInstallment(due);
+  const due = delvData?.amount - paid;
+  if (Number(formData.amount) > due) {
+    handleFormData("amount", due.toString());
   }
   return (
     <div className="px-mainxs w-full md:w-[752px]">
       <div className="relative rounded-md shadow-md bg-myLight p-mainxl flex flex-col gap-[10px]">
         <button
-          onClick={() => closePopup("suppliersBills")}
+          onClick={() => closePopup("payAdvance")}
           className="flex justify-center items-center w-[25px] h-[25px] bg-background rounded-[50%] z-[5] cursor-pointer absolute right-[-10px] top-[-10px] "
         >
           <TbCircleXFilled className="min-w-[30px] min-h-[30px]" />
@@ -72,17 +70,17 @@ export default function SuppliersBillsPopUp() {
         <SuppliersBillsTable
           data={data}
           refetch={fetchData}
-          title={`فاتورة تكاليف ${shortIdGenerator(delvData?.short_id)}`}
+          title={`فواتير تسديد لسلفة رقم ${delvData?.index}`}
         />
         <div className="w-full flex flex-col items-center mt-4 gap-2">
           <div className="flex gap-1 w-full">
             <TextField
               id="Glu"
               dir="rtl"
-              label="الفاتورة"
+              label="السلفة"
               variant="filled"
               sx={sameTextField}
-              value={cost?.price ? cost?.price + " ج.م" : ""}
+              value={delvData?.amount ? Number(delvData?.amount)?.toLocaleString() + " ج.م" : ""}
               className="w-full"
               disabled
             />
@@ -114,8 +112,8 @@ export default function SuppliersBillsPopUp() {
               multiline
               rows={2}
               sx={sameTextField}
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
+              value={formData.note}
+              onChange={(e) => handleFormData("note", e.target.value)}
               variant="filled"
             />
             <div className="flex gap-2 items-stretch  w-full">
@@ -125,12 +123,12 @@ export default function SuppliersBillsPopUp() {
                 label="المبلغ"
                 variant="filled"
                 sx={sameTextField}
-                onChange={(e) => setInstallment(e.target.value.replace(/[^0-9.]/g, ""))}
-                value={installment}
+                onChange={(e) => handleFormData("amount", e.target.value.replace(/[^0-9.]/g, ""))}
+                value={formData.amount}
                 className="w-full"
               />
               <Button
-                onClick={paySupplier}
+                onClick={pay}
                 sx={{ fontFamily: "cairo" }}
                 className="!bg-mdDark text-nowrap"
                 variant="contained"

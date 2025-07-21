@@ -28,6 +28,7 @@ export default function EditQtyPopup({
     newQty: "",
     costPrice: "",
     supplier: "",
+    initial_amount: "",
   });
   const [suppliers, setSuppliers] = useState([]);
 
@@ -56,6 +57,7 @@ export default function EditQtyPopup({
       qty: Number(total),
       costPrice: Number(data.costPrice) * Math.abs(Number(data.newQty)),
       supplier: data.supplier,
+      initial_amount: data.initial_amount ? Number(data.initial_amount) : undefined,
     });
     setLoading(false);
   };
@@ -68,7 +70,16 @@ export default function EditQtyPopup({
   useEffect(() => {
     getAllSuppliers();
   }, []);
+  useEffect(() => {
+    const inAmount = data.initial_amount;
+    if (inAmount !== "") {
+      if (Number(inAmount) > totalCost) {
+        handleData("initial_amount", totalCost.toString());
+      }
+    }
+  }, [data.initial_amount]);
   const total = (Number(data?.oldQty) ?? 0) + (Number(data.newQty) ?? 0);
+  const totalCost = (Number(data.newQty) ?? 0) * Number(data.costPrice ?? 0);
   return (
     <div className="w-full min-[365px]:w-[365px] px-mainxs">
       <div className="rounded-md shadow-md bg-myLight p-mainxl">
@@ -77,17 +88,29 @@ export default function EditQtyPopup({
         </h2>
 
         <div className="flex flex-col gap-[8px]">
-          <TextField
-            id="Glu"
-            dir="rtl"
-            label="الكمية الاجمالية"
-            variant="filled"
-            className="w-full"
-            sx={sameTextField}
-            value={total}
-            onChange={(e) => handleData("oldQty", e.target.value)}
-            disabled
-          />
+          <div className="flex gap-[8px]">
+            <TextField
+              id="Glu"
+              dir="rtl"
+              label="الكمية الاجمالية"
+              variant="filled"
+              className="w-full"
+              sx={sameTextField}
+              value={total}
+              onChange={(e) => handleData("oldQty", e.target.value)}
+              disabled
+            />
+            <TextField
+              id="Glu"
+              dir="rtl"
+              label="اجمالي التكلفة"
+              variant="filled"
+              className="w-full"
+              sx={sameTextField}
+              value={totalCost.toLocaleString() + " ج.م"}
+              disabled
+            />
+          </div>
           <SelectList
             placeHolder="المورد"
             select={data.supplier !== "" ? data.supplier : "المورد"}
@@ -155,6 +178,16 @@ export default function EditQtyPopup({
             sx={sameTextField}
             value={latest_cost_unit_price.toString()}
             disabled
+          />
+          <TextField
+            id="Glu"
+            dir="rtl"
+            label="دفعة مبداية للمورد"
+            variant="filled"
+            className="w-full"
+            sx={sameTextField}
+            value={data.initial_amount}
+            onChange={(e) => handleData("initial_amount", e.target.value.replace(/[^0-9.]/g, ""))}
           />
 
           <Button
