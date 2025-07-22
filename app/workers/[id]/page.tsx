@@ -2,9 +2,11 @@
 import AdvanceBillsPopUp from "@/app/components/advances/advance-bills-popup";
 import BlackLayer from "@/app/components/common/black-layer";
 import AddAdvanceForm from "@/app/components/forms & alerts/add-advance";
+import DeductionStatusForm from "@/app/components/forms & alerts/deduction-status";
 import DeleteAlert from "@/app/components/forms & alerts/delete-alert";
 import UpdateWorkerForm from "@/app/components/forms & alerts/update-worker";
 import AdvanceTable from "@/app/components/tables/advance-table";
+import DeductionTable from "@/app/components/tables/deduction-table";
 import PhonesTable from "@/app/components/tables/phones.table";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import {
@@ -12,9 +14,16 @@ import {
   CLIENT_COLLECTOR_REQ,
   GET_WORKERS_PROFILE_REQ,
   MAKE_WORKER_ADVANCE_REQ,
+  MAKE_WORKER_DEDUCTION_REQ,
   UPDATE_WORKER_ADVANCE_REQ,
+  UPDATE_WORKER_DEDUCTION_REQ,
 } from "@/app/utils/requests/client-side.requests";
-import { AdvanceInterface, PhoneInterface, WorkersInterface } from "@/app/utils/types/interfaces";
+import {
+  AdvanceInterface,
+  DeductionInterface,
+  PhoneInterface,
+  WorkersInterface,
+} from "@/app/utils/types/interfaces";
 import { Button, Chip } from "@mui/material";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -25,6 +34,7 @@ export default function Worker() {
   const [update, setUpdate] = useState(false);
   const [loading, setLoading] = useState(false);
   const [addAdvance, setAddAdvance] = useState(false);
+  const [addDeduction, setAddDeduction] = useState(false);
   const params = useParams();
   const id = params.id;
   const [data, setData] = useState<WorkersInterface | undefined>();
@@ -118,6 +128,17 @@ export default function Worker() {
             سلفة جديدة
           </Button>
         </div>
+        <div className="relative w-full max-w-[600px] mx-auto mt-5">
+          <DeductionTable title="الخصومات" data={data?.deductions as DeductionInterface[]} />
+          <Button
+            onClick={() => setAddDeduction(true)}
+            sx={{ fontFamily: "cairo" }}
+            className="!bg-mdDark !absolute !left-[3px] !top-0"
+            variant="contained"
+          >
+            خصم جديد
+          </Button>
+        </div>
         <div className="w-full max-w-[600px] mx-auto mt-5">
           <PhonesTable
             type={"الموظف"}
@@ -151,6 +172,7 @@ export default function Worker() {
       {addAdvance && (
         <BlackLayer onClick={() => setAddAdvance(false)}>
           <AddAdvanceForm
+            title={"سلفة جديدة"}
             onDone={async (data) => {
               const response = await CLIENT_COLLECTOR_REQ(MAKE_WORKER_ADVANCE_REQ, {
                 ...data,
@@ -173,6 +195,7 @@ export default function Worker() {
       {popupState.advanceForm.isOpen && (
         <BlackLayer onClick={() => setAddAdvance(false)}>
           <AddAdvanceForm
+            title={"تعديل السلفة"}
             isForEdit={popupState.advanceForm.data}
             onDone={async (data) => {
               const response = await CLIENT_COLLECTOR_REQ(UPDATE_WORKER_ADVANCE_REQ, data);
@@ -194,6 +217,78 @@ export default function Worker() {
       {popupState.payAdvance.isOpen && (
         <BlackLayer onClick={() => closePopup("payAdvance")}>
           <AdvanceBillsPopUp />
+        </BlackLayer>
+      )}
+      {addDeduction && (
+        <BlackLayer onClick={() => setAddDeduction(false)}>
+          <AddAdvanceForm
+            title={"خصم جديد"}
+            onDone={async (data) => {
+              const response = await CLIENT_COLLECTOR_REQ(MAKE_WORKER_DEDUCTION_REQ, {
+                ...data,
+                id,
+              });
+              if (response.done) {
+                openPopup("snakeBarPopup", {
+                  message: "تم تسجيل خصم جديد بنجاح.",
+                  type: "success",
+                });
+                fetchData();
+                setAddDeduction(false);
+              } else {
+                openPopup("snakeBarPopup", { message: response.message });
+              }
+            }}
+          />
+        </BlackLayer>
+      )}
+      {popupState.editDeduction.isOpen && (
+        <BlackLayer onClick={() => closePopup("editDeduction")}>
+          <AddAdvanceForm
+            title={"خصم جديد"}
+            onDone={async (data) => {
+              const response = await CLIENT_COLLECTOR_REQ(UPDATE_WORKER_DEDUCTION_REQ, data);
+              if (response.done) {
+                openPopup("snakeBarPopup", {
+                  message: "تم تعديل الخصم بنجاح.",
+                  type: "success",
+                });
+                fetchData();
+                closePopup("editDeduction");
+              } else {
+                openPopup("snakeBarPopup", { message: response.message });
+              }
+            }}
+            isForEdit={{
+              id: popupState.editDeduction.data?.id,
+              amount: popupState.editDeduction.data?.amount,
+              note: popupState.editDeduction.data?.note,
+            }}
+          />
+        </BlackLayer>
+      )}
+      {popupState.editDeductionStatus.isOpen && (
+        <BlackLayer onClick={() => closePopup("editDeductionStatus")}>
+          <DeductionStatusForm
+            title={`تعديل حالة الخصم ${popupState.editDeductionStatus.data?.index}`}
+            onDone={async (data) => {
+              const response = await CLIENT_COLLECTOR_REQ(UPDATE_WORKER_DEDUCTION_REQ, {
+                ...data,
+                id: popupState.editDeductionStatus.data?.id,
+              });
+              if (response.done) {
+                openPopup("snakeBarPopup", {
+                  message: "تم تعديل حالة الخصم بنجاح.",
+                  type: "success",
+                });
+                fetchData();
+                closePopup("editDeductionStatus");
+              } else {
+                openPopup("snakeBarPopup", { message: response.message });
+              }
+            }}
+            curr_status={popupState.editDeductionStatus.data?.status}
+          />
         </BlackLayer>
       )}
     </>

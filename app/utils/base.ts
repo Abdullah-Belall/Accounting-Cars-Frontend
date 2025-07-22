@@ -1,5 +1,6 @@
 import {
   CarType,
+  DeductionStatusEnum,
   DropDownsInterface,
   PaidStatusEnum,
   PaymentMethodsEnum,
@@ -45,7 +46,7 @@ export const formatDate = (input: string | Date) => {
 };
 
 export const getSlug = (arr: any, value: string) => {
-  return arr.find((e: any) => e.value === value)?.label;
+  return arr.find((e: any) => e.value === value)?.lable;
 };
 export const sameTextField = {
   "& .MuiFilledInput-root": {
@@ -164,3 +165,17 @@ export const shortIdGenerator = (shortId: number) => {
 export const notFoundSlug = (value: any) => {
   return value && value !== "" ? value : "لا يوجد";
 };
+export const deductionStatusArr = [
+  {
+    value: DeductionStatusEnum.APPLIED,
+    lable: "تم تطبيقه",
+  },
+  {
+    value: DeductionStatusEnum.CANCELLED,
+    lable: "تم الغاؤه",
+  },
+  {
+    value: DeductionStatusEnum.PENDING,
+    lable: "لم يطبق بعد",
+  },
+];

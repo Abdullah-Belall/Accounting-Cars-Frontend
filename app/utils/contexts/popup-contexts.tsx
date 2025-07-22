@@ -25,6 +25,8 @@ interface PopupContextState {
   carForm: PopupState;
   advanceForm: PopupState;
   payAdvance: PopupState;
+  editDeduction: PopupState;
+  editDeductionStatus: PopupState;
 }
 
 interface PopupContextType {
@@ -63,6 +65,8 @@ export const PopupProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     carForm: { isOpen: false, data: null },
     advanceForm: { isOpen: false, data: null },
     payAdvance: { isOpen: false, data: null },
+    editDeduction: { isOpen: false, data: null },
+    editDeductionStatus: { isOpen: false, data: null },
   });
 
   const openPopup = (popupName: keyof PopupContextState, data: any) => {

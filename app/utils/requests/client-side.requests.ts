@@ -1903,6 +1903,53 @@ const GET_ADVANCE_PAY_BILLS_REQ = async ({ id }: { id: string }) => {
     };
   }
 };
+const MAKE_WORKER_DEDUCTION_REQ = async ({ data, id }: { id: string; data: any }) => {
+  try {
+    const response: any = await axios.post(`${BASE_URL}/deduction/${id}`, data, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const UPDATE_WORKER_DEDUCTION_REQ = async ({ data, id }: any) => {
+  try {
+    const response: any = await axios.patch(`${BASE_URL}/deduction/${id}`, data, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+
 //* MAIN FUNCTION (USED FOR ALL REQUESTS THAT NEED ACCESS_TOKEN)
 const CLIENT_COLLECTOR_REQ = async (varFunction: any, dataBody?: any) => {
   const access_token = getCookie("access_token");
@@ -1929,6 +1976,8 @@ const getCookie = (keyName: string): string | null => {
 };
 
 export {
+  MAKE_WORKER_DEDUCTION_REQ,
+  UPDATE_WORKER_DEDUCTION_REQ,
   GET_ADVANCE_PAY_BILLS_REQ,
   EDIT_PAY_WORKER_ADVANCE_REQ,
   PAY_WORKER_ADVANCE_REQ,

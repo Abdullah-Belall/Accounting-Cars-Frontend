@@ -214,6 +214,21 @@ export interface AdvanceInterface {
   created_at: Date;
   updated_at?: Date;
 }
+export enum DeductionStatusEnum {
+  APPLIED = "applied",
+  CANCELLED = "cancelled",
+  PENDING = "pending",
+}
+export interface DeductionInterface {
+  id: string;
+  index: number;
+  worker?: WorkersInterface;
+  amount: number;
+  note: string | null;
+  status: DeductionStatusEnum;
+  created_at: Date;
+  updated_at?: Date;
+}
 export interface CarsInterface {
   id: string;
   index: number;
@@ -244,6 +259,7 @@ export interface WorkersInterface {
   user_name: string;
   role: string;
   advances?: AdvanceInterface[];
+  deductions?: DeductionInterface[];
   is_banned: boolean;
   banned_reason: string;
   created_at: Date;

@@ -111,8 +111,6 @@ export default function OrdersTableRow({
       ? "bg-yellow-900 text-yellow-300"
       : "bg-red-900 text-red-300";
 
-  console.log(installment);
-  console.log(installment_type);
   return (
     <>
       <tr>

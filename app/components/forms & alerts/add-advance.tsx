@@ -7,9 +7,11 @@ import { sameTextField } from "../../utils/base";
 export default function AddAdvanceForm({
   onDone,
   isForEdit,
+  title,
 }: {
   onDone: (data: any) => void;
   isForEdit?: { amount: number; note: string | null; id: string };
+  title: string;
 }) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
@@ -40,7 +42,7 @@ export default function AddAdvanceForm({
   };
   return (
     <div className="mx-mainxs rounded-md shadow-md w-full min-[400px]:w-[384px] bg-myLight p-mainxl">
-      <h2 className="text-lg text-center font-semibold mb-4">سلفة جديدة</h2>
+      <h2 className="text-lg text-center font-semibold mb-4">{title}</h2>
       <div className="space-y-4 flex flex-col gap-[15px]">
         <TextField
           id="Glu"
