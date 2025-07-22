@@ -53,7 +53,7 @@ export default function DeductionStatusForm({
                     }}
                     className="p-mainxs text-center border-b border-myLight cursor-pointer"
                   >
-                    {e.lable}
+                    {e.label}
                   </li>
                 ))}
               </ul>
