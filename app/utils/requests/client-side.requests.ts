@@ -1949,6 +1949,98 @@ const UPDATE_WORKER_DEDUCTION_REQ = async ({ data, id }: any) => {
     };
   }
 };
+const MAKE_WORKER_ABSENCE_REQ = async ({ data, id }: { id: string; data: any }) => {
+  try {
+    const response: any = await axios.post(`${BASE_URL}/absence/${id}`, data, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const UPDATE_WORKER_ABSENCE_REQ = async ({ data, id }: any) => {
+  try {
+    const response: any = await axios.patch(`${BASE_URL}/absence/${id}`, data, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const DELETE_WORKER_ABSENCE_REQ = async ({ id }: any) => {
+  try {
+    const response: any = await axios.delete(`${BASE_URL}/absence/${id}`, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const GET_DAILY_REPORT_REQ = async () => {
+  try {
+    const response: any = await axios.get(`${BASE_URL}/common/daily-report`, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true, data: response?.data };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
 
 //* MAIN FUNCTION (USED FOR ALL REQUESTS THAT NEED ACCESS_TOKEN)
 const CLIENT_COLLECTOR_REQ = async (varFunction: any, dataBody?: any) => {
@@ -1976,7 +2068,11 @@ const getCookie = (keyName: string): string | null => {
 };
 
 export {
+  GET_DAILY_REPORT_REQ,
   MAKE_WORKER_DEDUCTION_REQ,
+  MAKE_WORKER_ABSENCE_REQ,
+  UPDATE_WORKER_ABSENCE_REQ,
+  DELETE_WORKER_ABSENCE_REQ,
   UPDATE_WORKER_DEDUCTION_REQ,
   GET_ADVANCE_PAY_BILLS_REQ,
   EDIT_PAY_WORKER_ADVANCE_REQ,

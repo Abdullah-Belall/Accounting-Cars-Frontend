@@ -76,11 +76,12 @@ export default function RabiaBill() {
       </ul>
     ));
   }, [bills?.data]);
+  console.log(bills);
   useEffect(() => {
     setHostName(window.location.hostname);
   }, []);
   return (
-    <div className="print-content h-[calc(100dvh)] relative flex flex-col w-full">
+    <div className="print-content min-h-[calc(100dvh)] relative flex flex-col w-full">
       <Button
         sx={{ fontFamily: "cairo" }}
         className="print-button !bg-mdDark !absolute !right-[10px] !top-0 z-3"
@@ -161,7 +162,8 @@ export default function RabiaBill() {
           <div className="bg-[#45616c] border-2 border-[#9fadb0] bg-[#45616c] rounded-md h-[50px] w-[180px] text-white flex justify-center items-center">
             {bills?.data
               ?.reduce(
-                (acc, curr: any) => acc + Number(curr.unit_price ?? curr.price) * Number(curr.qty),
+                (acc, curr: any) =>
+                  acc + Number((curr?.unit_price ?? curr?.price) || 0) * Number(curr?.qty || 0),
                 0
               )
               .toLocaleString()}

@@ -27,6 +27,7 @@ interface PopupContextState {
   payAdvance: PopupState;
   editDeduction: PopupState;
   editDeductionStatus: PopupState;
+  absenceForm: PopupState;
 }
 
 interface PopupContextType {
@@ -67,6 +68,7 @@ export const PopupProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     payAdvance: { isOpen: false, data: null },
     editDeduction: { isOpen: false, data: null },
     editDeductionStatus: { isOpen: false, data: null },
+    absenceForm: { isOpen: false, data: null },
   });
 
   const openPopup = (popupName: keyof PopupContextState, data: any) => {

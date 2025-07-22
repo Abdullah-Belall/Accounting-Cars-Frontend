@@ -22,7 +22,7 @@ export default function Home() {
     fetchData();
   }, []);
   return (
-    <div className="flex flex-col gap-[40px] px-mainxs mt-[20px] mb-2">
+    <div className="flex flex-col gap-[40px] px-mainxs mt-[10px] mb-1">
       <GeneralInfo data={data as CalcsInterface} />
       <AllGraphs />
     </div>

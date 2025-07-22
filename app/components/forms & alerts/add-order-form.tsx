@@ -109,7 +109,7 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
     (formData.additional_fees === "" ? 0 : Number(formData.additional_fees));
   const validation = () => {
     const proSorts = popupState.makeOrderPopup.data?.product_sorts;
-    if (!popupState.makeOrderPopup.data?.car) {
+    if (!popupState.makeOrderPopup.data?.car?.id) {
       openSnakeBar("يجب اختيار سيارة للمتابعة.");
       return false;
     }
@@ -186,6 +186,7 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
   const handleDone = async () => {
     if (!validation()) return;
     const product_sorts = [...popupState.makeOrderPopup.data?.product_sorts];
+
     if (formData.additional_band) {
       product_sorts.push({ product_id: formData.additional_band, qty: formData.additional_fees });
       product_sorts.push("band");
@@ -268,11 +269,15 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
                   : -Number(data?.total_price_after),
             }
           : undefined;
+      const orderItemsData = sortsData;
+      if (additional) {
+        orderItemsData.push(additional);
+      }
       setBills({
         type: "order",
         bill_id: data?.short_id,
         car: data?.car,
-        data: [...sortsData, additional],
+        data: orderItemsData,
         totals: {
           totalPrice: data?.total_price_after,
           tax: data?.tax + "%",

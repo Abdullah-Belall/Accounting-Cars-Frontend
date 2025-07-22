@@ -8,7 +8,7 @@ export default function ExpensesTable({
   data,
   forEdit,
 }: {
-  forEdit: (data: any) => void;
+  forEdit?: (data: any) => void;
   data: ExpensesInterface[];
 }) {
   return (

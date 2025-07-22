@@ -37,7 +37,6 @@ export default function UsersTableRows({
   const { popupState, openPopup } = usePopup();
   const { user } = useUser();
   const { findOne, add, deleteByWorkerId } = useWorkerSalary();
-
   const HandleUi = () => {
     if (isForOrder) {
       if (popupState.makeOrderPopup.data.car?.id === id) {

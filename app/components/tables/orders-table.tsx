@@ -38,7 +38,6 @@ export default function OrdersTable({
   //   { name: "order.short_id", slug: "رقم الفاتورة" },
   //   { name: "client.user_name", slug: "العميل" },
   // ];
-  console.log(data);
   return (
     <>
       <MainTable title={title} headers={headers}>
@@ -53,17 +52,17 @@ export default function OrdersTable({
             car={row?.car}
             index={index + 1}
             earning={+row.total_price_after}
-            payment_method={row.payment.payment_method}
-            payment_status={row.payment.status}
-            date={row.created_at}
-            tax={row.tax}
-            additional_fees={row.additional_fees}
-            discount={row.discount}
-            short_id={row.short_id}
-            installment_type={row.payment.installment_type}
-            down_payment={row.payment.down_payment}
-            installment={row.payment.installment}
-            next_payment_date={row.payment.next_payment_date}
+            payment_method={row?.payment?.payment_method}
+            payment_status={row?.payment?.status}
+            date={row?.created_at}
+            tax={row?.tax}
+            additional_fees={row?.additional_fees}
+            discount={row?.discount}
+            short_id={row?.short_id}
+            installment_type={row?.payment?.installment_type}
+            down_payment={row?.payment?.down_payment}
+            installment={row?.payment?.installment}
+            next_payment_date={row?.payment?.next_payment_date}
           />
         ))}
       </MainTable>

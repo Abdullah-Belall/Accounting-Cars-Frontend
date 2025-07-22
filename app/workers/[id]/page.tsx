@@ -1,10 +1,12 @@
 "use client";
 import AdvanceBillsPopUp from "@/app/components/advances/advance-bills-popup";
 import BlackLayer from "@/app/components/common/black-layer";
+import AddAbsenceForm from "@/app/components/forms & alerts/add-absence";
 import AddAdvanceForm from "@/app/components/forms & alerts/add-advance";
 import DeductionStatusForm from "@/app/components/forms & alerts/deduction-status";
 import DeleteAlert from "@/app/components/forms & alerts/delete-alert";
 import UpdateWorkerForm from "@/app/components/forms & alerts/update-worker";
+import AbsenceTable from "@/app/components/tables/absence-table";
 import AdvanceTable from "@/app/components/tables/advance-table";
 import DeductionTable from "@/app/components/tables/deduction-table";
 import PhonesTable from "@/app/components/tables/phones.table";
@@ -12,13 +14,17 @@ import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import {
   BAN_USER_REQ,
   CLIENT_COLLECTOR_REQ,
+  DELETE_WORKER_ABSENCE_REQ,
   GET_WORKERS_PROFILE_REQ,
+  MAKE_WORKER_ABSENCE_REQ,
   MAKE_WORKER_ADVANCE_REQ,
   MAKE_WORKER_DEDUCTION_REQ,
+  UPDATE_WORKER_ABSENCE_REQ,
   UPDATE_WORKER_ADVANCE_REQ,
   UPDATE_WORKER_DEDUCTION_REQ,
 } from "@/app/utils/requests/client-side.requests";
 import {
+  AbsenceInterface,
   AdvanceInterface,
   DeductionInterface,
   PhoneInterface,
@@ -35,6 +41,7 @@ export default function Worker() {
   const [loading, setLoading] = useState(false);
   const [addAdvance, setAddAdvance] = useState(false);
   const [addDeduction, setAddDeduction] = useState(false);
+  const [addAbsence, setAddAbsence] = useState(false);
   const params = useParams();
   const id = params.id;
   const [data, setData] = useState<WorkersInterface | undefined>();
@@ -117,6 +124,25 @@ export default function Worker() {
             </div>
           )}
         </div>
+        <div className="w-full max-w-[600px] mx-auto mt-5">
+          <PhonesTable
+            type={"الموظف"}
+            data={data?.contacts as PhoneInterface[]}
+            userId={id as string}
+            refetch={fetchData}
+          />
+        </div>
+        <div className="relative w-full max-w-[600px] mx-auto mt-5">
+          <AbsenceTable data={data?.absences as AbsenceInterface[]} title={"غياب"} />
+          <Button
+            onClick={() => setAddAbsence(true)}
+            sx={{ fontFamily: "cairo" }}
+            className="!bg-mdDark !absolute !left-[3px] !top-0"
+            variant="contained"
+          >
+            تسجيل غياب جديد
+          </Button>
+        </div>
         <div className="relative w-full max-w-[600px] mx-auto mt-5">
           <AdvanceTable title="السلف" data={data?.advances as AdvanceInterface[]} />
           <Button
@@ -138,14 +164,6 @@ export default function Worker() {
           >
             خصم جديد
           </Button>
-        </div>
-        <div className="w-full max-w-[600px] mx-auto mt-5">
-          <PhonesTable
-            type={"الموظف"}
-            data={data?.contacts as PhoneInterface[]}
-            userId={id as string}
-            refetch={fetchData}
-          />
         </div>
       </div>
       {deleteAlert && (
@@ -288,6 +306,79 @@ export default function Worker() {
               }
             }}
             curr_status={popupState.editDeductionStatus.data?.status}
+          />
+        </BlackLayer>
+      )}
+      {addAbsence && (
+        <BlackLayer onClick={() => setAddAbsence(false)}>
+          <AddAbsenceForm
+            title={"غياب جديد"}
+            onDone={async (data) => {
+              const response = await CLIENT_COLLECTOR_REQ(MAKE_WORKER_ABSENCE_REQ, {
+                ...data,
+                id,
+              });
+              if (response.done) {
+                openPopup("snakeBarPopup", {
+                  message: "تم تسجيل غياب جديد بنجاح.",
+                  type: "success",
+                });
+                fetchData();
+                setAddAbsence(false);
+              } else {
+                openPopup("snakeBarPopup", { message: response.message });
+              }
+            }}
+          />
+        </BlackLayer>
+      )}
+      {popupState.absenceForm.isOpen && (
+        <BlackLayer onClick={() => closePopup("absenceForm")}>
+          <AddAbsenceForm
+            title={`تعديل غياب رقم ${popupState.absenceForm.data?.index}`}
+            onDone={async (data) => {
+              const response = await CLIENT_COLLECTOR_REQ(UPDATE_WORKER_ABSENCE_REQ, {
+                ...data,
+                id: popupState.absenceForm.data?.id,
+              });
+              if (response.done) {
+                openPopup("snakeBarPopup", {
+                  message: "تم تعديل الغياب بنجاح.",
+                  type: "success",
+                });
+                fetchData();
+                closePopup("absenceForm");
+              } else {
+                openPopup("snakeBarPopup", { message: response.message });
+              }
+            }}
+            isForEdit={{
+              reason: popupState.absenceForm.data?.reason,
+              id: popupState.absenceForm.data?.id,
+            }}
+          />
+        </BlackLayer>
+      )}
+      {popupState.deleteAlertPopup.isOpen && (
+        <BlackLayer onClick={() => closePopup("deleteAlertPopup")}>
+          <DeleteAlert
+            onConfirm={async () => {
+              const response = await CLIENT_COLLECTOR_REQ(DELETE_WORKER_ABSENCE_REQ, {
+                id: popupState.deleteAlertPopup.data?.id,
+              });
+              if (response.done) {
+                openPopup("snakeBarPopup", {
+                  message: "تم حذف الغياب بنجاح.",
+                  type: "success",
+                });
+                fetchData();
+                closePopup("deleteAlertPopup");
+              } else {
+                openPopup("snakeBarPopup", { message: response.message });
+              }
+            }}
+            action={"حذف"}
+            name={`الغياب رقم ${popupState.deleteAlertPopup.data?.index}`}
           />
         </BlackLayer>
       )}

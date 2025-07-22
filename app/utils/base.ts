@@ -46,7 +46,7 @@ export const formatDate = (input: string | Date) => {
 };
 
 export const getSlug = (arr: any, value: string) => {
-  return arr.find((e: any) => e.value === value)?.lable;
+  return arr.find((e: any) => e.value === value)?.label;
 };
 export const sameTextField = {
   "& .MuiFilledInput-root": {
@@ -105,7 +105,11 @@ const billUi = [
     href: "/rabi3-bill",
   },
   {
-    domain: "alrabi3-trail.nabdtech.store",
+    domain: "elrabi3.nabdtech.store",
+    href: "/rabi3-bill",
+  },
+  {
+    domain: "toyota.nabdtech.store",
     href: "/rabi3-bill",
   },
 ];
@@ -168,14 +172,14 @@ export const notFoundSlug = (value: any) => {
 export const deductionStatusArr = [
   {
     value: DeductionStatusEnum.APPLIED,
-    lable: "تم تطبيقه",
+    label: "تم تطبيقه",
   },
   {
     value: DeductionStatusEnum.CANCELLED,
-    lable: "تم الغاؤه",
+    label: "تم الغاؤه",
   },
   {
     value: DeductionStatusEnum.PENDING,
-    lable: "لم يطبق بعد",
+    label: "لم يطبق بعد",
   },
 ];

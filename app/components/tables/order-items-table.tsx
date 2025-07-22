@@ -14,7 +14,7 @@ import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import { useReturns } from "@/app/utils/contexts/returns-contexts";
 import ReturnsPopUp from "../orders/returns-popup";
 import { useBills } from "@/app/utils/contexts/bills-contexts";
-import { getSlug, methodsArray, paidStatusArray } from "@/app/utils/base";
+import { getBillHref, getSlug, methodsArray, paidStatusArray } from "@/app/utils/base";
 
 export default function OrderItemsTable({
   title,
@@ -97,7 +97,7 @@ export default function OrderItemsTable({
         created_at: data?.created_at,
       },
     });
-    router.push("/bill");
+    router.push(getBillHref(window.location.hostname));
   };
 
   return (

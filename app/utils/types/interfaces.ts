@@ -259,6 +259,7 @@ export interface WorkersInterface {
   user_name: string;
   role: string;
   advances?: AdvanceInterface[];
+  absences?: AbsenceInterface[];
   deductions?: DeductionInterface[];
   is_banned: boolean;
   banned_reason: string;
@@ -296,7 +297,7 @@ export interface ExpensesInterface {
   note?: string;
   created_at: Date;
   updated_at?: Date;
-  forEdit: (data: any) => void;
+  forEdit?: any;
 }
 export interface StockChecksInterface {
   id: string;
@@ -391,4 +392,12 @@ export interface InstallmentInterface {
   amount: number;
   created_at: Date;
   updated_at: Date;
+}
+
+export interface AbsenceInterface {
+  id: string;
+  index: number;
+  worker?: WorkersInterface;
+  reason: string;
+  created_at: Date;
 }
