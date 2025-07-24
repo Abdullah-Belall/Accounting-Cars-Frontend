@@ -38,9 +38,9 @@ export default function EquipmentsTableRow({
       <td className="px-4 py-2 text-center">{qty}</td>
       {!stockChecks && (
         <>
-          <td className="px-4 py-2 text-center">{Number(unit_price).toLocaleString()} ج.م</td>
+          <td className="px-4 py-2 text-center">{Number(unit_price).toLocaleString()}</td>
           <td className="px-4 py-2 text-center">
-            - {(Number(unit_price) * Number(qty)).toLocaleString()} ج.م
+            - {(Number(unit_price) * Number(qty)).toLocaleString()}
           </td>
           <td className="px-4 py-2 text-center">{formatDate(created_at)}</td>
         </>

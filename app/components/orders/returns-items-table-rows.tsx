@@ -42,9 +42,9 @@ export default function ReturnsItemsTableRows({
       <td className="px-4 py-2 text-center">{proMaterial}</td>
       <td className="px-4 py-2 text-center">{order_item?.qty}</td>
       <td className="px-4 py-2 text-center">{qty}</td>
-      <td className="px-4 py-2 text-center">{Number(unit_price).toLocaleString()} ج.م</td>
+      <td className="px-4 py-2 text-center">{Number(unit_price).toLocaleString()}</td>
       <td className="px-4 py-2 text-center text-nowrap">
-        ج.م {Number((Number(qty) * Number(unit_price)).toFixed(2)).toLocaleString()} -
+        {Number((Number(qty) * Number(unit_price)).toFixed(2)).toLocaleString()} -
       </td>
       <td className="px-4 py-2 text-center">{formatDate(created_at)}</td>
     </tr>

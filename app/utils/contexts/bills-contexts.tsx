@@ -30,9 +30,12 @@ type BillsValueType = {
     additional_fees: number;
     paid_status: string;
     installment_type?: string;
+    client_balance?: string;
+    take_from_client_balance?: string;
     down_payment?: string;
     installment?: string;
     payment_method: string;
+    client_depts: string | number;
     created_at?: Date;
   };
 };
@@ -58,9 +61,12 @@ export const BillesProvider = ({ children }: { children: ReactNode }) => {
       discount: "",
       paid_status: "",
       installment_type: "",
+      client_balance: "",
+      take_from_client_balance: "",
       down_payment: "",
       installment: "",
       payment_method: "",
+      client_depts: "",
     },
   });
   const closeBills = () => {
@@ -75,10 +81,13 @@ export const BillesProvider = ({ children }: { children: ReactNode }) => {
         additional_fees: 0,
         discount: "",
         paid_status: "",
+        client_balance: "",
+        take_from_client_balance: "",
         installment_type: "",
         down_payment: "",
         installment: "",
         payment_method: "",
+        client_depts: "",
       },
     });
   };

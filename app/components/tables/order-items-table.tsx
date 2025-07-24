@@ -92,9 +92,13 @@ export default function OrderItemsTable({
         tax: data?.tax + "%",
         discount: data?.discount,
         additional_fees: data?.additional_fees,
+        client_balance: data?.car?.client?.balance,
+        take_from_client_balance: data?.payment?.client_balance,
+        down_payment: data?.payment?.down_payment,
         paid_status: getSlug(paidStatusArray, data?.payment.status),
         payment_method: getSlug(methodsArray, data?.payment?.payment_method),
         created_at: data?.created_at,
+        client_depts: data?.client_depts,
       },
     });
     router.push(getBillHref(window.location.hostname));

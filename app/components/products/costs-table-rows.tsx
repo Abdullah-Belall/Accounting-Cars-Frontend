@@ -51,10 +51,10 @@ export default function CostsTableRows({
         </td>
         <td className={`px-4 py-2 text-center`}>{qty}</td>
         <td className="px-4 py-2 text-center">
-          {Math.abs(Number(price) / Number(qty)).toLocaleString()} ج.م
+          {Math.abs(Number(price) / Number(qty)).toLocaleString()}
         </td>
         <td className="px-4 py-2 text-center">
-          {qty > 0 && "-"} {Number(price).toLocaleString()} ج.م
+          {qty > 0 && "-"} {Number(price).toLocaleString()}
         </td>
         <td className="px-4 py-2 text-center">
           <button

@@ -63,9 +63,9 @@ export default function Client() {
               <p className="text-mdDark mt-2">
                 الرقم الضريبي: {data?.tax_num && data?.tax_num !== "" ? data?.tax_num : "لا يوجد"}
               </p>
-              {/* <p className="text-mdDark mt-2">اجمالي الديون: {allDepts} ج.م</p> */}
+              {/* <p className="text-mdDark mt-2">اجمالي الديون: {allDepts}</p> */}
               <p className="text-mdDark mt-2">
-                الميزانية: {Number(data?.balance).toLocaleString()} ج.م
+                الميزانية: {Number(data?.balance).toLocaleString()}
               </p>
             </div>
             <CiEdit

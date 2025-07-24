@@ -23,7 +23,7 @@ export default function ExpensesTableRows({
       <tr>
         <td className="px-4 py-2 text-center">{index}</td>
         <td className="px-4 py-2 text-center">{name}</td>
-        <td className="px-4 py-2 text-center">ج.م {Number(amount).toLocaleString()} -</td>
+        <td className="px-4 py-2 text-center">{Number(amount).toLocaleString()} -</td>
         <td className="px-4 py-2 text-center">{note && note !== "" ? note : "لا يوجد"}</td>
         <td className="px-4 py-2 text-center">{formatDate(created_at)}</td>
         <td className="px-4 py-2 text-center">

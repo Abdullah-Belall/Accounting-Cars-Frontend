@@ -2041,6 +2041,29 @@ const GET_DAILY_REPORT_REQ = async () => {
     };
   }
 };
+const ORDERS_COLLECTOR_REQ = async ({ data }: any) => {
+  try {
+    const response: any = await axios.post(`${BASE_URL}/orders/collector`, data, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.id) {
+      return { done: true, data: response?.data };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
 
 //* MAIN FUNCTION (USED FOR ALL REQUESTS THAT NEED ACCESS_TOKEN)
 const CLIENT_COLLECTOR_REQ = async (varFunction: any, dataBody?: any) => {
@@ -2068,6 +2091,7 @@ const getCookie = (keyName: string): string | null => {
 };
 
 export {
+  ORDERS_COLLECTOR_REQ,
   GET_DAILY_REPORT_REQ,
   MAKE_WORKER_DEDUCTION_REQ,
   MAKE_WORKER_ABSENCE_REQ,

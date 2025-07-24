@@ -82,7 +82,7 @@ export default function SuppliersBillsPopUp() {
               label="الفاتورة"
               variant="filled"
               sx={sameTextField}
-              value={cost?.price ? cost?.price + " ج.م" : ""}
+              value={cost?.price ? cost?.price : ""}
               className="w-full"
               disabled
             />
@@ -92,7 +92,7 @@ export default function SuppliersBillsPopUp() {
               label="المسدد حتي الأن"
               variant="filled"
               sx={sameTextField}
-              value={paid + " ج.م"}
+              value={paid}
               className="w-full"
               disabled
             />
@@ -102,7 +102,7 @@ export default function SuppliersBillsPopUp() {
               label="الغير مسدد"
               variant="filled"
               sx={sameTextField}
-              value={due + " ج.م"}
+              value={due}
               className="w-full"
               disabled
             />

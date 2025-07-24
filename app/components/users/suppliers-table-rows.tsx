@@ -23,7 +23,7 @@ export default function SuppliersTableRows({
           </Link>
         </td>
         <td className="px-4 py-2 text-center">
-          {Number(Number(unpaid_total).toFixed(2)).toLocaleString()} ج.م
+          {Number(Number(unpaid_total).toFixed(2)).toLocaleString()}
         </td>
         <td className="px-4 py-2 text-center">{formatDate(created_at)}</td>
       </tr>

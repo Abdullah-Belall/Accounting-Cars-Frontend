@@ -94,7 +94,7 @@ export default function Worker() {
                 </p>
                 <p className=" text-mdDark">
                   <span className="font-semibold">الراتب:</span>{" "}
-                  {data?.salary ? `ج.م ${data?.salary}` : "غير محدد"}
+                  {data?.salary ? `${data?.salary}` : "غير محدد"}
                 </p>
               </div>
             </div>

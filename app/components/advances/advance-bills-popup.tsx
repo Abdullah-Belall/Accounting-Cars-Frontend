@@ -80,7 +80,7 @@ export default function AdvanceBillsPopUp() {
               label="السلفة"
               variant="filled"
               sx={sameTextField}
-              value={delvData?.amount ? Number(delvData?.amount)?.toLocaleString() + " ج.م" : ""}
+              value={delvData?.amount ? Number(delvData?.amount)?.toLocaleString() : ""}
               className="w-full"
               disabled
             />
@@ -90,7 +90,7 @@ export default function AdvanceBillsPopUp() {
               label="المسدد حتي الأن"
               variant="filled"
               sx={sameTextField}
-              value={paid + " ج.م"}
+              value={paid}
               className="w-full"
               disabled
             />
@@ -100,7 +100,7 @@ export default function AdvanceBillsPopUp() {
               label="الغير مسدد"
               variant="filled"
               sx={sameTextField}
-              value={due + " ج.م"}
+              value={due}
               className="w-full"
               disabled
             />

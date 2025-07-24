@@ -127,7 +127,7 @@ export default function UsersTableRows({
         {type === "client" && <td className="px-4 py-2 text-center">{cars_count}</td>}
         {type === "worker" && <td className="px-4 py-2 text-center">{role}</td>}
         {type === "worker" && (
-          <td className="px-4 py-2 text-center">{salary ? `ج.م ${salary}` : "غير محدد"}</td>
+          <td className="px-4 py-2 text-center">{salary ? `${salary}` : "غير محدد"}</td>
         )}
         <td className="px-4 py-2 text-center">{phone_count}</td>
         <td className="px-4 py-2 text-center">{formatDate(date)}</td>

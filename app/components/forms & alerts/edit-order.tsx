@@ -5,6 +5,7 @@ import {
   paidStatusArray,
   periodsArray,
   sameTextField,
+  shortIdGenerator,
   taxArray,
 } from "@/app/utils/base";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
@@ -125,11 +126,7 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
       openSnakeBar(response.message);
     }
   };
-  const totalPriceAfter =
-    deliveryData.earning *
-      (data.tax && data.tax !== "0%" ? Number(data.tax.slice(0, 2)) / 100 + 1 : 1) -
-    (data.discount ? Number(data.discount) : 0) +
-    (data.additional_fees ? Number(data.additional_fees) : 0);
+  const totalPriceAfter = deliveryData.earning;
   return (
     <div className="relative rounded-md shadow-md w-full min-[400px]:w-[384px] mx-mainxs bg-myLight p-mainxl">
       <button
@@ -139,7 +136,7 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
         <TbCircleXFilled className="min-w-[30px] min-h-[30px]" />
       </button>
       <h2 className="text-lg text-center font-semibold mb-4">
-        تعديل الفاتورة {deliveryData.index}
+        تعديل الفاتورة {shortIdGenerator(deliveryData.index)}
       </h2>
 
       <div className="space-y-4 flex flex-col">
@@ -259,7 +256,11 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
           </SelectList>
         </div>
         <div
-          className={`${data.paid_status === "installments" ? "h-[114px] overflow-visible" : "h-[0] overflow-hidden"} mt-0 duration-[.3s] transition-[margin height] w-full flex flex-col gap-2 items-center`}
+          className={`${
+            data.paid_status === "installments"
+              ? "h-[114px] overflow-visible"
+              : "h-[0] overflow-hidden mb-0"
+          } mt-0 duration-[.3s] transition-[margin height] w-full flex flex-col gap-2 items-center`}
         >
           <SelectList
             placeHolder="نوع القسط"
@@ -292,7 +293,7 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
               </ul>
             )}
           </SelectList>
-          <div className="flex gap-2 items-center w-full">
+          <div className="flex gap-2 items-center w-full mb-0">
             <TextField
               id="Glu"
               dir="rtl"
@@ -315,28 +316,16 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
             />
           </div>
         </div>
-        <div className="w-full flex gap-2 items-center">
-          <TextField
-            id="Glu"
-            dir="rtl"
-            label="اجمالي السعر"
-            variant="filled"
-            sx={sameTextField}
-            value={deliveryData.earning.toLocaleString()}
-            className="w-full"
-            disabled
-          />
-          <TextField
-            id="Glu"
-            dir="rtl"
-            label="اجمالي السعر بعد الضريبة والخصم"
-            variant="filled"
-            sx={sameTextField}
-            value={totalPriceAfter.toFixed(2).toLocaleString()}
-            className="w-full"
-            disabled
-          />
-        </div>
+        <TextField
+          id="Glu"
+          dir="rtl"
+          label="اجمالي السعر بعد الضريبة والخصم"
+          variant="filled"
+          sx={sameTextField}
+          value={totalPriceAfter.toFixed(2).toLocaleString()}
+          className="w-full !mb-2"
+          disabled
+        />
         <Button
           onClick={handleDone}
           sx={{ fontFamily: "cairo" }}

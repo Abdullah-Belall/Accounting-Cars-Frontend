@@ -74,6 +74,7 @@ export interface PaymentInterface {
   installment_type?: string;
   installments?: InstallmentInterface[];
   down_payment?: number;
+  client_balance?: number;
   installment?: number;
   next_payment_date?: Date;
   created_at?: Date;
@@ -82,6 +83,7 @@ export interface PaymentInterface {
 export interface OrderInterface {
   id: string;
   short_id: number;
+  total_cost_price: number;
   total_price_after: string;
   created_at: Date;
   payment: PaymentInterface;

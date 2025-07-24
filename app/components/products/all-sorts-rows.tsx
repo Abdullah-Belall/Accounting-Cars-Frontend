@@ -63,7 +63,7 @@ export default function AllSortsTableRows({
         <td className="px-4 py-2 text-center">{size && size !== "" ? size : "لا يوجد"}</td>
         <td className="px-4 py-2 text-center">{qty}</td>
         <td className="px-4 py-2 text-center">
-          {Number(Number(unit_price).toFixed(2)).toLocaleString()} ج.م
+          {Number(Number(unit_price).toFixed(2)).toLocaleString()}
         </td>
 
         <td className="px-4 py-2 text-center">{formatDate(created_at)}</td>

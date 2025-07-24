@@ -17,24 +17,23 @@ export default function OrderPrint() {
         <h2>العميل: {bills?.car?.client?.user_name}</h2>
         <h2>السيارة: {bills?.car?.mark}</h2>
         <h2>ضريبة القيمة المضافة: {bills?.totals.tax}</h2>
-        <h2>الخصم: {bills?.totals.discount} ج.م</h2>
+        <h2>الخصم: {bills?.totals.discount}</h2>
         <h2>
           مصنعية:{" "}
           {bills?.totals.additional_fees
             ? Number(Number(bills?.totals.additional_fees).toFixed(2)).toLocaleString()
             : 0}{" "}
-          ج.م
         </h2>
         <h2>
-          اجمالي السعر: {Number(Number(bills?.totals.totalPrice).toFixed(2)).toLocaleString()} ج.م
+          اجمالي السعر: {Number(Number(bills?.totals.totalPrice).toFixed(2)).toLocaleString()}
         </h2>
         <h2>وسيلة الدفع: {bills?.totals?.payment_method}</h2>
         <h2>حالة الدفع: {bills?.totals?.paid_status}</h2>
         {bills?.totals?.paid_status === "دفع بالأقساط" && (
           <>
             <h2>نوع القسط: {bills?.totals?.installment_type}</h2>
-            <h2>المقدم: {bills?.totals?.down_payment} ج.م</h2>
-            <h2>قيمة القسط: {bills?.totals?.installment} ج.م</h2>
+            <h2>المقدم: {bills?.totals?.down_payment}</h2>
+            <h2>قيمة القسط: {bills?.totals?.installment}</h2>
           </>
         )}
         <h2>تاريخ انشاء الفاتورة: {formatDate(bills?.totals?.created_at as Date)}</h2>

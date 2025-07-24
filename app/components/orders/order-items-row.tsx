@@ -83,8 +83,8 @@ export default function OrderItemsTableRow({
         <td className="px-4 py-2 text-center">{size && size !== "" ? size : "لا يوجد"}</td>
         <td className="px-4 py-2 text-center">{color && color !== "" ? color : "لا يوجد"}</td>
         <td className="px-4 py-2 text-center">{qty}</td>
-        <td className="px-4 py-2 text-center">{formattedUnitPrice} ج.م</td>
-        <td className="px-4 py-2 text-center">{formattedEarnig} ج.م</td>
+        <td className="px-4 py-2 text-center">{formattedUnitPrice}</td>
+        <td className="px-4 py-2 text-center">{formattedEarnig}</td>
       </tr>
     </>
   );

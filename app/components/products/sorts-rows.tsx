@@ -48,7 +48,7 @@ export default function SortsTableRows({
           {qty}
         </td>
         <td className="px-4 py-2 text-center">
-          {Number(Number(unit_price).toFixed(2)).toLocaleString()} ج.م
+          {Number(Number(unit_price).toFixed(2)).toLocaleString()}
         </td>
         <td className="px-4 py-2 text-center">{orders_count}</td>
         <td className="px-4 py-2 text-center">{note ?? "لا يوجد"}</td>

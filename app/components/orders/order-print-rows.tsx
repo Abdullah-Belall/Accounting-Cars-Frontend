@@ -28,9 +28,9 @@ export default function OrderPrintRows({
         </td>
         <td className="px-4 py-2 text-center">{qty}</td>
         <td className="px-4 py-2 text-center">
-          {Number(Number(unit_price).toFixed(2)).toLocaleString()} ج.م
+          {Number(Number(unit_price).toFixed(2)).toLocaleString()}
         </td>
-        <td className="px-4 py-2 text-center">{(+unit_price * qty).toLocaleString()} ج.م</td>
+        <td className="px-4 py-2 text-center">{(+unit_price * qty).toLocaleString()}</td>
       </tr>
     </>
   );

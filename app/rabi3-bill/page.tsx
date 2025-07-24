@@ -90,8 +90,8 @@ export default function RabiaBill() {
       >
         طباعة
       </Button>
-      <h1 className="text-[85px] font-bold text-center mx-auto">{getBillData(hostname)?.title}</h1>
-      <div className="w-full flex flex-col items-start pr-[30px] gap-2">
+      <h1 className="text-[80px] font-bold text-center mx-auto">{getBillData(hostname)?.title}</h1>
+      <div className="w-full flex flex-col items-start pr-[30px] gap-1">
         <p className="font-bold text-[20px] pr-[60px]">
           لجميع انواع السيارات {getBillData(hostname)?.carsType}
         </p>
@@ -99,7 +99,7 @@ export default function RabiaBill() {
           <p className="px-2 py-2 bg-[#45616c] rounded-md text-white border-2 border-[#9fadb0]">
             <FaLocationDot />
           </p>
-          الغردقة منقة الحرفين امام المجمع الصناعي بالغردقة
+          الغردقة منطقة الحرفين امام المجمع الصناعي بالغردقة
         </div>
         <div className="flex items-center font-semibold gap-2 tracking-widest">
           <p className="px-2 py-2 bg-[#45616c] rounded-md text-white border-2 border-[#9fadb0]">
@@ -108,18 +108,18 @@ export default function RabiaBill() {
           {getBillData(hostname)?.phones}
         </div>
       </div>
-      <div className="flex gap-2 font-semibold mt-[20px] w-[90%] mx-auto">
-        <div className="border-3 border-[#9fadb0] rounded-md py-4 text-lg px-1 text-center w-[calc(100%/3)]">
+      <div className="flex gap-1 font-semibold mt-[10px] w-[90%] mx-auto">
+        <div className="border-3 border-[#9fadb0] rounded-md py-3 text-lg px-1 text-center w-[calc(100%/3)]">
           {formatDate(bills?.totals?.created_at as Date)}
         </div>
-        <div className="border-3 border-[#9fadb0] rounded-md py-4 text-lg px-1 text-center w-[calc(100%/3)]">
+        <div className="border-3 border-[#9fadb0] rounded-md py-3 text-lg px-1 text-center w-[calc(100%/3)]">
           فاتورة مبيعات - {shortIdGenerator(Number(bills?.bill_id))}
         </div>
-        <div className="border-3 border-[#9fadb0] rounded-md py-4 text-lg px-1 text-center w-[calc(100%/3)]">
+        <div className="border-3 border-[#9fadb0] rounded-md py-3 text-lg px-1 text-center w-[calc(100%/3)]">
           الرقم/ {bills?.car?.client?.contacts ? bills?.car?.client?.contacts[0].phone : "لا يوجد"}
         </div>
       </div>
-      <div className="border-3 tracking-widest border-[#9fadb0] rounded-md py-4 text-lg px-1 text-start w-[90%] font-semibold mx-auto mt-2">
+      <div className="border-3 tracking-widest border-[#9fadb0] rounded-md py-3 text-lg px-1 text-start w-[90%] font-semibold mx-auto mt-1">
         المطلوب من {bills?.car?.client?.user_name} المحترم لسيارة{" "}
         {bills?.car?.mark && bills?.car?.mark !== "" ? bills?.car?.mark : "__"}{" "}
         {bills?.car?.type && (bills?.car?.type as any) !== ""
@@ -129,11 +129,11 @@ export default function RabiaBill() {
       </div>
       <div className="flex flex-col w-[90%] mx-auto mt-1 border-3 border-[#9fadb0] rounded-xl overflow-hidden">
         <ul className="flex bg-[#45616c] border-b-3 border-[#9fadb0] text-white">
-          <li className="py-3 flex flex-col justify-center px-4 gap-2 text-center w-[50%]">
+          <li className="py-2 flex flex-col justify-center px-4 gap-2 text-center w-[50%]">
             <p className="text-xl font-bold whitespace-nowrap">البند</p>
             <p className="text-xs">ITEM</p>
           </li>
-          <li className="py-3 flex flex-col justify-center px-4 gap-2 text-center w-[13%] border-x-2 border-white">
+          <li className="py-2 flex flex-col justify-center px-4 gap-2 text-center w-[13%] border-x-2 border-white">
             <p className="text-xl font-bold whitespace-nowrap">الكمية</p>
             <p className="text-xs">QTY</p>
           </li>
@@ -150,25 +150,48 @@ export default function RabiaBill() {
         </ul>
         {items}
       </div>
-      <div className="flex w-[90%] mx-auto mt-1 border-3 border-[#9fadb0] rounded-md p-2 items-center justify-between text-xl font-bold">
-        <div className="w-full flex items-center gap-3">
-          الاجمالي
-          <div className="bg-[#45616c] border-2 border-[#9fadb0] bg-[#45616c] rounded-md h-[50px] w-[180px] text-white flex justify-center items-center">
-            {Number(bills?.totals?.totalPrice).toLocaleString()}
+      <div className="flex flex-col gap-1 w-[90%] mx-auto mt-1 border-3 border-[#9fadb0] rounded-md p-2 text-lg font-bold">
+        <div className="flex items-center justify-between">
+          <div className="w-full flex items-center gap-3 flex-row-reverse justify-end">
+            الاجمالي
+            <div className="bg-[#45616c] border-2 border-[#9fadb0] bg-[#45616c] rounded-md h-[40px] w-[160px] text-white flex justify-center items-center">
+              {Number(bills?.totals?.totalPrice).toLocaleString()}
+            </div>
+          </div>
+          <div className="w-full flex items-center gap-3 justify-end">
+            مدفوع تحت الحساب
+            <div className="bg-[#45616c] border-2 border-[#9fadb0] bg-[#45616c] rounded-md h-[40px] w-[160px] text-white flex justify-center items-center">
+              {Number(bills?.totals?.take_from_client_balance).toLocaleString()}
+            </div>
           </div>
         </div>
-        <div className="w-full flex items-center justify-end gap-3">
-          المطلوب
-          <div className="bg-[#45616c] border-2 border-[#9fadb0] bg-[#45616c] rounded-md h-[50px] w-[180px] text-white flex justify-center items-center">
-            {bills?.data
-              ?.reduce(
-                (acc, curr: any) =>
-                  acc + Number((curr?.unit_price ?? curr?.price) || 0) * Number(curr?.qty || 0),
-                0
-              )
-              .toLocaleString()}
+        <div className="flex items-center justify-between">
+          <div className="w-full flex items-center gap-3 flex-row-reverse justify-end">
+            الباقي في حساب العميل
+            <div className="bg-[#45616c] border-2 border-[#9fadb0] bg-[#45616c] rounded-md h-[40px] w-[160px] text-white flex justify-center items-center">
+              {Number(bills?.totals?.client_balance).toLocaleString()}
+            </div>
+          </div>
+          <div className="w-full flex items-center justify-end gap-3">
+            المطلوب
+            <div className="bg-[#45616c] border-2 border-[#9fadb0] bg-[#45616c] rounded-md h-[40px] w-[160px] text-white flex justify-center items-center">
+              {Number(bills?.totals?.client_depts).toLocaleString()}
+            </div>
           </div>
         </div>
+      </div>
+      <div className="flex gap-1 w-[90%] mx-auto mt-1 border-3 border-[#9fadb0] rounded-md p-2 text-lg font-bold">
+        <div className="text-sm w-full flex items-center gap-3 justify-start">
+          وسيلة الدفع: {bills?.totals?.payment_method}
+        </div>
+        <div className="text-sm w-full flex items-center gap-3 justify-center">
+          حالة الدفع: {bills?.totals?.paid_status}
+        </div>
+        {bills?.totals?.paid_status === "دفع بالأقساط" && (
+          <div className="text-sm w-full flex items-center gap-3 justify-end">
+            المقدم: {Number(bills?.totals?.down_payment || 0)}
+          </div>
+        )}
       </div>
     </div>
   );

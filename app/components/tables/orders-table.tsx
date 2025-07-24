@@ -13,10 +13,12 @@ export default function OrdersTable({
   title,
   data,
   refetch,
+  isForSelect,
 }: {
   title: string;
   data: OrderInterface[];
   refetch?: any;
+  isForSelect?: boolean;
 }) {
   const { closePopup, popupState } = usePopup();
   const { closeReturns } = useReturns();
@@ -29,6 +31,8 @@ export default function OrdersTable({
     "الخصم",
     "المصنعية",
     "الفاتورة",
+    "من حساب العميل",
+    "التكلفة",
     "طريقة الدفع",
     "حالة الدفع",
     "التاريخ",
@@ -61,8 +65,11 @@ export default function OrdersTable({
             short_id={row?.short_id}
             installment_type={row?.payment?.installment_type}
             down_payment={row?.payment?.down_payment}
+            client_balance={row?.payment?.client_balance}
             installment={row?.payment?.installment}
             next_payment_date={row?.payment?.next_payment_date}
+            isForSelect={isForSelect}
+            total_cost_price={row?.total_cost_price}
           />
         ))}
       </MainTable>

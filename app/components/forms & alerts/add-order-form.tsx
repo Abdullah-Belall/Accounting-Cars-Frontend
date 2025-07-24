@@ -62,6 +62,12 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
     installment_type: false,
   });
   const { setBills } = useBills();
+  useEffect(() => {
+    const client_balance = Number(popupState.makeOrderPopup.data?.car?.client?.balance);
+    if (formData.paid_status !== "paid" && client_balance >= totalPriceAfter) {
+      handleFormData("paid_status", "paid");
+    }
+  }, [formData.paid_status]);
   const handleOpenDropDown = (key: keyof typeof openDropDown, value: boolean) => {
     setOpenDropDown({ ...openDropDown, [key]: value });
   };
@@ -256,39 +262,25 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
           material: item?.sort?.product?.material,
         },
       }));
-      const balance = Number(popupState.makeOrderPopup.data?.car?.client?.balance);
-      const additional =
-        balance > 0
-          ? {
-              index: sortsData.length + 1,
-              name: "من ميزانية العميل",
-              qty: 1,
-              price:
-                Number(data?.total_price_after) > balance
-                  ? -Number(balance)
-                  : -Number(data?.total_price_after),
-            }
-          : undefined;
-      const orderItemsData = sortsData;
-      if (additional) {
-        orderItemsData.push(additional);
-      }
       setBills({
         type: "order",
         bill_id: data?.short_id,
         car: data?.car,
-        data: orderItemsData,
+        data: sortsData,
         totals: {
           totalPrice: data?.total_price_after,
           tax: data?.tax + "%",
           additional_fees: data?.additional_fees,
           discount: data?.discount,
-          paid_status: getSlug(paidStatusArray, data?.payment.status),
+          paid_status: getSlug(paidStatusArray, data?.payment?.status),
           installment_type: getSlug(periodsArray, formData?.installment_type),
+          take_from_client_balance: data?.payment?.client_balance,
+          client_balance: data?.car?.client?.balance,
           down_payment: formData?.down_payment,
           installment: installmentValue,
           payment_method: getSlug(methodsArray, data?.payment?.payment_method),
           created_at: data?.created_at,
+          client_depts: data?.client_depts,
         },
       });
       closeOrderPopup("makeOrderPopup");
@@ -326,7 +318,7 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
             {popupState.makeOrderPopup.data?.car?.client?.id && (
               <div className="my-1 font-semibold">
                 ميزانية العميل:{" "}
-                {Number(popupState.makeOrderPopup.data?.car?.client?.balance)?.toLocaleString()} ج.م
+                {Number(popupState.makeOrderPopup.data?.car?.client?.balance)?.toLocaleString()}
               </div>
             )}
           </div>

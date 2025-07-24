@@ -107,7 +107,7 @@ export default function EditQtyPopup({
               variant="filled"
               className="w-full"
               sx={sameTextField}
-              value={totalCost.toLocaleString() + " ج.م"}
+              value={totalCost.toLocaleString()}
               disabled
             />
           </div>
