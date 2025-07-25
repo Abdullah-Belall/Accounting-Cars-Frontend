@@ -37,6 +37,9 @@ export default function RootLayout({
   useEffect(() => {
     const lastUsedDomain = window.localStorage.getItem("last_used_domain");
     const currentDomain = window.location.hostname;
+    console.log("lastUsedDomain => ", lastUsedDomain);
+    console.log("currentDomain => ", currentDomain);
+    console.log(currentDomain !== lastUsedDomain);
     if (!lastUsedDomain) {
       window.localStorage.setItem("last_used_domain", currentDomain);
     }
@@ -81,11 +84,17 @@ export default function RootLayout({
         <>
           <div
             onClick={() => setOpenSidebar(false)}
-            className={`${!openSidebar && "hidden"} w-full h-full fixed left-0 top-0 bg-transparent z-30`}
+            className={`${
+              !openSidebar && "hidden"
+            } w-full h-full fixed left-0 top-0 bg-transparent z-30`}
           ></div>
           <div
             onClick={() => setOpenSidebar(!openSidebar)}
-            className={`!shadow-2xl ${openSidebar ? "right-[240px] !bg-white !text-mdDark" : "right-0"} ${isLoginRoute && "hidden"} z-30 backdrop-blur-[5px] duration-[.3s] fixed md:hidden z-10 top-[25%] text-lg cursor-pointer rounded-l-md bg-[#4950575d] p-2 text-myLight`}
+            className={`!shadow-2xl ${
+              openSidebar ? "right-[240px] !bg-white !text-mdDark" : "right-0"
+            } ${
+              isLoginRoute && "hidden"
+            } z-30 backdrop-blur-[5px] duration-[.3s] fixed md:hidden z-10 top-[25%] text-lg cursor-pointer rounded-l-md bg-[#4950575d] p-2 text-myLight`}
           >
             <PiListBold />
           </div>
