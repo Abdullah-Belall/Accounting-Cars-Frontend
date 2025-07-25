@@ -7,16 +7,18 @@ import ExpensesTableRows from "../expenses/expenses-table-row";
 export default function ExpensesTable({
   data,
   forEdit,
+  forDailyReport = true,
 }: {
   forEdit?: (data: any) => void;
   data: ExpensesInterface[];
+  forDailyReport?: boolean;
 }) {
   return (
     <>
       <MainTable
         title="فواتير المصاريف"
         headers={["*", "اسم البند", "المصروف", "ملاحظة", "التاريخ", "العمليات"]}
-        filter={[true, "expenses", []]}
+        filter={[forDailyReport, "expenses", []]}
       >
         {data?.map((row, index) => (
           <ExpensesTableRows

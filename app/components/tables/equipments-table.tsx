@@ -8,10 +8,12 @@ export default function EquipmentsTable({
   data,
   title,
   stockChecks,
+  isForDailyReport = true,
 }: {
   data: EquipmentInterface[];
   title: string;
   stockChecks?: boolean;
+  isForDailyReport?: boolean;
 }) {
   const headers = ["*", "الاسم", "الكمية", "سعر الوحدة", "الاجمالي", "التاريخ"];
   if (stockChecks) {
@@ -19,7 +21,7 @@ export default function EquipmentsTable({
   }
   return (
     <>
-      <MainTable title={title} headers={headers} filter={[true, "equipments", []]}>
+      <MainTable title={title} headers={headers} filter={[isForDailyReport, "equipments", []]}>
         {data?.map((row, index) => (
           <EquipmentsTableRow
             key={index}

@@ -74,7 +74,7 @@ export default function GeneralInfo({ data }: { data: CalcsInterface }) {
       <div>
         <OrdersTable
           data={dailyReportData?.sales?.orders}
-          title="فواتير المبيعات"
+          title=" فواتير المبيعات"
           refetch={fetchData}
         />
       </div>
@@ -86,13 +86,17 @@ export default function GeneralInfo({ data }: { data: CalcsInterface }) {
         />
       </div>
       <div className="mt-[20px]">
-        <ExpensesTable data={dailyReportData?.expenses?.expenses} />
+        <ExpensesTable data={dailyReportData?.expenses?.expenses} forDailyReport={false} />
       </div>
       <div className="mt-[20px]">
         <CostsTable data={dailyReportData?.costs?.costs} title=" فواتير التكاليف" />
       </div>
       <div className="mt-[20px]">
-        <EquipmentsTable title={"المعدات"} data={dailyReportData?.equipments?.equipments} />
+        <EquipmentsTable
+          title={"المعدات"}
+          data={dailyReportData?.equipments?.equipments}
+          isForDailyReport={false}
+        />
       </div>
     </div>
   ) : (
