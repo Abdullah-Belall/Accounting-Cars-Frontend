@@ -38,13 +38,18 @@ export default function OrdersTable({
     "التاريخ",
     "العمليات",
   ];
-  // const columns = [
-  //   { name: "order.short_id", slug: "رقم الفاتورة" },
-  //   { name: "client.user_name", slug: "العميل" },
-  // ];
+  const columns = [
+    { name: "order.short_id", slug: "رقم الفاتورة" },
+    { name: "client.user_name", slug: "العميل" },
+    { name: "car.mark", slug: "السيارة" },
+  ];
   return (
     <>
-      <MainTable title={title} headers={headers}>
+      <MainTable
+        title={title}
+        headers={headers}
+        filter={title === "فواتير المبيعات" ? [true, "orders", columns] : [false, "orders", []]}
+      >
         {data?.map((row, index) => (
           <OrdersTableRow
             key={index}

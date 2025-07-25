@@ -6,23 +6,23 @@ import {
 } from "@/app/utils/requests/client-side.requests";
 import EquipmentsTable from "../../tables/equipments-table";
 import { useEffect, useState } from "react";
-import { EquipmentInterface } from "@/app/utils/types/interfaces";
 import { useRouter } from "next/navigation";
 import { Button } from "@mui/material";
 import BlackLayer from "../../common/black-layer";
 import AddEquipment from "../../forms & alerts/add-equipments-form";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
+import { useSearch } from "@/app/utils/contexts/search-results-contexts";
 
 export default function EquipmentsPage() {
   const router = useRouter();
-  const [data, setData] = useState<EquipmentInterface[]>([]);
   const [addEquipment, setAddEquipment] = useState(false);
   const { openPopup } = usePopup();
-
+  const { fillSearch, getSearch } = useSearch();
   const fetchData = async () => {
     const response = await CLIENT_COLLECTOR_REQ(GET_ALL_EQUIPMENTS_REQ);
+    console.log(response);
     if (response.done) {
-      setData(response.data.equipments);
+      fillSearch("equipments", { results: response.data.equipments, total: response.data.total });
     } else {
       router.replace("log-in");
     }
@@ -41,7 +41,7 @@ export default function EquipmentsPage() {
         >
           انشاء معدة
         </Button>
-        <EquipmentsTable title={"كل المعدات"} data={data} />
+        <EquipmentsTable title={"كل المعدات"} data={getSearch("equipments").results} />
       </div>
       {addEquipment && (
         <BlackLayer onClick={() => setAddEquipment(false)}>

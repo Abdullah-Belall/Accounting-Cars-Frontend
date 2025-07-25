@@ -32,7 +32,20 @@ export default function ReturnsTableRows({
           {order?.car?.client?.user_name}
         </Link>
       </td>
-      <td className="px-4 py-2 text-center">{order?.short_id}</td>
+      <td className="px-4 py-2 text-center">
+        {order?.car?.mark && order?.car?.mark !== "" ? (
+          <p className="cursor-pointer font-semibold hover:no-underline underline w-fit mx-auto">
+            <Link
+              href={`/clients/${order?.car?.client?.id}/car/${order?.car?.id}?client=${name}&car=${order?.car?.mark}`}
+            >
+              {order?.car?.mark}
+            </Link>
+          </p>
+        ) : (
+          "لا يوجد"
+        )}
+      </td>
+      <td className="px-4 py-2 text-center">{shortIdGenerator(Number(order?.short_id))}</td>
       <td className="px-4 py-2 text-center">{returns_items_count}</td>
       <td className="px-4 py-2 text-center">
         {" "}

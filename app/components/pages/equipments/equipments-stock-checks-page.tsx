@@ -5,23 +5,22 @@ import {
   GET_ALL_EQUIPMENTS_REQ,
 } from "@/app/utils/requests/client-side.requests";
 import EquipmentsTable from "../../tables/equipments-table";
-import { useEffect, useState } from "react";
-import { EquipmentInterface } from "@/app/utils/types/interfaces";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@mui/material";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import { useStockChecks } from "@/app/utils/contexts/stock-checks-contexts";
+import { useSearch } from "@/app/utils/contexts/search-results-contexts";
 
 export default function EquipmentsStockChecksPage() {
   const router = useRouter();
-  const [data, setData] = useState<EquipmentInterface[]>([]);
   const { openPopup } = usePopup();
   const { findAll } = useStockChecks();
-
+  const { fillSearch, getSearch } = useSearch();
   const fetchData = async () => {
     const response = await CLIENT_COLLECTOR_REQ(GET_ALL_EQUIPMENTS_REQ);
     if (response.done) {
-      setData(response.data.equipments);
+      fillSearch("equipments", { results: response.data.equipments, total: response.data.total });
     } else {
       router.replace("log-in");
     }
@@ -57,7 +56,11 @@ export default function EquipmentsStockChecksPage() {
         >
           تأكيد الجرد
         </Button>
-        <EquipmentsTable title={"كل المعدات"} data={data} stockChecks={true} />
+        <EquipmentsTable
+          title={"كل المعدات"}
+          data={getSearch("equipments").results}
+          stockChecks={true}
+        />
       </div>
     </>
   );

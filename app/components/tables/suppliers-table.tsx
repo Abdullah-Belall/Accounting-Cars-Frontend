@@ -8,7 +8,7 @@ export default function SuppliersTable({ data }: { data: SuppliersInterface[] })
 
   return (
     <div className="px-mainxs">
-      <MainTable title={"كل الموردين"} headers={headers}>
+      <MainTable title={"كل الموردين"} headers={headers} filter={[true, "suppliers", []]}>
         {data?.map((row, index) => (
           <SuppliersTableRows
             key={row.id}

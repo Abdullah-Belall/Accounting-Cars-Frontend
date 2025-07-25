@@ -19,7 +19,7 @@ export default function EquipmentsTable({
   }
   return (
     <>
-      <MainTable title={title} headers={headers}>
+      <MainTable title={title} headers={headers} filter={[true, "equipments", []]}>
         {data?.map((row, index) => (
           <EquipmentsTableRow
             key={index}

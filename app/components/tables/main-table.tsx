@@ -67,7 +67,9 @@ export default function MainTable({
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUpOrLeave}
           onMouseLeave={handleMouseUpOrLeave}
-          className={`${styles.list} custom-scrollbar ${isPopup ? "max-h-[250px]" : "max-h-[calc(100dvh-170px)]"} overflow-y-auto rounded-xl border border-mdLight`}
+          className={`${styles.list} custom-scrollbar ${
+            isPopup ? "max-h-[250px]" : "max-h-[calc(100dvh-170px)]"
+          } overflow-y-auto rounded-xl border border-mdLight`}
         >
           <table className="w-full text-right border-collapse bg-myHover text-secDark">
             <thead className="select-none">

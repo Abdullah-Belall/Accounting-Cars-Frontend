@@ -24,7 +24,7 @@ export default function SortsStockChecksPage() {
       await CLIENT_COLLECTOR_REQ(GET_ALL_SORTS_REQ);
 
     if (response.done) {
-      fillSearch("stockChecksSorts", {
+      fillSearch("sorts", {
         results: response.data.sorts,
         total: response.data.sorts.length,
       });
@@ -35,7 +35,7 @@ export default function SortsStockChecksPage() {
   useEffect(() => {
     fetchData();
   }, []);
-  const data = getSearch("stockChecksSorts");
+  const data = getSearch("sorts");
   const handleDone = async () => {
     const sorts = findAll();
     if (sorts.length === 0) {

@@ -10,17 +10,18 @@ import { Button } from "@mui/material";
 import BlackLayer from "../../common/black-layer";
 import AddSupplierForm from "../../forms & alerts/add-supplier-form";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
+import { useSearch } from "@/app/utils/contexts/search-results-contexts";
 
 export default function SuppliersPage() {
   const router = useRouter();
-  const [data, setData] = useState([]);
   const { openPopup } = usePopup();
   const [add, setAdd] = useState(false);
+  const { fillSearch, getSearch } = useSearch();
   const fetchData = async () => {
     const response = await CLIENT_COLLECTOR_REQ(GET_ALL_SUPPLIERS_REQ);
 
     if (response.done) {
-      setData(response.data?.suppliers);
+      fillSearch("suppliers", { results: response.data?.suppliers, total: response.data?.total });
     } else {
       router.replace("/log-in");
     }
@@ -31,7 +32,7 @@ export default function SuppliersPage() {
   return (
     <>
       <div className="relative px-mainxs">
-        <SuppliersTable data={data} />
+        <SuppliersTable data={getSearch("suppliers").results} />
         <Button
           onClick={() => setAdd(true)}
           sx={{ fontFamily: "cairo" }}

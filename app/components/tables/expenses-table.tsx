@@ -16,6 +16,7 @@ export default function ExpensesTable({
       <MainTable
         title="فواتير المصاريف"
         headers={["*", "اسم البند", "المصروف", "ملاحظة", "التاريخ", "العمليات"]}
+        filter={[true, "expenses", []]}
       >
         {data?.map((row, index) => (
           <ExpensesTableRows

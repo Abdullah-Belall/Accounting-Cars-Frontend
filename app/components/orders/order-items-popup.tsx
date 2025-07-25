@@ -1,6 +1,7 @@
 "use client";
 import { TbCircleXFilled } from "react-icons/tb";
 import OrderItemsTable from "../tables/order-items-table";
+import { shortIdGenerator } from "@/app/utils/base";
 
 export default function OrderItemsPopUp({
   id,
@@ -23,7 +24,7 @@ export default function OrderItemsPopUp({
           <TbCircleXFilled className="min-w-[30px] min-h-[30px]" />
         </button>
         <OrderItemsTable
-          title={`منتجات الفاتورة رقم ${index}`}
+          title={`منتجات الفاتورة رقم ${shortIdGenerator(index)}`}
           id={id}
           refetchOrders={refetchOrders}
         />
