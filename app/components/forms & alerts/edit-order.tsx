@@ -24,15 +24,12 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
   };
   const [data, setData] = useState({
     tax: deliveryData.tax,
-    discount: deliveryData.discount,
-    additional_fees: deliveryData.additional_fees,
+    discount: deliveryData.discount || "",
+    client_balance: deliveryData.client_balance || "",
     payment_method: deliveryData.payment_method,
     paid_status: deliveryData.payment_status,
-    installment_type: deliveryData.installment_type,
-    down_payment: deliveryData.down_payment,
-    installment: deliveryData.installment,
+    installment_type: deliveryData.installment_type || "",
   });
-  console.log(deliveryData);
   const [dropDown, setDropDown] = useState({
     tax: false,
     payment_method: false,
@@ -44,7 +41,7 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
   };
   const handleData = (key: keyof typeof data, value: string) => {
     if (key === "paid_status" && value !== "installment") {
-      setData({ ...data, [key]: value, installment_type: "", down_payment: "", installment: "" });
+      setData({ ...data, [key]: value, installment_type: "" });
     } else {
       setData({ ...data, [key]: value });
     }
@@ -72,28 +69,6 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
         openSnakeBar("يجب تحديد نوع القسط للمتابعة.");
         return false;
       }
-      if (data.down_payment && +data.down_payment >= Number(totalPriceAfter.toFixed(2))) {
-        openSnakeBar("لا يمكن ان يكون المقدم اكبر من او يساوي اجمالي السعر بعد الضريبة والخصم.");
-        return false;
-      }
-      if (data.installment === "" || +data.installment <= 0) {
-        openSnakeBar("يجب تحديد قيمة قسط للمتابعة.");
-        return false;
-      }
-      if (data.installment !== "" && +data.installment > Number(totalPriceAfter.toFixed(2))) {
-        openSnakeBar("لا يمكن ان يكون قيمة القسط اكبر من اجمالي السعر بعد الضريبة والخصم.");
-        return false;
-      }
-      if (
-        data.down_payment !== "" &&
-        data.installment !== "" &&
-        +data.down_payment + +data.installment > Number(totalPriceAfter.toFixed(2))
-      ) {
-        openSnakeBar(
-          "لا يمكن ان يكون مجموع المقدم وقيمة القسط اكبر من اجمالي السعر بعد الضريبة والخصم."
-        );
-        return false;
-      }
     }
     return true;
   };
@@ -104,10 +79,8 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
       discount: data.discount !== "" ? Number(data.discount) : 0,
       payment_method: data.payment_method,
       paid_status: data.paid_status,
-      additional_fees: data.additional_fees ? Number(data.additional_fees) : null,
+      client_balance: data.client_balance ? Number(data.client_balance) : 0,
       installment_type: data.installment_type ?? null,
-      installment: data.installment ? Number(data.installment) : null,
-      down_payment: data.down_payment ? Number(data.down_payment) : null,
     };
     if (finalObj.paid_status !== "installments") {
       delete finalObj.installment_type;
@@ -126,7 +99,17 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
       openSnakeBar(response.message);
     }
   };
-  const totalPriceAfter = deliveryData.earning;
+
+  const tax = data.tax.length > 2 ? data.tax.slice(0, 2) : data.tax.slice(0, 1);
+  const deliveryDataTax =
+    deliveryData.tax.length > 2 ? deliveryData.tax.slice(0, 2) : deliveryData.tax.slice(0, 1);
+  console.log(deliveryData.earning);
+  console.log(deliveryDataTax);
+  const totalPriceAfter =
+    ((Number(deliveryData.earning) + Number(deliveryData.discount || 0)) /
+      (Number(deliveryDataTax) > 0 ? Number(deliveryDataTax) / 100 + 1 : 1)) *
+      (Number(tax) > 0 ? Number(tax) / 100 + 1 : 1) -
+    Number(data.discount);
   return (
     <div className="relative rounded-md shadow-md w-full min-[400px]:w-[384px] mx-mainxs bg-myLight p-mainxl">
       <button
@@ -143,12 +126,12 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
         <div className="flex flex-row-reverse gap-2 mb-2.5 w-full">
           <TextField
             id="Glu"
-            label="المصاريف الاضافية"
+            label="من حساب العميل"
             variant="filled"
             className="w-full"
             sx={sameTextField}
-            value={data.additional_fees}
-            onChange={(e) => handleData("additional_fees", e.target.value.replace(/[^0-9.]/g, ""))}
+            value={data.client_balance}
+            onChange={(e) => handleData("client_balance", e.target.value.replace(/[^0-9.]/g, ""))}
           />
           <TextField
             id="Glu"
@@ -258,9 +241,9 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
         <div
           className={`${
             data.paid_status === "installments"
-              ? "h-[114px] overflow-visible"
+              ? "h-[52px] overflow-visible"
               : "h-[0] overflow-hidden mb-0"
-          } mt-0 duration-[.3s] transition-[margin height] w-full flex flex-col gap-2 items-center`}
+          } mt-0 duration-[.3s] transition-[margin height] w-full`}
         >
           <SelectList
             placeHolder="نوع القسط"
@@ -293,28 +276,6 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
               </ul>
             )}
           </SelectList>
-          <div className="flex gap-2 items-center w-full mb-0">
-            <TextField
-              id="Glu"
-              dir="rtl"
-              label="المقدم"
-              variant="filled"
-              sx={sameTextField}
-              onChange={(e) => handleData("down_payment", e.target.value.replace(/[^0-9.]/g, ""))}
-              value={data.down_payment ?? ""}
-              className="w-full"
-            />
-            <TextField
-              id="Glu"
-              dir="rtl"
-              label="قيمة القسط"
-              variant="filled"
-              sx={sameTextField}
-              onChange={(e) => handleData("installment", e.target.value.replace(/[^0-9.]/g, ""))}
-              value={data.installment ?? ""}
-              className="w-full"
-            />
-          </div>
         </div>
         <TextField
           id="Glu"

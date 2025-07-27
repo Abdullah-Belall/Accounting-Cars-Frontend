@@ -19,6 +19,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { CiEdit } from "react-icons/ci";
 import { IoIosPrint } from "react-icons/io";
+import { MdDeleteOutline } from "react-icons/md";
 
 export default function OrdersTableRow({
   earning,
@@ -125,11 +126,7 @@ export default function OrdersTableRow({
   const delv: any[] = popupState.billCollector.data?.checked;
   const checkbox = () => {
     const currentDelv = Array.isArray(delv) ? delv : [];
-
     const isChecked = currentDelv.findIndex((e) => e === id) !== -1;
-    console.log(delv);
-    console.log(currentDelv);
-    console.log(currentDelv.findIndex((e) => e === id));
     return (
       <Checkbox
         checked={isChecked}
@@ -181,7 +178,6 @@ export default function OrdersTableRow({
         </td>
         <td className="px-4 py-2 text-center">{tax}%</td>
         <td className="px-4 py-2 text-center">{discount}</td>
-        <td className="px-4 py-2 text-center">{additional_fees ?? 0}</td>
         <td className="px-4 py-2 text-center">{formattedEarnig}</td>
         <td className="px-4 py-2 text-center">{client_balance ?? 0}</td>
         <td className="px-4 py-2 text-center">{Number(total_cost_price || 0).toLocaleString()}</td>
@@ -231,11 +227,18 @@ export default function OrdersTableRow({
                   installment_type,
                   down_payment,
                   installment,
+                  client_balance,
                 })
               }
               className="w-fit text-xl hover:text-orange-600 cursor-pointer text-anotherDark"
             >
               <CiEdit />
+            </p>
+            <p
+              onClick={() => openPopup("deleteAlertPopup", { short_id, id })}
+              className="w-fit text-xl ml-auto hover:text-red-700 cursor-pointer text-anotherDark"
+            >
+              <MdDeleteOutline />
             </p>
           </div>
         </td>

@@ -2064,7 +2064,29 @@ const ORDERS_COLLECTOR_REQ = async ({ data }: any) => {
     };
   }
 };
-
+const DELETE_ORDER_REQ = async ({ id }: { id: string }) => {
+  try {
+    const response: any = await axios.delete(`${BASE_URL}/orders/${id}`, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
 //* MAIN FUNCTION (USED FOR ALL REQUESTS THAT NEED ACCESS_TOKEN)
 const CLIENT_COLLECTOR_REQ = async (varFunction: any, dataBody?: any) => {
   const access_token = getCookie("access_token");
@@ -2091,6 +2113,7 @@ const getCookie = (keyName: string): string | null => {
 };
 
 export {
+  DELETE_ORDER_REQ,
   ORDERS_COLLECTOR_REQ,
   GET_DAILY_REPORT_REQ,
   MAKE_WORKER_DEDUCTION_REQ,

@@ -8,6 +8,9 @@ import EditOrderPopup from "../forms & alerts/edit-order";
 import NoData from "../common/no-data";
 import { useReturns } from "@/app/utils/contexts/returns-contexts";
 import InstallmentsPopUp from "../orders/installments-popup";
+import DeleteAlert from "../forms & alerts/delete-alert";
+import { shortIdGenerator } from "@/app/utils/base";
+import { CLIENT_COLLECTOR_REQ, DELETE_ORDER_REQ } from "@/app/utils/requests/client-side.requests";
 
 export default function OrdersTable({
   title,
@@ -29,7 +32,6 @@ export default function OrdersTable({
     "الطلبات",
     "ضريبة القيمة المضافة",
     "الخصم",
-    "المصنعية",
     "الفاتورة",
     "من حساب العميل",
     "التكلفة",
@@ -105,6 +107,24 @@ export default function OrdersTable({
       {popupState.installmentsPopup.isOpen && (
         <BlackLayer onClick={() => closePopup("installmentsPopup")}>
           <InstallmentsPopUp />
+        </BlackLayer>
+      )}
+      {popupState.deleteAlertPopup.isOpen && (
+        <BlackLayer onClick={() => closePopup("deleteAlertPopup")}>
+          <DeleteAlert
+            action="حذف"
+            name={`هذه الفاتورة ${shortIdGenerator(popupState.deleteAlertPopup.data?.short_id)}`}
+            onConfirm={async () => {
+              const response = await CLIENT_COLLECTOR_REQ(DELETE_ORDER_REQ, {
+                id: popupState.deleteAlertPopup.data?.id,
+              });
+              if (response.done) {
+                refetch();
+                closePopup("deleteAlertPopup");
+              }
+            }}
+            warning={`عند حذف هذه الفاتورة سيتم ارجاع المال المؤخوذ من حساب العميل الي حسابه مرة اخري وسيتم حذف كل الدفعات المدفوعة وايضا اي مرتجع خاص بالفاتورة وسيتم ارجاع الكميات الي المخزن ولا يمكن التراجع عن هذا الاجراء`}
+          />
         </BlackLayer>
       )}
     </>
