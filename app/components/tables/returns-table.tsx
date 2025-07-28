@@ -42,7 +42,7 @@ export default function ReturnsTable({
           ],
         ]}
         headers={[
-          "*",
+          "#",
           "عناصر المرتجع",
           "العميل",
           "السيارة",

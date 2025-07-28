@@ -4,7 +4,7 @@ import NoData from "../common/no-data";
 import SuppliersTableRows from "../users/suppliers-table-rows";
 
 export default function SuppliersTable({ data }: { data: SuppliersInterface[] }) {
-  const headers = ["*", "الاسم", "الديون", "التاريخ"];
+  const headers = ["#", "الاسم", "الديون", "التاريخ"];
 
   return (
     <div className="px-mainxs">

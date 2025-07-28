@@ -8,7 +8,7 @@ import { useParams } from "next/navigation";
 export default function StockChecksItemsTable({ data }: { data: StockChecksItemsInterface[] }) {
   const params = useParams();
   const headers = [
-    "*",
+    "#",
     "المنتج",
     "الصنف",
     "اللون",

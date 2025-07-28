@@ -17,7 +17,7 @@ export default function SuppliersBillsTable({
       <section>
         <MainTable
           title={title}
-          headers={["*", "المبلغ", "ملاحظات", "تاريخ الاضافة"]}
+          headers={["#", "المبلغ", "ملاحظات", "تاريخ الاضافة"]}
           isPopup={true}
         >
           {data?.map((row, index) => (

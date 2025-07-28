@@ -26,7 +26,7 @@ export default function OrdersTable({
   const { closePopup, popupState } = usePopup();
   const { closeReturns } = useReturns();
   const headers = [
-    "*",
+    "#",
     "العميل",
     "السيارة",
     "الطلبات",

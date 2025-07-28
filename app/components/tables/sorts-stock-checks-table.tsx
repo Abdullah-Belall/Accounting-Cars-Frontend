@@ -17,7 +17,7 @@ export default function SortsStockChecksTable({ data }: { data: SortInterface[] 
     <>
       <MainTable
         title={`كل الاصناف`}
-        headers={["*", "اسم المنتج", "اسم الصنف", "اللون", "الخامة", "المقاس", "الكمية", "الفئة"]}
+        headers={["#", "اسم المنتج", "اسم الصنف", "اللون", "الخامة", "المقاس", "الكمية", "الفئة"]}
         filter={[true, "sorts", columns]}
       >
         {data?.map((row) => (

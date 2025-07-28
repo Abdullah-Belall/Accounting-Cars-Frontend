@@ -9,7 +9,7 @@ export default function ReturnsItemsTable({ data }: { data: ReturnDataInterface 
       <MainTable
         title={`عناصر المرتجع رقم ${data?.short_id}`}
         headers={[
-          "*",
+          "#",
           "رقم المبيعات",
           "المنتج",
           "الصنف",

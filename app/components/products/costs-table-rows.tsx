@@ -2,6 +2,7 @@
 import { formatDate, shortIdGenerator } from "@/app/utils/base";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import { CostsInterface } from "@/app/utils/types/interfaces";
+import { Checkbox } from "@mui/material";
 import { useRouter } from "next/navigation";
 
 export default function CostsTableRows({
@@ -14,12 +15,49 @@ export default function CostsTableRows({
   is_paid,
 }: CostsInterface) {
   const router = useRouter();
-  const { openPopup } = usePopup();
+  const { openPopup, popupState } = usePopup();
   const statusColor = is_paid ? "bg-green-900 text-green-300" : "bg-yellow-900 text-yellow-300";
-
+  const delv: any[] = popupState.costsCollector.data?.checked;
+  const CheckboxViewar = () => {
+    const currentDelv = Array.isArray(delv) ? delv : [];
+    const isChecked = currentDelv.findIndex((e) => e?.id === id) !== -1;
+    return (
+      <Checkbox
+        checked={isChecked}
+        onChange={() => {
+          if (isChecked) {
+            openPopup("costsCollector", { checked: currentDelv.filter((e) => e?.id !== id) });
+          } else {
+            console.log("add");
+            openPopup("costsCollector", {
+              checked: [
+                ...currentDelv,
+                {
+                  id,
+                  qty,
+                  unit_price: Number(price) / Number(qty),
+                  is_paid,
+                  short_id,
+                  sort,
+                },
+              ],
+            });
+          }
+        }}
+        sx={{
+          "&.Mui-checked": {
+            color: "var(--mdDark)",
+          },
+        }}
+      />
+    );
+  };
   return (
     <>
       <tr>
+        <td className="px-4 py-2 text-center">
+          <CheckboxViewar />
+        </td>
         <td className="px-4 py-2 text-center">{shortIdGenerator(short_id)}</td>
         <td className="px-4 py-2">
           <p

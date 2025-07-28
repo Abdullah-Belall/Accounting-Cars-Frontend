@@ -19,7 +19,7 @@ export type BillsDataType = {
 };
 
 type BillsValueType = {
-  type: "order" | "return" | null;
+  type: "order" | "return" | "cost" | null;
   bill_id: string | null;
   car: CarsInterface | null;
   data?: BillsDataType[];

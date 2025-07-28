@@ -18,7 +18,7 @@ export default function CarsTable({
       <MainTable
         title={title}
         headers={[
-          "*",
+          "#",
           "العميل",
           "العلامة",
           "رقم اللوحة",

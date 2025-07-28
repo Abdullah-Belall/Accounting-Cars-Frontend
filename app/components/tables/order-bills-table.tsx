@@ -9,7 +9,7 @@ export default function OrderBillsTable({ data }: { data: any }) {
       <MainTable
         title={""}
         headers={[
-          "*",
+          "#",
           "المنتج",
           "الصنف",
           "اللون",

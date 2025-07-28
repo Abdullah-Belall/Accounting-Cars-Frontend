@@ -32,7 +32,7 @@ export default function SortsTable({ title, id }: { id: string; title: string })
       <MainTable
         title={`اصناف منتج ${title}`}
         headers={[
-          "*",
+          "#",
           "الأسم",
           "اللون",
           "المقاس",

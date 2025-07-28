@@ -2018,9 +2018,9 @@ const DELETE_WORKER_ABSENCE_REQ = async ({ id }: any) => {
     };
   }
 };
-const GET_DAILY_REPORT_REQ = async () => {
+const GET_DAILY_REPORT_REQ = async (body: { date: Date }) => {
   try {
-    const response: any = await axios.get(`${BASE_URL}/common/daily-report`, {
+    const response: any = await axios.post(`${BASE_URL}/common/daily-report`, body, {
       headers: { Authorization: `Bearer ${getCookie("access_token")}` },
     });
     if (response?.data?.done) {

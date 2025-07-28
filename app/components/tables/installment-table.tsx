@@ -14,7 +14,7 @@ export default function InstalmentTable({
 }) {
   return (
     <div>
-      <MainTable title={title} headers={["*", "القسط", "تاريخ التحصيل"]} isPopup={true}>
+      <MainTable title={title} headers={["#", "القسط", "تاريخ التحصيل"]} isPopup={true}>
         {data?.map((row, index) => (
           <InstallmentsTableRow
             key={index}

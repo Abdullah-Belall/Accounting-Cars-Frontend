@@ -31,7 +31,7 @@ export default function PhonesTable({
   const openSnakeBar = (message: string) => {
     openPopup("snakeBarPopup", { message });
   };
-  const headers = ["*", "رقم الهاتف", "ملاحظات", "تاريخ الاضافة", "العمليات"];
+  const headers = ["#", "رقم الهاتف", "ملاحظات", "تاريخ الاضافة", "العمليات"];
   if (type === "الموظف") {
     headers.splice(4, 1);
   }

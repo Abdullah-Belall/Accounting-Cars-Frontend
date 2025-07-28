@@ -42,7 +42,7 @@ export default function CategoriesTable({
     <>
       <MainTable
         title={"كل الفئات"}
-        headers={["*", "الاسم", "الوصف", "عدد المنتجات التابعة", "تاريخ الانشاء", "العمليات"]}
+        headers={["#", "الاسم", "الوصف", "عدد المنتجات التابعة", "تاريخ الانشاء", "العمليات"]}
         filter={[true, "categories", columns]}
       >
         {data?.map((row, index) => (

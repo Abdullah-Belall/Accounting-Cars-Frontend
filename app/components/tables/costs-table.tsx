@@ -23,6 +23,7 @@ export default function CostsTable({ data, title }: { data: CostsInterface[]; ti
         title={title}
         headers={[
           "*",
+          "#",
           "اسم المنتج",
           "اسم الصنف",
           "اللون",

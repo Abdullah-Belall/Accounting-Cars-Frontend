@@ -18,7 +18,7 @@ export default function UsersTable({
   isPopup?: boolean;
 }) {
   const headers = [
-    "*",
+    "#",
     "الاسم",
     "الرقم الضريبي",
     "عدد السيارات",

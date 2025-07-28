@@ -14,7 +14,7 @@ export default function DeductionTable({
     <>
       <MainTable
         title={title}
-        headers={["*", "المبلغ", "ملاحظات", "الحالة", "التاريخ", "العمليات"]}
+        headers={["#", "المبلغ", "ملاحظات", "الحالة", "التاريخ", "العمليات"]}
       >
         {data?.map((row, index) => (
           <DeductionTableRow key={index} data={{ ...row, index }} />

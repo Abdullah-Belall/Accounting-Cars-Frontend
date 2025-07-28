@@ -19,7 +19,7 @@ export default function AllSortsTable({ data }: { data: SortInterface[] }) {
         filter={[true, "sorts", columns]}
         title={`انشاء فاتورة`}
         headers={[
-          "*",
+          "#",
           "اسم المنتج",
           "اسم الصنف",
           "اللون",

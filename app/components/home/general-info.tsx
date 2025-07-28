@@ -6,39 +6,25 @@ import { getSlug, periodsArray } from "@/app/utils/base";
 import { Button } from "@mui/material";
 import BlackLayer from "../common/black-layer";
 import EditPeriodPopup from "../forms & alerts/edit-period";
+import DailyReport from "../forms & alerts/daily-report";
+import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import OrdersTable from "../tables/orders-table";
-import {
-  CLIENT_COLLECTOR_REQ,
-  GET_DAILY_REPORT_REQ,
-} from "@/app/utils/requests/client-side.requests";
-import { useRouter } from "next/navigation";
 import ReturnsTable from "../tables/returns-table";
 import ExpensesTable from "../tables/expenses-table";
 import CostsTable from "../tables/costs-table";
 import EquipmentsTable from "../tables/equipments-table";
 
 export default function GeneralInfo({ data }: { data: CalcsInterface }) {
-  const router = useRouter();
   const [editBalance, setEditBalance] = useState(false);
   const [dailyReport, setDailyReport] = useState(false);
-  const [dailyReportData, setDailyReportData] = useState<any>();
-  const fetchData = async () => {
-    const response = await CLIENT_COLLECTOR_REQ(GET_DAILY_REPORT_REQ);
-    console.log(response);
-    if (response.done) {
-      setDailyReportData(response.data);
-    } else {
-      router.replace("log-in");
-    }
-  };
-  const handlePrint = () => {
-    window.print();
-  };
-  return dailyReport ? (
+  const { popupState, closePopup } = usePopup();
+  const dailyReportData = popupState.dailyReport?.data;
+
+  return popupState.dailyReport.isOpen ? (
     <div className="print-content relative min-h-[calc(100dvh)] relative flex flex-col w-full px-mainxs mt-[20px]">
       <div className="flex items-center gap-1 !absolute !left-mainxs !top-0 z-2">
         <Button
-          onClick={handlePrint}
+          onClick={() => window.print()}
           sx={{ fontFamily: "cairo" }}
           className="print-button !bg-mdDark"
           variant="contained"
@@ -47,7 +33,7 @@ export default function GeneralInfo({ data }: { data: CalcsInterface }) {
         </Button>
         <Button
           onClick={() => {
-            setDailyReport(false);
+            closePopup("dailyReport");
           }}
           sx={{ fontFamily: "cairo" }}
           className="print-button !bg-mdDark"
@@ -56,27 +42,8 @@ export default function GeneralInfo({ data }: { data: CalcsInterface }) {
           رجوع
         </Button>
       </div>
-      {/* <div className="flex gap-1">
-        <TextField
-          id="Glu"
-          dir="rtl"
-          label="اجمالي المبيعات"
-          variant="filled"
-          className="w-full"
-          sx={sameTextField}
-          value={dailyReportData?.sales?.orders?.reduce(
-            (acc: any, curr: any) => acc + Number(curr.total_price_after),
-            0
-          )}
-          disabled
-        />
-      </div> */}
       <div>
-        <OrdersTable
-          data={dailyReportData?.sales?.orders}
-          title=" فواتير المبيعات"
-          refetch={fetchData}
-        />
+        <OrdersTable data={dailyReportData?.sales?.orders} title=" فواتير المبيعات" />
       </div>
       <div className="mt-[20px]">
         <ReturnsTable
@@ -105,7 +72,6 @@ export default function GeneralInfo({ data }: { data: CalcsInterface }) {
         <Button
           onClick={() => {
             setDailyReport(true);
-            fetchData();
           }}
           sx={{ fontFamily: "cairo" }}
           className="!bg-mdDark !absolute !left-[3px] !top-[-5px]"
@@ -174,6 +140,11 @@ export default function GeneralInfo({ data }: { data: CalcsInterface }) {
             />
           </BlackLayer>
         </>
+      )}
+      {dailyReport && (
+        <BlackLayer onClick={() => setDailyReport(false)}>
+          <DailyReport close={() => setDailyReport(false)} />
+        </BlackLayer>
       )}
     </>
   );

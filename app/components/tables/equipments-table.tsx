@@ -15,7 +15,7 @@ export default function EquipmentsTable({
   stockChecks?: boolean;
   isForDailyReport?: boolean;
 }) {
-  const headers = ["*", "الاسم", "الكمية", "سعر الوحدة", "الاجمالي", "التاريخ"];
+  const headers = ["#", "الاسم", "الكمية", "سعر الوحدة", "الاجمالي", "التاريخ"];
   if (stockChecks) {
     headers.splice(3, 3);
   }

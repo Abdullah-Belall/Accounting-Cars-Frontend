@@ -109,7 +109,7 @@ export default function OrderItemsTable({
       <MainTable
         title={title}
         headers={[
-          "*",
+          "#",
           "المنتج",
           "الصنف",
           "المقاس",

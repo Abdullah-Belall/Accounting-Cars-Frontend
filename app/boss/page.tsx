@@ -72,7 +72,7 @@ export default function Boss() {
           "الدومين",
           "اسم الشركة",
           "المعرف",
-          "*",
+          "#",
         ]}
       >
         {data?.map((row: any, index) => (

@@ -8,7 +8,7 @@ export default function AdvanceTable({ title, data }: { title: string; data: Adv
     <>
       <MainTable
         title={title}
-        headers={["*", "المبلغ", "ملاحظات", "التسديد", "التاريخ", "العمليات"]}
+        headers={["#", "المبلغ", "ملاحظات", "التسديد", "التاريخ", "العمليات"]}
       >
         {data?.map((row, index) => (
           <AdvanceTableRow key={index} data={{ ...row, index: index + 1 }} />

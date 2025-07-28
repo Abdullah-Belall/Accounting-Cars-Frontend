@@ -10,6 +10,7 @@ import { TbBrandToyota } from "react-icons/tb";
 export default function RabiaBill() {
   const { bills } = useBills();
   const [hostname, setHostName] = useState("");
+  const isCostBill = bills?.type === "cost";
   const handlePrint = () => {
     window.print();
   };
@@ -22,6 +23,7 @@ export default function RabiaBill() {
         }
       >
         <li className="py-3 flex flex-col justify-center px-4 gap-2 text-center w-[50%]">
+          {isCostBill && shortIdGenerator(e.id) + " - "}
           {e?.name}
         </li>
         <li className="py-3 flex flex-col justify-center px-4 gap-2 text-center w-[13%] border-x-2 border-[#9fadb0]">
@@ -36,7 +38,6 @@ export default function RabiaBill() {
       </ul>
     ));
   }, [bills?.data]);
-  console.log(bills);
   useEffect(() => {
     setHostName(window.location.hostname);
   }, []);
@@ -69,24 +70,33 @@ export default function RabiaBill() {
         </div>
       </div>
       <div className="flex gap-1 font-semibold mt-[10px] w-[90%] mx-auto">
-        <div className="border-3 border-[#9fadb0] rounded-md py-3 text-lg px-1 text-center w-[calc(100%/3)]">
-          {formatDate(bills?.totals?.created_at as Date)}
+        {!isCostBill && (
+          <div className="border-3 border-[#9fadb0] rounded-md py-3 text-lg px-1 text-center w-[calc(100%/3)]">
+            {formatDate(bills?.totals?.created_at as Date)}
+          </div>
+        )}
+        <div className="mx-auto border-3 border-[#9fadb0] rounded-md py-3 text-lg px-1 text-center w-[calc(100%/3)]">
+          {isCostBill
+            ? "فواتير تكاليف"
+            : "فاتورة مبيعات - " + shortIdGenerator(Number(bills?.bill_id))}
         </div>
-        <div className="border-3 border-[#9fadb0] rounded-md py-3 text-lg px-1 text-center w-[calc(100%/3)]">
-          فاتورة مبيعات - {shortIdGenerator(Number(bills?.bill_id))}
-        </div>
-        <div className="border-3 border-[#9fadb0] rounded-md py-3 text-lg px-1 text-center w-[calc(100%/3)]">
-          الرقم/ {bills?.car?.client?.contacts ? bills?.car?.client?.contacts[0].phone : "لا يوجد"}
-        </div>
+        {!isCostBill && (
+          <div className="border-3 border-[#9fadb0] rounded-md py-3 text-lg px-1 text-center w-[calc(100%/3)]">
+            الرقم/{" "}
+            {bills?.car?.client?.contacts ? bills?.car?.client?.contacts[0].phone : "لا يوجد"}
+          </div>
+        )}
       </div>
-      <div className="border-3 tracking-widest border-[#9fadb0] rounded-md py-3 text-lg px-1 text-start w-[90%] font-semibold mx-auto mt-1">
-        المطلوب من {bills?.car?.client?.user_name} المحترم لسيارة{" "}
-        {bills?.car?.mark && bills?.car?.mark !== "" ? bills?.car?.mark : "__"}{" "}
-        {bills?.car?.type && (bills?.car?.type as any) !== ""
-          ? getSlug(carTypesArray, bills?.car?.type)
-          : "-"}{" "}
-        {bills?.car?.plate && bills?.car?.plate !== "" ? bills?.car?.plate : ""}
-      </div>
+      {!isCostBill && (
+        <div className="border-3 tracking-widest border-[#9fadb0] rounded-md py-3 text-lg px-1 text-start w-[90%] font-semibold mx-auto mt-1">
+          المطلوب من {bills?.car?.client?.user_name} المحترم لسيارة{" "}
+          {bills?.car?.mark && bills?.car?.mark !== "" ? bills?.car?.mark : "__"}{" "}
+          {bills?.car?.type && (bills?.car?.type as any) !== ""
+            ? getSlug(carTypesArray, bills?.car?.type)
+            : "-"}{" "}
+          {bills?.car?.plate && bills?.car?.plate !== "" ? bills?.car?.plate : ""}
+        </div>
+      )}
       <div className="flex flex-col w-[90%] mx-auto mt-1 border-3 border-[#9fadb0] rounded-xl overflow-hidden">
         <ul className="flex bg-[#45616c] border-b-3 border-[#9fadb0] text-white">
           <li className="py-2 flex flex-col justify-center px-4 gap-2 text-center w-[50%]">
@@ -118,41 +128,47 @@ export default function RabiaBill() {
               {Number(bills?.totals?.totalPrice).toLocaleString()}
             </div>
           </div>
-          <div className="w-full flex items-center gap-3 justify-end">
-            مدفوع تحت الحساب
-            <div className="bg-[#45616c] border-2 border-[#9fadb0] bg-[#45616c] rounded-md h-[40px] w-[160px] text-white flex justify-center items-center">
-              {Number(bills?.totals?.take_from_client_balance).toLocaleString()}
+          {!isCostBill && (
+            <div className="w-full flex items-center gap-3 justify-end">
+              مدفوع تحت الحساب
+              <div className="bg-[#45616c] border-2 border-[#9fadb0] bg-[#45616c] rounded-md h-[40px] w-[160px] text-white flex justify-center items-center">
+                {Number(bills?.totals?.take_from_client_balance).toLocaleString()}
+              </div>
             </div>
-          </div>
+          )}
         </div>
-        <div className="flex items-center justify-between">
-          <div className="w-full flex items-center gap-3 flex-row-reverse justify-end">
-            الباقي في حساب العميل
-            <div className="bg-[#45616c] border-2 border-[#9fadb0] bg-[#45616c] rounded-md h-[40px] w-[160px] text-white flex justify-center items-center">
-              {Number(bills?.totals?.client_balance).toLocaleString()}
+        {!isCostBill && (
+          <div className="flex items-center justify-between">
+            <div className="w-full flex items-center gap-3 flex-row-reverse justify-end">
+              الباقي في حساب العميل
+              <div className="bg-[#45616c] border-2 border-[#9fadb0] bg-[#45616c] rounded-md h-[40px] w-[160px] text-white flex justify-center items-center">
+                {Number(bills?.totals?.client_balance).toLocaleString()}
+              </div>
             </div>
-          </div>
-          <div className="w-full flex items-center justify-end gap-3">
-            المطلوب
-            <div className="bg-[#45616c] border-2 border-[#9fadb0] bg-[#45616c] rounded-md h-[40px] w-[160px] text-white flex justify-center items-center">
-              {Number(bills?.totals?.client_depts).toLocaleString()}
+            <div className="w-full flex items-center justify-end gap-3">
+              المطلوب
+              <div className="bg-[#45616c] border-2 border-[#9fadb0] bg-[#45616c] rounded-md h-[40px] w-[160px] text-white flex justify-center items-center">
+                {Number(bills?.totals?.client_depts).toLocaleString()}
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div className="flex gap-1 w-[90%] mx-auto mt-1 border-3 border-[#9fadb0] rounded-md p-2 text-lg font-bold">
-        <div className="text-sm w-full flex items-center gap-3 justify-start">
-          وسيلة الدفع: {bills?.totals?.payment_method}
-        </div>
-        <div className="text-sm w-full flex items-center gap-3 justify-center">
-          حالة الدفع: {bills?.totals?.paid_status}
-        </div>
-        {bills?.totals?.paid_status === "دفع بالأقساط" && (
-          <div className="text-sm w-full flex items-center gap-3 justify-end">
-            المقدم: {Number(bills?.totals?.down_payment || 0)}
           </div>
         )}
       </div>
+      {!isCostBill && (
+        <div className="flex gap-1 w-[90%] mx-auto mt-1 border-3 border-[#9fadb0] rounded-md p-2 text-lg font-bold">
+          <div className="text-sm w-full flex items-center gap-3 justify-start">
+            وسيلة الدفع: {bills?.totals?.payment_method}
+          </div>
+          <div className="text-sm w-full flex items-center gap-3 justify-center">
+            حالة الدفع: {bills?.totals?.paid_status}
+          </div>
+          {bills?.totals?.paid_status === "دفع بالأقساط" && (
+            <div className="text-sm w-full flex items-center gap-3 justify-end">
+              المقدم: {Number(bills?.totals?.down_payment || 0)}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

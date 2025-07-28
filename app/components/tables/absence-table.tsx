@@ -6,7 +6,7 @@ import AbsenceTableRow from "../absence/absence-table-row";
 export default function AbsenceTable({ title, data }: { title: string; data: AbsenceInterface[] }) {
   return (
     <>
-      <MainTable title={title} headers={["*", "سبب الغياب", "التاريخ", "العمليات"]}>
+      <MainTable title={title} headers={["#", "سبب الغياب", "التاريخ", "العمليات"]}>
         {data?.map((row, index) => (
           <AbsenceTableRow key={index} data={{ ...row, index: index + 1 }} />
         ))}

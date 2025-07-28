@@ -37,7 +37,7 @@ export default function ProductsTable({
   };
   const [addSort, setAddSort] = useState(false);
   const headers = [
-    "*",
+    "#",
     "الاسم",
     "الوصف",
     "الكمية",
