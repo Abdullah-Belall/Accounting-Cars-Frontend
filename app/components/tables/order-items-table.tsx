@@ -108,7 +108,17 @@ export default function OrderItemsTable({
     <>
       <MainTable
         title={title}
-        headers={["*", "المنتج", "الصنف", "المقاس", "اللون", "الكمية", "سعر الوحدة", "الفاتورة"]}
+        headers={[
+          "*",
+          "المنتج",
+          "الصنف",
+          "المقاس",
+          "اللون",
+          "الكمية",
+          "سعر الوحدة",
+          "الفاتورة",
+          "التكلفة",
+        ]}
       >
         {data?.order_items?.map((row: any, index: number) => (
           <OrderItemsTableRow
@@ -121,6 +131,7 @@ export default function OrderItemsTable({
             color={row?.sort?.color !== "" ? row?.sort?.color : null}
             qty={row?.qty}
             unit_price={+row?.unit_price}
+            total_cost_price={+row?.total_cost_price || 0}
           />
         ))}
       </MainTable>

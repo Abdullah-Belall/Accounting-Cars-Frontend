@@ -17,7 +17,6 @@ import {
   paidStatusArray,
   periodsArray,
   sameTextField,
-  taxArray,
 } from "@/app/utils/base";
 import { useRouter } from "next/navigation";
 import { useBills } from "@/app/utils/contexts/bills-contexts";
@@ -451,38 +450,7 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
               />
             </div>
           </div>
-          <div className="w-full flex flex-col sm:flex-row gap-2 items-center mt-1.5">
-            <SelectList
-              placeHolder="ضريبة القيمة المضافة"
-              select={getSlug(taxArray, formData.tax as string) ?? "ضريبة القيمة المضافة"}
-              onClick={() => handleOpenDropDown("tax", true)}
-              onBlur={() => handleOpenDropDown("tax", false)}
-              dropDown={openDropDown.tax}
-            >
-              {openDropDown.tax && (
-                <>
-                  <ul
-                    className={
-                      styles.list +
-                      " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
-                    }
-                  >
-                    {DropDownOptions(taxArray, "tax")}
-                  </ul>
-                </>
-              )}
-            </SelectList>
-            <TextField
-              id="Glu"
-              dir="rtl"
-              label="الخصم بالجنية"
-              variant="filled"
-              sx={sameTextField}
-              value={formData.discount}
-              onChange={(e) => handleFormData("discount", e.target.value.replace(/[^0-9.]/g, ""))}
-              className="w-full"
-            />
-          </div>
+
           <div className="w-full flex gap-2 items-center mt-1.5">
             <TextField
               id="Glu"
@@ -504,6 +472,38 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
               onChange={(e) =>
                 handleFormData("additional_fees", e.target.value.replace(/[^0-9.]/g, ""))
               }
+              className="w-full"
+            />
+          </div>
+          <div className="w-full flex flex-col sm:flex-row gap-2 items-center mt-1.5">
+            {/* <SelectList
+              placeHolder="ضريبة القيمة المضافة"
+              select={getSlug(taxArray, formData.tax as string) ?? "ضريبة القيمة المضافة"}
+              onClick={() => handleOpenDropDown("tax", true)}
+              onBlur={() => handleOpenDropDown("tax", false)}
+              dropDown={openDropDown.tax}
+            >
+              {openDropDown.tax && (
+                <>
+                  <ul
+                    className={
+                      styles.list +
+                      " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
+                    }
+                  >
+                    {DropDownOptions(taxArray, "tax")}
+                  </ul>
+                </>
+              )}
+            </SelectList> */}
+            <TextField
+              id="Glu"
+              dir="rtl"
+              label="الخصم بالجنية"
+              variant="filled"
+              sx={sameTextField}
+              value={formData.discount}
+              onChange={(e) => handleFormData("discount", e.target.value.replace(/[^0-9.]/g, ""))}
               className="w-full"
             />
           </div>

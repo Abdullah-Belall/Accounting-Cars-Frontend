@@ -6,7 +6,6 @@ import {
   periodsArray,
   sameTextField,
   shortIdGenerator,
-  taxArray,
 } from "@/app/utils/base";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import { Button, TextField } from "@mui/material";
@@ -143,7 +142,7 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
             onChange={(e) => handleData("discount", e.target.value.replace(/[^0-9.]/g, ""))}
           />
         </div>
-        <SelectList
+        {/* <SelectList
           placeHolder={data.tax == "0%" ? "بدون ضريبة" : data.tax}
           select={taxArray.find((e) => e.value === data.tax)?.label as string}
           onClick={() => handleDropDowns("tax", true)}
@@ -173,8 +172,8 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
               </ul>
             </>
           )}
-        </SelectList>
-        <div className="flex gap-2 mt-2.5">
+        </SelectList> */}
+        <div className="flex gap-2">
           <SelectList
             placeHolder="طريقة الدفع"
             select={methodsArray.find((e) => e.value === data.payment_method)?.label as string}

@@ -14,6 +14,7 @@ export default function OrderItemsTableRow({
   color,
   qty,
   unit_price,
+  total_cost_price,
 }: {
   index: number;
   id: string;
@@ -25,6 +26,7 @@ export default function OrderItemsTableRow({
   size: string;
   color: string | null;
   qty: number;
+  total_cost_price: number;
   unit_price: number;
 }) {
   const router = useRouter();
@@ -85,6 +87,7 @@ export default function OrderItemsTableRow({
         <td className="px-4 py-2 text-center">{qty}</td>
         <td className="px-4 py-2 text-center">{formattedUnitPrice}</td>
         <td className="px-4 py-2 text-center">{formattedEarnig}</td>
+        <td className="px-4 py-2 text-center">{Number(total_cost_price || 0).toLocaleString()}</td>
       </tr>
     </>
   );

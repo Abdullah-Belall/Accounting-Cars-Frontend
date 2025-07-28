@@ -7,46 +7,6 @@ import { FaLocationDot } from "react-icons/fa6";
 import { FaPhoneAlt } from "react-icons/fa";
 import { TbBrandToyota } from "react-icons/tb";
 
-const billParamters: {
-  domain: string;
-  title: string | React.ReactNode;
-  carsType: string;
-  phones: string;
-}[] = [
-  {
-    domain: "elrabi3.nabdtech.store",
-    title: `الربيع سيرفس`,
-    carsType: "البنزين",
-    phones: "01224957535 - 01155607133",
-  },
-  {
-    domain: "toyota.nabdtech.store",
-    title: (
-      <div className="flex items-center gap-1">
-        <p>TOYOTA</p>
-        <TbBrandToyota />
-        <p>D</p>
-      </div>
-    ),
-    carsType: "الجاز",
-    phones: "01224957535 - 01155607133",
-  },
-  {
-    domain: "localhost",
-    title: (
-      <div className="flex items-center gap-1">
-        <p>TOYOTA</p>
-        <TbBrandToyota />
-        <p>D</p>
-      </div>
-    ),
-    carsType: "الجاز",
-    phones: "01224957535 - 01155607133",
-  },
-];
-const getBillData = (domain: string) => {
-  return billParamters.find((e) => e.domain === domain);
-};
 export default function RabiaBill() {
   const { bills } = useBills();
   const [hostname, setHostName] = useState("");
@@ -196,6 +156,47 @@ export default function RabiaBill() {
     </div>
   );
 }
+
+const billParamters: {
+  domain: string;
+  title: string | React.ReactNode;
+  carsType: string;
+  phones: string;
+}[] = [
+  {
+    domain: "elrabi3.nabdtech.store",
+    title: `الربيع سيرفس`,
+    carsType: "البنزين",
+    phones: "01224957535 - 01155607133",
+  },
+  {
+    domain: "toyota.nabdtech.store",
+    title: (
+      <div className="flex items-center gap-1">
+        <p>TOYOTA</p>
+        <TbBrandToyota />
+        <p>D</p>
+      </div>
+    ),
+    carsType: "الجاز",
+    phones: "01224957535 - 01155607133",
+  },
+  {
+    domain: "localhost",
+    title: (
+      <div className="flex items-center gap-1">
+        <p>TOYOTA</p>
+        <TbBrandToyota />
+        <p>D</p>
+      </div>
+    ),
+    carsType: "الجاز",
+    phones: "01224957535 - 01155607133",
+  },
+];
+const getBillData = (domain: string) => {
+  return billParamters.find((e) => e.domain === domain);
+};
 // "use client";
 
 // import { useMemo } from "react";

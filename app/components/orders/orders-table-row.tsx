@@ -176,7 +176,6 @@ export default function OrdersTableRow({
             عرض الكل
           </p>
         </td>
-        <td className="px-4 py-2 text-center">{tax}%</td>
         <td className="px-4 py-2 text-center">{discount}</td>
         <td className="px-4 py-2 text-center">{formattedEarnig}</td>
         <td className="px-4 py-2 text-center">{client_balance ?? 0}</td>
