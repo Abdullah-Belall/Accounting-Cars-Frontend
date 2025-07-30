@@ -19,7 +19,7 @@ export default function SortsStockChecksPage() {
   const { findAll, clear } = useStockChecks();
   const [loading, setLoading] = useState(false);
   const { getSearch, fillSearch } = useSearch();
-  const { openPopup, closePopup } = usePopup();
+  const { openPopup } = usePopup();
 
   const fetchData = async () => {
     const response: { done: boolean; data: { sorts: SortInterface[] } } =
