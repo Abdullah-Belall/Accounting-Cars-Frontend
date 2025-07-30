@@ -14,7 +14,8 @@ export default function RabiaBill() {
   const handlePrint = () => {
     window.print();
   };
-  const sortedBills: any = bills?.data?.filter((e) => e?.product?.name);
+  const billsData: any = bills?.data?.map((e) => Number(e?.qty) > 0) || [];
+  const sortedBills: any = billsData?.filter((e: any) => e?.product?.name);
   const items = useMemo(() => {
     return sortedBills.map((e: any, i: number, arr: any) => (
       <ul
@@ -38,8 +39,8 @@ export default function RabiaBill() {
         </li>
       </ul>
     ));
-  }, [bills?.data]);
-  const masna3a: any = bills?.data?.filter((e) => !e?.product?.name);
+  }, [billsData]);
+  const masna3a: any = billsData?.filter((e: any) => !e?.product?.name);
   const masna3aItems = useMemo(() => {
     return masna3a.map((e: any, i: number, arr: any) => (
       <ul
@@ -65,7 +66,7 @@ export default function RabiaBill() {
         </li>
       </ul>
     ));
-  }, [bills?.data]);
+  }, [billsData]);
   useEffect(() => {
     setHostName(window.location.hostname);
   }, []);
@@ -254,9 +255,9 @@ const getBillData = (domain: string) => {
 //   const handlePrint = () => {
 //     window.print();
 //   };
-//   // {bills?.data}
+//   // {billsData}
 //   const items = useMemo(() => {
-//     return bills?.data?.map((e: any, i) => (
+//     return billsData?.map((e: any, i) => (
 //       <ul key={e?.id + i.toString()} className="w-full flex border-b-2 border-[#888]">
 //         <li className="w-[35%] py-3 text-center">
 //           {e?.product?.name} {e?.name} {e?.size}
@@ -270,7 +271,7 @@ const getBillData = (domain: string) => {
 //         </li>
 //       </ul>
 //     ));
-//   }, [bills?.data]);
+//   }, [billsData]);
 //   console.log(bills);
 //   return (
 //     <div className="print-content h-[calc(100dvh)] relative flex flex-col w-full">
