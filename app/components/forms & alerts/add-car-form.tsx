@@ -6,6 +6,7 @@ import { carTypesArray, getSlug, sameTextField } from "../../utils/base";
 import { CarType } from "@/app/utils/types/interfaces";
 import SelectList from "../common/select-list";
 import styles from "@/app/styles/drop-down.module.css";
+import MyLoading from "../common/loading";
 
 export default function AddCarForm({
   onAdded,
@@ -204,7 +205,7 @@ export default function AddCarForm({
           className="!bg-mdDark"
           variant="contained"
         >
-          {isForEdit ? "تعديل" : "اضافة"}
+          {loading ? <MyLoading /> : isForEdit ? "تعديل السيارة" : "اضافة السيارة"}
         </Button>
       </div>
     </div>

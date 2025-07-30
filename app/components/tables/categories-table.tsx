@@ -11,6 +11,7 @@ import {
   DELETE_CATEGORY_REQ,
 } from "@/app/utils/requests/client-side.requests";
 import NoData from "../common/no-data";
+import { useState } from "react";
 
 export default function CategoriesTable({
   data,
@@ -20,11 +21,14 @@ export default function CategoriesTable({
   refetch: any;
 }) {
   const { popupState, closePopup, openPopup } = usePopup();
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const updateCatData = popupState.editCategoryPopup.data;
   const deleteCatData = popupState.deleteAlertPopup.data;
   const onDelele = async () => {
+    if (deleteLoading) return;
+    setDeleteLoading(true);
     const response = await CLIENT_COLLECTOR_REQ(DELETE_CATEGORY_REQ, { id: deleteCatData.id });
-
+    setDeleteLoading(false);
     if (response.done) {
       openPopup("snakeBarPopup", {
         message: "تم حذف فئة بنجاح.",
@@ -83,7 +87,12 @@ export default function CategoriesTable({
       {popupState.deleteAlertPopup.isOpen && (
         <>
           <BlackLayer onClick={() => closePopup("deleteAlertPopup")}>
-            <DeleteAlert action={"حذف"} name={`فئة ${deleteCatData?.title}`} onConfirm={onDelele} />
+            <DeleteAlert
+              action={"حذف"}
+              name={`فئة ${deleteCatData?.title}`}
+              onConfirm={onDelele}
+              loading={deleteLoading}
+            />
           </BlackLayer>
         </>
       )}

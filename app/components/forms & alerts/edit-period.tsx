@@ -9,6 +9,7 @@ import {
   CLIENT_COLLECTOR_REQ,
   UPDATE_BALANCE_REQ,
 } from "@/app/utils/requests/client-side.requests";
+import MyLoading from "../common/loading";
 
 export default function EditPeriodPopup({ OnConfirm }: { OnConfirm: any }) {
   const [loading, setLoading] = useState(false);
@@ -57,7 +58,9 @@ export default function EditPeriodPopup({ OnConfirm }: { OnConfirm: any }) {
         handleData("period", e.value);
         setDropDown(false);
       }}
-      className={`${i !== arr.length - 1 && "border-b"} p-mainxs text-center border-myLight cursor-pointer`}
+      className={`${
+        i !== arr.length - 1 && "border-b"
+      } p-mainxs text-center border-myLight cursor-pointer`}
     >
       {e.label}
     </li>
@@ -107,7 +110,7 @@ export default function EditPeriodPopup({ OnConfirm }: { OnConfirm: any }) {
             className="!bg-mdDark"
             variant="contained"
           >
-            تأكيد
+            {loading ? <MyLoading /> : "تأكيد"}
           </Button>
         </div>
       </div>

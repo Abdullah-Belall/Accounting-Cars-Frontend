@@ -11,6 +11,7 @@ import InstallmentsPopUp from "../orders/installments-popup";
 import DeleteAlert from "../forms & alerts/delete-alert";
 import { shortIdGenerator } from "@/app/utils/base";
 import { CLIENT_COLLECTOR_REQ, DELETE_ORDER_REQ } from "@/app/utils/requests/client-side.requests";
+import { useState } from "react";
 
 export default function OrdersTable({
   title,
@@ -24,6 +25,7 @@ export default function OrdersTable({
   isForSelect?: boolean;
 }) {
   const { closePopup, popupState } = usePopup();
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const { closeReturns } = useReturns();
   const headers = [
     "#",
@@ -114,15 +116,19 @@ export default function OrdersTable({
             action="حذف"
             name={`هذه الفاتورة ${shortIdGenerator(popupState.deleteAlertPopup.data?.short_id)}`}
             onConfirm={async () => {
+              if (deleteLoading) return;
+              setDeleteLoading(true);
               const response = await CLIENT_COLLECTOR_REQ(DELETE_ORDER_REQ, {
                 id: popupState.deleteAlertPopup.data?.id,
               });
+              setDeleteLoading(false);
               if (response.done) {
                 refetch();
                 closePopup("deleteAlertPopup");
               }
             }}
             warning={`عند حذف هذه الفاتورة سيتم ارجاع المال المؤخوذ من حساب العميل الي حسابه مرة اخري وسيتم حذف كل الدفعات المدفوعة وايضا اي مرتجع خاص بالفاتورة وسيتم ارجاع الكميات الي المخزن ولا يمكن التراجع عن هذا الاجراء`}
+            loading={deleteLoading}
           />
         </BlackLayer>
       )}

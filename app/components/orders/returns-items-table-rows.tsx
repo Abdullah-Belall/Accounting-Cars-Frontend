@@ -1,5 +1,5 @@
 "use client";
-import { formatDate } from "@/app/utils/base";
+import { formatDate, shortIdGenerator } from "@/app/utils/base";
 import { ReturnsItemsInterface } from "@/app/utils/types/interfaces";
 
 interface CusReturnsItemsInterface extends ReturnsItemsInterface {
@@ -34,7 +34,7 @@ export default function ReturnsItemsTableRows({
   return (
     <tr>
       <td className="px-4 py-2 text-center">{index}</td>
-      <td className="px-4 py-2 text-center">{order?.short_id}</td>
+      <td className="px-4 py-2 text-center">{shortIdGenerator(order?.short_id as string)}</td>
       <td className="px-4 py-2 text-center">{order_item?.sort?.product?.name}</td>
       <td className="px-4 py-2 text-center">{sortName}</td>
       <td className="px-4 py-2 text-center">{sortColor}</td>

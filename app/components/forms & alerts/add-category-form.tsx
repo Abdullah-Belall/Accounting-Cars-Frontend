@@ -9,6 +9,7 @@ import {
 import { Button, TextField } from "@mui/material";
 import { ChangeEvent, useState } from "react";
 import { sameTextField } from "../../utils/base";
+import MyLoading from "../common/loading";
 
 export default function AddCategoryForm({
   onCategoryAdded,
@@ -108,7 +109,7 @@ export default function AddCategoryForm({
           className="!bg-mdDark"
           variant="contained"
         >
-          انشاء
+          {loading ? <MyLoading /> : "انشاء"}
         </Button>
       </div>
     </div>

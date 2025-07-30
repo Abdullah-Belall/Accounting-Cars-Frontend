@@ -15,6 +15,7 @@ import { useReturns } from "@/app/utils/contexts/returns-contexts";
 import ReturnsPopUp from "../orders/returns-popup";
 import { useBills } from "@/app/utils/contexts/bills-contexts";
 import { getBillHref, getSlug, methodsArray, paidStatusArray } from "@/app/utils/base";
+import MyLoading from "../common/loading";
 
 export default function OrderItemsTable({
   title,
@@ -29,6 +30,7 @@ export default function OrderItemsTable({
   const [data, setData] = useState<any>([]);
   const { openPopup } = usePopup();
   const [openReturns, setOpenReturns] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { returns, setReturns, closeReturns } = useReturns();
   const fetchData = async () => {
     const response = await CLIENT_COLLECTOR_REQ(GET_ORDER_ITEMS_REQ, { id });
@@ -45,12 +47,14 @@ export default function OrderItemsTable({
     fetchData();
   }, []);
   const onConfirmReturns = async () => {
+    if (loading) return;
     if (!returns?.data || returns?.data?.length === 0) {
       openPopup("snakeBarPopup", {
         message: "يجب تحديد الكمية المراد ارجاعها من كل صنف للمتابعة.",
       });
       return;
     }
+    setLoading(true);
     const response = await CLIENT_COLLECTOR_REQ(MAKE_RETURNS_REQ, {
       id: id,
       data: { returns: returns?.data },
@@ -61,6 +65,7 @@ export default function OrderItemsTable({
       });
       return;
     }
+    setLoading(false);
     closeReturns();
     openPopup("snakeBarPopup", {
       message: "تم تنفيذ المرتجع بنجاح.",
@@ -159,7 +164,7 @@ export default function OrderItemsTable({
             className="!bg-mdDark !max-w-[110px] !text-nowrap"
             variant="contained"
           >
-            تأكيد
+            {loading ? <MyLoading /> : "تأكيد"}
           </Button>
         )}
         {data?.return?.return_count > 0 && (

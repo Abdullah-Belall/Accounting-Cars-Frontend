@@ -21,6 +21,7 @@ export default function ExpensesPage() {
     openPopup("snakeBarPopup", { message });
   };
   const [openExpense, setOpenExpense] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const [editExpense, setEditExpense] = useState<{
     title: string;
     isForEdit?: { id: string; name: string; amount: number; note: string };
@@ -40,9 +41,12 @@ export default function ExpensesPage() {
   }, []);
 
   const deleteExpense = async () => {
+    if (deleteLoading) return;
+    setDeleteLoading(true);
     const response = await CLIENT_COLLECTOR_REQ(DELETE_EXPENSE_REQ, {
       id: popupState?.deleteAlertPopup?.data?.id,
     });
+    setDeleteLoading(false);
     if (response.done) {
       fetchData();
       closePopup("deleteAlertPopup");
@@ -106,6 +110,7 @@ export default function ExpensesPage() {
             action={"حذف"}
             name={`مصروف ${popupState?.deleteAlertPopup?.data?.name}`}
             onConfirm={deleteExpense}
+            loading={deleteLoading}
           />
         </BlackLayer>
       )}

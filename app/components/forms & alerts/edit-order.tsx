@@ -14,6 +14,7 @@ import SelectList from "../common/select-list";
 import styles from "@/app/styles/drop-down.module.css";
 import { CLIENT_COLLECTOR_REQ, UPDATE_ORDER_REQ } from "@/app/utils/requests/client-side.requests";
 import { TbCircleXFilled } from "react-icons/tb";
+import MyLoading from "../common/loading";
 
 export default function EditOrderPopup({ refetch }: { refetch: any }) {
   const { popupState, openPopup, closePopup } = usePopup();
@@ -21,6 +22,7 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
   const openSnakeBar = (message: string) => {
     openPopup("snakeBarPopup", { message });
   };
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
     tax: deliveryData.tax,
     discount: deliveryData.discount || "",
@@ -73,6 +75,7 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
   };
   const handleDone = async () => {
     if (!validation()) return;
+    if (loading) return;
     const finalObj: any = {
       tax: data.tax !== "" && data.tax !== "0%" ? data.tax.slice(0, 2) : "0",
       discount: data.discount !== "" ? Number(data.discount) : 0,
@@ -86,6 +89,7 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
       delete finalObj.installment;
       delete finalObj.down_payment;
     }
+    setLoading(true);
     const response = await CLIENT_COLLECTOR_REQ(UPDATE_ORDER_REQ, {
       id: deliveryData.id,
       data: finalObj,
@@ -97,6 +101,7 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
     } else {
       openSnakeBar(response.message);
     }
+    setLoading(false);
   };
 
   const tax = data.tax.length > 2 ? data.tax.slice(0, 2) : data.tax.slice(0, 1);
@@ -292,7 +297,7 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
           className="!bg-mdDark"
           variant="contained"
         >
-          تأكيد
+          {loading ? <MyLoading /> : "تأكيد"}
         </Button>
       </div>
     </div>

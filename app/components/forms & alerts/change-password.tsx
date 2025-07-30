@@ -7,9 +7,11 @@ import {
 import { Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import MyLoading from "../common/loading";
 
 export default function ChangePassword() {
   const [showPass, setShowPass] = useState([false, false, false]);
+  const [loading, setLoading] = useState(false);
   const handleShowPass = (num: number) => {
     const showPassClone = [...showPass];
     showPassClone.splice(num, 1, !showPass[num]);
@@ -44,11 +46,14 @@ export default function ChangePassword() {
     return true;
   };
   const handleDone = async () => {
+    if (loading) return;
     if (!vaildation()) return;
+    setLoading(true);
     const response = await CLIENT_COLLECTOR_REQ(UPDATE_PASSWORD_REQ, {
       password: data.password,
       new_password: data.new_password,
     });
+    setLoading(false);
     if (response.done) {
       openPopup("snakeBarPopup", { message: "تم تغيير كلمة السر بنجاح.", type: "success" });
       setData({
@@ -120,10 +125,10 @@ export default function ChangePassword() {
         <Button
           onClick={handleDone}
           sx={{ fontFamily: "cairo" }}
-          className="!bg-myDark !text-lg !px-8 !py-2"
+          className="!bg-myDark !px-8 !py-2"
           variant="contained"
         >
-          تأكيد
+          {loading ? <MyLoading /> : "تغيير كلمة السر"}
         </Button>
       </div>
     </div>

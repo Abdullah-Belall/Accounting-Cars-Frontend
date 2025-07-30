@@ -9,6 +9,7 @@ import {
 } from "@/app/utils/requests/client-side.requests";
 import { TextField, Button } from "@mui/material";
 import { useState } from "react";
+import MyLoading from "../common/loading";
 
 export default function AddPhoneForm({
   user_id,
@@ -72,15 +73,15 @@ export default function AddPhoneForm({
           id: isForEdit?.id,
         })
       : type === "client"
-        ? await CLIENT_COLLECTOR_REQ(ADD_CLIENT_CONTACT_REQ, {
-            ...data,
-            phone: "+" + data.phone,
-            user_id,
-          })
-        : await CLIENT_COLLECTOR_REQ(ADD_WORKER_CONTACT_REQ, {
-            data: { ...data, phone: "+" + data.phone },
-            id: user_id,
-          });
+      ? await CLIENT_COLLECTOR_REQ(ADD_CLIENT_CONTACT_REQ, {
+          ...data,
+          phone: "+" + data.phone,
+          user_id,
+        })
+      : await CLIENT_COLLECTOR_REQ(ADD_WORKER_CONTACT_REQ, {
+          data: { ...data, phone: "+" + data.phone },
+          id: user_id,
+        });
     setLoading(false);
     if (response.done) {
       onDone();
@@ -123,7 +124,7 @@ export default function AddPhoneForm({
             className="!bg-mdDark"
             variant="contained"
           >
-            اضافة
+            {loading ? <MyLoading /> : isForEdit ? "تعديل" : "اضافة"}
           </Button>
         </div>
       </div>

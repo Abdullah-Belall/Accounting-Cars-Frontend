@@ -32,6 +32,7 @@ export default function ProductsTable({
   isForCategory: boolean;
 }) {
   const { popupState, closePopup, openPopup } = usePopup();
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const openSnakeBar = (message: string) => {
     openPopup("snakeBarPopup", { message });
   };
@@ -93,8 +94,11 @@ export default function ProductsTable({
     { name: "product.note", slug: "الملاحظات" },
   ];
   const handleDeleteProduct = async () => {
+    if (deleteLoading) return;
     const id = popupState.deleteAlertPopup.data.id;
+    setDeleteLoading(true);
     const response = await CLIENT_COLLECTOR_REQ(DELETE_PRODUCT_REQ, { id });
+    setDeleteLoading(false);
     if (response.done) {
       openPopup("snakeBarPopup", {
         message: "تم حذف المنتج بنجاح.",
@@ -217,6 +221,7 @@ export default function ProductsTable({
               action={"حذف"}
               name={`المنتج ${popupState.deleteAlertPopup.data.name}`}
               onConfirm={handleDeleteProduct}
+              loading={deleteLoading}
             />
           </BlackLayer>
         </>

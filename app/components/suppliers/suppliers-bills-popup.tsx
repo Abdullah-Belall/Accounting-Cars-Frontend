@@ -12,6 +12,7 @@ import { Button, TextField } from "@mui/material";
 import { sameTextField, shortIdGenerator } from "@/app/utils/base";
 import SuppliersBillsTable from "../tables/suppliers-bills-table";
 import { TbCircleXFilled } from "react-icons/tb";
+import MyLoading from "../common/loading";
 
 export default function SuppliersBillsPopUp() {
   const { openPopup, popupState, closePopup } = usePopup();
@@ -135,7 +136,7 @@ export default function SuppliersBillsPopUp() {
                 className="!bg-mdDark text-nowrap"
                 variant="contained"
               >
-                تسديد
+                {loading ? <MyLoading /> : "تسديد"}
               </Button>
             </div>
           </div>

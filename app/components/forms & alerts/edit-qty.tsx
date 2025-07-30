@@ -9,6 +9,7 @@ import {
   CLIENT_COLLECTOR_REQ,
   GET_ALL_SUPPLIERS_REQ,
 } from "@/app/utils/requests/client-side.requests";
+import MyLoading from "../common/loading";
 
 export default function EditQtyPopup({
   OnConfirm,
@@ -196,7 +197,7 @@ export default function EditQtyPopup({
             className="!bg-mdDark"
             variant="contained"
           >
-            تأكيد
+            {loading ? <MyLoading /> : "تأكيد"}
           </Button>
         </div>
       </div>

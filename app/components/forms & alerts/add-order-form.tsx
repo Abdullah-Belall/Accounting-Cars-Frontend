@@ -22,9 +22,11 @@ import { useRouter } from "next/navigation";
 import { useBills } from "@/app/utils/contexts/bills-contexts";
 import { TbCircleXFilled } from "react-icons/tb";
 import CarsTable from "../tables/cars-table";
+import MyLoading from "../common/loading";
 
 export default function AddOrderForm({ closePopup }: { closePopup: () => void }) {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const { openPopup, popupState, closeOrderPopup } = usePopup();
   const openSnakeBar = (message: string) => {
@@ -189,6 +191,7 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
     return true;
   };
   const handleDone = async () => {
+    if (loading) return;
     if (!validation()) return;
     const product_sorts = [...popupState.makeOrderPopup.data?.product_sorts];
 
@@ -226,6 +229,7 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
       delete finalObj.installment_type;
     }
     delete finalObj.additional_band;
+    setLoading(true);
     let response;
     if (
       popupState.makeOrderPopup.data?.product_sorts &&
@@ -287,6 +291,7 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
     } else {
       openSnakeBar(response.message);
     }
+    setLoading(false);
   };
   const installmentValue = formData.installment
     ? Math.ceil(
@@ -535,7 +540,7 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
             className="!bg-mdDark !mt-3 w-fit"
             variant="contained"
           >
-            تأكيد الفاتورة
+            {loading ? <MyLoading /> : "تأكيد الفاتورة"}
           </Button>
         </div>
       </div>

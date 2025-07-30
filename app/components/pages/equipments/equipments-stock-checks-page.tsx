@@ -5,15 +5,17 @@ import {
   GET_ALL_EQUIPMENTS_REQ,
 } from "@/app/utils/requests/client-side.requests";
 import EquipmentsTable from "../../tables/equipments-table";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@mui/material";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import { useStockChecks } from "@/app/utils/contexts/stock-checks-contexts";
 import { useSearch } from "@/app/utils/contexts/search-results-contexts";
+import MyLoading from "../../common/loading";
 
 export default function EquipmentsStockChecksPage() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const { openPopup } = usePopup();
   const { findAll } = useStockChecks();
   const { fillSearch, getSearch } = useSearch();
@@ -29,11 +31,13 @@ export default function EquipmentsStockChecksPage() {
     fetchData();
   }, []);
   const handleDone = async () => {
+    if (loading) return;
     const sorts = findAll();
     if (sorts.length === 0) {
       openPopup("snakeBarPopup", { message: "لا يوجد أصناف في الجرد." });
       return;
     }
+    setLoading(true);
     const response = await CLIENT_COLLECTOR_REQ(CREATE_STOCK_CHECKS_REQ, {
       data: sorts,
       type: "equipments",
@@ -44,6 +48,7 @@ export default function EquipmentsStockChecksPage() {
     } else {
       openPopup("snakeBarPopup", { message: response?.message });
     }
+    setLoading(false);
   };
   return (
     <>
@@ -54,7 +59,7 @@ export default function EquipmentsStockChecksPage() {
           className="!bg-mdDark !absolute !left-[12px] !top-0 z-[3]"
           variant="contained"
         >
-          تأكيد الجرد
+          {loading ? <MyLoading /> : "تأكيد الجرد"}
         </Button>
         <EquipmentsTable
           title={"كل المعدات"}

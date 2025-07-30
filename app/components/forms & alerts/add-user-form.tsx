@@ -10,6 +10,7 @@ import {
   EDIT_CLIENT_REQ,
 } from "@/app/utils/requests/client-side.requests";
 import { sameTextField } from "@/app/utils/base";
+import MyLoading from "../common/loading";
 
 export default function AddUserForm({
   type,
@@ -215,7 +216,7 @@ export default function AddUserForm({
             className="!bg-mdDark"
             variant="contained"
           >
-            {isForEdit ? "تعديل" : "اضافة"}
+            {loading ? <MyLoading /> : isForEdit ? "تعديل" : "اضافة"}
           </Button>
         </div>
       </div>

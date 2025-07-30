@@ -11,6 +11,7 @@ import { useSearch } from "@/app/utils/contexts/search-results-contexts";
 import { Button } from "@mui/material";
 import { useWorkerSalary } from "@/app/utils/contexts/paying-salaries-context";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
+import MyLoading from "../../common/loading";
 
 export default function WorkersPage() {
   const router = useRouter();
@@ -80,7 +81,7 @@ export default function WorkersPage() {
               className="!bg-mdDark"
               variant="contained"
             >
-              تأكيد
+              {loading ? <MyLoading /> : "تأكيد"}
             </Button>
           )}
           <Button

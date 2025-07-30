@@ -25,6 +25,7 @@ export default function Client() {
   const { openPopup, popupState, closePopup } = usePopup();
   const id = params.id;
   const [edit, setEdit] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const [data, setData] = useState<ClientInterface>();
   const [addCar, setAddCar] = useState(false);
 
@@ -154,9 +155,12 @@ export default function Client() {
             name={popupState.deleteAlertPopup.data?.mark}
             action="حذف"
             onConfirm={async () => {
+              if (deleteLoading) return;
+              setDeleteLoading(true);
               const response = await CLIENT_COLLECTOR_REQ(DELETE_CAR_REQ, {
                 id: popupState.deleteAlertPopup.data?.id,
               });
+              setDeleteLoading(false);
               if (response.done) {
                 openPopup("snakeBarPopup", { message: "تم حذف السيارة بنجاح.", type: "success" });
                 closePopup("deleteAlertPopup");
@@ -165,6 +169,7 @@ export default function Client() {
                 openPopup("snakeBarPopup", { message: response.message });
               }
             }}
+            loading={deleteLoading}
           />
         </BlackLayer>
       )}

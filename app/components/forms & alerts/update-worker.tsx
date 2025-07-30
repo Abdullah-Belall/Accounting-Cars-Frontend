@@ -5,6 +5,7 @@ import SelectList from "../common/select-list";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import { CLIENT_COLLECTOR_REQ, UPDATE_WORKER_REQ } from "@/app/utils/requests/client-side.requests";
 import { getSlug, rolesArray, sameTextField } from "@/app/utils/base";
+import MyLoading from "../common/loading";
 
 export default function UpdateWorkerForm({
   id,
@@ -113,7 +114,7 @@ export default function UpdateWorkerForm({
             className="!bg-mdDark"
             variant="contained"
           >
-            تعديل
+            {loading ? <MyLoading /> : "تعديل"}
           </Button>
         </div>
       </div>

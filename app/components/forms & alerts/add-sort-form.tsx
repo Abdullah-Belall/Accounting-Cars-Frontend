@@ -11,6 +11,7 @@ import {
 } from "@/app/utils/requests/client-side.requests";
 import SelectList from "../common/select-list";
 import styles from "@/app/styles/drop-down.module.css";
+import MyLoading from "../common/loading";
 
 export default function AddSortForm({
   id,
@@ -282,7 +283,7 @@ export default function AddSortForm({
             className={"!bg-mdDark"}
             variant="contained"
           >
-            اضافة
+            {loading ? <MyLoading /> : isForEdit ? "تعديل الصنف" : "اضافة صنف"}
           </Button>
         </div>
       </div>

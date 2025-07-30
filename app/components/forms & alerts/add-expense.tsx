@@ -8,6 +8,7 @@ import {
   CREATE_EXPENSE_REQ,
   UPDATE_EXPENSE_REQ,
 } from "@/app/utils/requests/client-side.requests";
+import MyLoading from "../common/loading";
 
 export default function ExpenseForm({
   title,
@@ -116,7 +117,7 @@ export default function ExpenseForm({
           className="!bg-mdDark"
           variant="contained"
         >
-          {isForEdit ? "تعديل" : "اضافة"}
+          {loading ? <MyLoading /> : isForEdit ? "تعديل" : "اضافة"}
         </Button>
       </div>
     </div>

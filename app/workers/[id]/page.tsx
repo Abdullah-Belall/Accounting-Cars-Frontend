@@ -37,6 +37,7 @@ import { useEffect, useState } from "react";
 export default function Worker() {
   const router = useRouter();
   const [deleteAlert, setDeleteAlert] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const [update, setUpdate] = useState(false);
   const [loading, setLoading] = useState(false);
   const [addAdvance, setAddAdvance] = useState(false);
@@ -363,9 +364,12 @@ export default function Worker() {
         <BlackLayer onClick={() => closePopup("deleteAlertPopup")}>
           <DeleteAlert
             onConfirm={async () => {
+              if (deleteLoading) return;
+              setDeleteLoading(true);
               const response = await CLIENT_COLLECTOR_REQ(DELETE_WORKER_ABSENCE_REQ, {
                 id: popupState.deleteAlertPopup.data?.id,
               });
+              setDeleteLoading(false);
               if (response.done) {
                 openPopup("snakeBarPopup", {
                   message: "تم حذف الغياب بنجاح.",
@@ -379,6 +383,7 @@ export default function Worker() {
             }}
             action={"حذف"}
             name={`الغياب رقم ${popupState.deleteAlertPopup.data?.index}`}
+            loading={deleteLoading}
           />
         </BlackLayer>
       )}

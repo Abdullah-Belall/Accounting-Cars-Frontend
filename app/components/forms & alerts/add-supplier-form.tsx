@@ -5,6 +5,7 @@ import { ADD_SUPPLIER_REQ, CLIENT_COLLECTOR_REQ } from "@/app/utils/requests/cli
 import { Button, TextField } from "@mui/material";
 import { ChangeEvent, useState } from "react";
 import { sameTextField } from "../../utils/base";
+import MyLoading from "../common/loading";
 
 export default function AddSupplierForm({
   onSupplierAdded,
@@ -80,7 +81,7 @@ export default function AddSupplierForm({
           className="!bg-mdDark"
           variant="contained"
         >
-          اضافة
+          {loading ? <MyLoading /> : "اضافة"}
         </Button>
       </div>
     </div>

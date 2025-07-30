@@ -107,6 +107,7 @@ export default function PhonesTable({
               action={"حذف"}
               name={`الهاتف رقم ${popupState.deleteAlertPopup.data.index}`}
               onConfirm={handleConfirmDelete}
+              loading={loading}
             />
           </BlackLayer>
         </>

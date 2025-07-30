@@ -2,8 +2,10 @@ import { sameTextField } from "@/app/utils/base";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import { Button, TextField } from "@mui/material";
 import { useState } from "react";
+import MyLoading from "../common/loading";
 
 export default function AddEquipment({ onDone }: { onDone: (data: any) => Promise<void> }) {
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
     name: "",
     qty: "",
@@ -29,11 +31,13 @@ export default function AddEquipment({ onDone }: { onDone: (data: any) => Promis
   };
   const handleDone = async () => {
     if (!vaildation()) return;
-    onDone({
+    setLoading(true);
+    await onDone({
       ...data,
       qty: Number(data.qty),
       unit_price: Number(data.unit_price),
     });
+    setLoading(false);
   };
   return (
     <div className="mx-mainxs rounded-md shadow-md w-full min-[400px]:w-[384px] bg-myLight p-mainxl">
@@ -77,7 +81,7 @@ export default function AddEquipment({ onDone }: { onDone: (data: any) => Promis
           className="!bg-mdDark"
           variant="contained"
         >
-          اضافة معدة
+          {loading ? <MyLoading /> : "اضافة معدة"}
         </Button>
       </div>
     </div>

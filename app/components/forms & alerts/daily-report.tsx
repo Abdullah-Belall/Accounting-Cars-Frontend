@@ -11,6 +11,7 @@ import {
   CLIENT_COLLECTOR_REQ,
   GET_DAILY_REPORT_REQ,
 } from "@/app/utils/requests/client-side.requests";
+import MyLoading from "../common/loading";
 
 export default function DailyReport({ close }: { close: () => void }) {
   const [loading, setLoading] = useState(false);
@@ -48,7 +49,7 @@ export default function DailyReport({ close }: { close: () => void }) {
           className="!bg-mdDark"
           variant="contained"
         >
-          انشاء
+          {loading ? <MyLoading /> : "إظهار التقرير"}
         </Button>
       </div>
     </div>

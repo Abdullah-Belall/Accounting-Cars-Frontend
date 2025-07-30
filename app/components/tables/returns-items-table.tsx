@@ -2,12 +2,14 @@ import { ReturnDataInterface } from "@/app/utils/types/interfaces";
 import NoData from "../common/no-data";
 import MainTable from "./main-table";
 import ReturnsItemsTableRows from "../orders/returns-items-table-rows";
+import { shortIdGenerator } from "@/app/utils/base";
 
 export default function ReturnsItemsTable({ data }: { data: ReturnDataInterface }) {
+  console.log(data?.short_id);
   return (
     <>
       <MainTable
-        title={`عناصر المرتجع رقم ${data?.short_id}`}
+        title={`عناصر المرتجع رقم ${data?.short_id ? shortIdGenerator(data?.short_id) : ""}`}
         headers={[
           "#",
           "رقم المبيعات",
@@ -31,7 +33,7 @@ export default function ReturnsItemsTable({ data }: { data: ReturnDataInterface 
             qty={row?.qty}
             unit_price={row?.unit_price}
             reason={row?.reason}
-            order_item={row.order_item}
+            order_item={row?.order_item}
             created_at={row?.created_at}
             updated_at={row?.updated_at}
             order={data?.order as any}

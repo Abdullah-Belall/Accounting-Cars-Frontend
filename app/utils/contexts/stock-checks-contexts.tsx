@@ -13,6 +13,7 @@ type StockChecksContextType = {
   findOne: (sort_id: string) => StockCheck | undefined;
   add: (item: StockCheck) => void;
   deleteBySortId: (sort_id: string) => void;
+  clear: () => void;
 };
 
 const StockChecksContext = createContext<StockChecksContextType | undefined>(undefined);
@@ -31,9 +32,12 @@ export const StockChecksProvider = ({ children }: { children: ReactNode }) => {
   const deleteBySortId = (sort_id: string) => {
     setData((prev) => prev.filter((item) => item.sort_id !== sort_id));
   };
+  const clear = () => {
+    setData([]);
+  };
 
   return (
-    <StockChecksContext.Provider value={{ data, findAll, findOne, add, deleteBySortId }}>
+    <StockChecksContext.Provider value={{ data, findAll, findOne, add, deleteBySortId, clear }}>
       {children}
     </StockChecksContext.Provider>
   );

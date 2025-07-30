@@ -14,12 +14,40 @@ export default function RabiaBill() {
   const handlePrint = () => {
     window.print();
   };
+  const sortedBills: any = bills?.data?.filter((e) => e?.product?.name);
   const items = useMemo(() => {
-    return bills?.data?.map((e: any, i, arr) => (
+    return sortedBills.map((e: any, i: number, arr: any) => (
       <ul
         key={i}
         className={
           "flex bg-white text-[#45616c]" + (i !== arr.length - 1 && " border-b-3 border-[#9fadb0]")
+        }
+      >
+        <li className="py-3 flex flex-col justify-center px-4 gap-2 text-center w-[50%]">
+          {isCostBill && shortIdGenerator(e.id) + " - "}
+          {e?.name}
+        </li>
+        <li className="py-3 flex flex-col justify-center px-4 gap-2 text-center w-[13%] border-x-2 border-[#9fadb0]">
+          {e?.qty}
+        </li>
+        <li className="flex flex-col gap-2 justify-center text-center w-[13%] border-l-2 border-[#9fadb0]">
+          {Number(e?.price ?? e?.unit_price).toLocaleString()}
+        </li>
+        <li className="flex flex-col gap-2 justify-center text-center w-[24%]">
+          {(Number(e?.price ?? e?.unit_price) * Number(e?.qty)).toLocaleString()}
+        </li>
+      </ul>
+    ));
+  }, [bills?.data]);
+  const masna3a: any = bills?.data?.filter((e) => !e?.product?.name);
+  const masna3aItems = useMemo(() => {
+    return masna3a.map((e: any, i: number, arr: any) => (
+      <ul
+        key={i + "masna3a"}
+        className={
+          "flex bg-white text-[#45616c] border-[#9fadb0] " +
+          (i !== arr.length - 1 && " border-b-3 ") +
+          (i === 0 && " border-t-3")
         }
       >
         <li className="py-3 flex flex-col justify-center px-4 gap-2 text-center w-[50%]">
@@ -118,7 +146,7 @@ export default function RabiaBill() {
             <div className="text-center py-1 border-t-2 border-white px-4">جنية</div>
           </li>
         </ul>
-        {items}
+        {[items, masna3aItems].flat()}
       </div>
       <div className="flex flex-col gap-1 w-[90%] mx-auto mt-1 border-3 border-[#9fadb0] rounded-md p-2 text-lg font-bold">
         <div className="flex items-center justify-between">

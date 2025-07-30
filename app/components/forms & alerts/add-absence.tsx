@@ -2,6 +2,7 @@
 import { Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { sameTextField } from "@/app/utils/base";
+import MyLoading from "../common/loading";
 
 export default function AddAbsenceForm({
   onDone,
@@ -41,7 +42,7 @@ export default function AddAbsenceForm({
           className="!bg-mdDark"
           variant="contained"
         >
-          تأكيد
+          {loading ? <MyLoading /> : "تأكيد"}
         </Button>
       </div>
     </div>

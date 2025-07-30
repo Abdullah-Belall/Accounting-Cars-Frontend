@@ -18,7 +18,7 @@ export default function PhonesTabelRow({
     <>
       <tr>
         <td className="px-4 py-2 text-center">{index}</td>
-        <td className="px-4 py-2 text-center">{phone}</td>
+        <td className="px-4 py-2 text-center">{phone.slice(1)}+</td>
         <td className="px-4 py-2 text-center">{note ?? "لا يوجد"}</td>
         <td className="px-4 py-2 text-center">{formatDate(created_at)}</td>
         {type === "العميل" && (

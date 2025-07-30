@@ -5,13 +5,14 @@ import { deductionStatusArr, getSlug } from "../../utils/base";
 import { DeductionStatusEnum } from "@/app/utils/types/interfaces";
 import SelectList from "../common/select-list";
 import styles from "@/app/styles/drop-down.module.css";
+import MyLoading from "../common/loading";
 
 export default function DeductionStatusForm({
   onDone,
   title,
   curr_status,
 }: {
-  onDone: (data: any) => void;
+  onDone: (data: any) => Promise<void>;
   title: string;
   curr_status: DeductionStatusEnum;
 }) {
@@ -22,7 +23,7 @@ export default function DeductionStatusForm({
   const handleDone = async () => {
     if (loading) return;
     setLoading(true);
-    onDone({ data: { status } });
+    await onDone({ data: { status } });
     setLoading(false);
   };
   return (
@@ -66,7 +67,7 @@ export default function DeductionStatusForm({
           className="!bg-mdDark"
           variant="contained"
         >
-          تأكيد
+          {loading ? <MyLoading /> : "تأكيد"}
         </Button>
       </div>
     </div>

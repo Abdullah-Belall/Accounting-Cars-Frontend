@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   CLIENT_COLLECTOR_REQ,
   CREATE_STOCK_CHECKS_REQ,
@@ -12,12 +12,14 @@ import SortsStockChecksTable from "../../tables/sorts-stock-checks-table";
 import { Button } from "@mui/material";
 import { useStockChecks } from "@/app/utils/contexts/stock-checks-contexts";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
+import MyLoading from "../../common/loading";
 
 export default function SortsStockChecksPage() {
   const router = useRouter();
-  const { findAll } = useStockChecks();
+  const { findAll, clear } = useStockChecks();
+  const [loading, setLoading] = useState(false);
   const { getSearch, fillSearch } = useSearch();
-  const { openPopup } = usePopup();
+  const { openPopup, closePopup } = usePopup();
 
   const fetchData = async () => {
     const response: { done: boolean; data: { sorts: SortInterface[] } } =
@@ -37,11 +39,13 @@ export default function SortsStockChecksPage() {
   }, []);
   const data = getSearch("sorts");
   const handleDone = async () => {
+    if (loading) return;
     const sorts = findAll();
     if (sorts.length === 0) {
       openPopup("snakeBarPopup", { message: "لا يوجد أصناف في الجرد." });
       return;
     }
+    setLoading(true);
     const response = await CLIENT_COLLECTOR_REQ(CREATE_STOCK_CHECKS_REQ, {
       data: sorts,
       type: "sorts",
@@ -52,6 +56,8 @@ export default function SortsStockChecksPage() {
     } else {
       openPopup("snakeBarPopup", { message: response?.message });
     }
+    clear();
+    setLoading(false);
   };
   return (
     <>
@@ -63,7 +69,7 @@ export default function SortsStockChecksPage() {
           className="!bg-mdDark !absolute !left-[12px] !top-0"
           variant="contained"
         >
-          تأكيد الجرد
+          {loading ? <MyLoading /> : "تأكيد الجرد"}
         </Button>
       </div>
     </>

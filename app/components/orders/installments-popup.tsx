@@ -17,6 +17,7 @@ import {
   shortIdGenerator,
 } from "@/app/utils/base";
 import { TbCircleXFilled } from "react-icons/tb";
+import MyLoading from "../common/loading";
 
 export default function InstallmentsPopUp() {
   const { openPopup, popupState, closePopup } = usePopup();
@@ -32,7 +33,6 @@ export default function InstallmentsPopUp() {
       openPopup("snakeBarPopup", { message: response.message });
     }
   };
-  console.log(delvData);
   useEffect(() => {
     fetchData();
   }, [delvData]);
@@ -53,8 +53,9 @@ export default function InstallmentsPopUp() {
     setLoading(false);
   };
   const paid =
-    Number(delvData.down_payment) + data.reduce((acc, curr) => Number(curr.amount) + acc, 0);
-  const due = Number(delvData.totalPriceAfter) - paid;
+    Number(delvData.down_payment || 0) +
+    (data.reduce((acc, curr) => Number(curr.amount) + acc, 0) || 0);
+  const due = Number(delvData.totalPriceAfter || 0) - paid;
   if (Number(installment) > due) {
     setInstallment(due);
   }
@@ -105,7 +106,7 @@ export default function InstallmentsPopUp() {
                 className="w-full"
                 disabled
               />
-              <TextField
+              {/* <TextField
                 id="Glu"
                 dir="rtl"
                 label="الاقساط المتبقية"
@@ -114,7 +115,7 @@ export default function InstallmentsPopUp() {
                 value={due && installment ? Math.ceil(due / installment) : "0"}
                 className="w-full"
                 disabled
-              />
+              /> */}
             </div>
             <div className="flex gap-1">
               <TextField
@@ -172,7 +173,7 @@ export default function InstallmentsPopUp() {
               className="!bg-mdDark text-nowrap"
               variant="contained"
             >
-              دفع القسط
+              {loading ? <MyLoading /> : "دفع القسط"}
             </Button>
           </div>
         </div>

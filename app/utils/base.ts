@@ -156,8 +156,8 @@ export const periodsArray = [
   { value: "year", label: "سنوي" },
 ];
 
-export const shortIdGenerator = (shortId: number) => {
-  const rest = 6 - shortId.toString().length;
+export const shortIdGenerator = (shortId: number | string) => {
+  const rest = 6 - shortId?.toString().length;
   const shortIdArr = [];
   for (let i = 0; i < rest; i++) {
     shortIdArr.push(0);

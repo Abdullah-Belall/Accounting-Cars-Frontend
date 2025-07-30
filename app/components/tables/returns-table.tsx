@@ -68,7 +68,7 @@ export default function ReturnsTable({
         })}
       </MainTable>
       {data?.length === 0 && <NoData />}
-      {popupState?.returnsItemsPopup.isOpen && (
+      {popupState.returnsItemsPopup.isOpen && (
         <>
           <BlackLayer onClick={() => closePopup("returnsItemsPopup")}>
             <ReturnsItemsPopup returnId={popupState.returnsItemsPopup.data?.returnId} />

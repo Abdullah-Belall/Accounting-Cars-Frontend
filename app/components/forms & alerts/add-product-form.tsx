@@ -13,6 +13,7 @@ import { CategoryInterface } from "@/app/utils/types/interfaces";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import { useRouter } from "next/navigation";
 import { sameTextField } from "@/app/utils/base";
+import MyLoading from "../common/loading";
 
 export default function AddProductForm({
   isForEdit,
@@ -27,11 +28,11 @@ export default function AddProductForm({
   };
 }) {
   const [data, setData] = useState({
-    name: isForEdit ? (isForEdit.title ?? "") : "",
-    desc: isForEdit ? (isForEdit.desc ?? "") : "",
+    name: isForEdit ? isForEdit.title ?? "" : "",
+    desc: isForEdit ? isForEdit.desc ?? "" : "",
     category: "الفئة",
-    material: isForEdit ? (isForEdit.material ?? "") : "",
-    note: isForEdit ? (isForEdit.note ?? "") : "",
+    material: isForEdit ? isForEdit.material ?? "" : "",
+    note: isForEdit ? isForEdit.note ?? "" : "",
   });
   const [dropDown, setDropDown] = useState(false);
   const { openPopup, closePopup } = usePopup();
@@ -60,7 +61,9 @@ export default function AddProductForm({
     <li
       key={e.id}
       onClick={() => handleData("category", e.name + `###` + e.id)}
-      className={`${i !== arr.length - 1 && "border-b"} p-mainxs text-center border-myLight cursor-pointer`}
+      className={`${
+        i !== arr.length - 1 && "border-b"
+      } p-mainxs text-center border-myLight cursor-pointer`}
     >
       {e.name}
     </li>
@@ -198,7 +201,7 @@ export default function AddProductForm({
             className={"!bg-mdDark"}
             variant="contained"
           >
-            اضافة
+            {loading ? <MyLoading /> : isForEdit ? "تعديل المنتج" : "اضافة المنتج"}
           </Button>
         </div>
       </div>
