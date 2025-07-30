@@ -14,8 +14,8 @@ export default function RabiaBill() {
   const handlePrint = () => {
     window.print();
   };
-  const billsData: any = bills?.data?.map((e) => Number(e?.qty) > 0) || [];
-  const sortedBills: any = billsData?.filter((e: any) => e?.product?.name);
+  const billsData = bills?.data?.filter((e) => Number(e.qty) > 0);
+  const sortedBills: any = billsData?.filter((e) => e?.product?.name);
   const items = useMemo(() => {
     return sortedBills.map((e: any, i: number, arr: any) => (
       <ul
@@ -40,7 +40,7 @@ export default function RabiaBill() {
       </ul>
     ));
   }, [billsData]);
-  const masna3a: any = billsData?.filter((e: any) => !e?.product?.name);
+  const masna3a: any = billsData?.filter((e) => !e?.product?.name);
   const masna3aItems = useMemo(() => {
     return masna3a.map((e: any, i: number, arr: any) => (
       <ul
