@@ -25,7 +25,9 @@ export default function Header({ logo }: { logo: string }) {
   };
   useEffect(() => {
     const fetchData = async () => {
-      const response = await CLIENT_COLLECTOR_REQ(GET_MY_PROFILE_REQ);
+      const response = await CLIENT_COLLECTOR_REQ(GET_MY_PROFILE_REQ, {
+        domain: window.location.pathname,
+      });
       if (response.done) {
         setUser(response.data);
       } else {
