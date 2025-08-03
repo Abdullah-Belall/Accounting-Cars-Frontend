@@ -388,7 +388,7 @@ const GET_MY_PROFILE_REQ = async ({ domain }: { domain: string }) => {
     domain = "localhost.com";
   }
   try {
-    const response: any = await axios.get(`${BASE_URL}/workers/profile?domain=${domain}`, {
+    const response: any = await axios.get(`${BASE_URL}/workers/profile/${domain}`, {
       headers: { Authorization: `Bearer ${getCookie("access_token")}` },
     });
 
