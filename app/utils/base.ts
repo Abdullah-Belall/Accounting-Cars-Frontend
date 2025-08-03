@@ -64,23 +64,6 @@ export const taxArray = [
     label: "14%",
   },
 ];
-const billUi = [
-  {
-    domain: "localhost",
-    href: "/rabi3-bill",
-  },
-  {
-    domain: "elrabi3.nabdtech.store",
-    href: "/rabi3-bill",
-  },
-  {
-    domain: "toyota.nabdtech.store",
-    href: "/rabi3-bill",
-  },
-];
-export const getBillHref = (domain: string) => {
-  return billUi.find((e) => e.domain === domain)?.href ?? "/bill";
-};
 export const carTypesArray = [
   { value: CarType.SEDAN, label: "سيدان" },
   { value: CarType.HATCHBACK, label: "هاتشباك" },

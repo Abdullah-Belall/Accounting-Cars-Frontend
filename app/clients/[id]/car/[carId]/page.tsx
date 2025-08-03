@@ -79,7 +79,7 @@ export default function CarsOrders() {
         },
       });
       const billPath = window.localStorage.getItem("bill_path");
-      router.push((billPath ?? "/bill") + "?collector=true");
+      router.push((billPath && billPath !== "null" ? billPath : "/bill") + "?collector=true");
     } else {
       openPopup("snakeBarPopup", { message: response.message });
     }

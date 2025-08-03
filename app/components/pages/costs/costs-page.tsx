@@ -65,7 +65,7 @@ export default function CostsPage() {
     });
     closePopup("costsCollector");
     const billPath = window.localStorage.getItem("bill_path");
-    router.push(billPath ?? "/bill");
+    router.push(billPath && billPath !== "null" ? billPath : "/bill");
   };
   return (
     <>

@@ -281,7 +281,7 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
       });
       closeOrderPopup("makeOrderPopup");
       const billPath = window.localStorage.getItem("bill_path");
-      router.push(billPath ?? "/bill");
+      router.push(billPath && billPath !== "null" ? billPath : "/bill");
     } else {
       openSnakeBar(response.message);
     }

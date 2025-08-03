@@ -113,7 +113,7 @@ export default function OrdersTableRow({
         },
       });
       const billPath = window.localStorage.getItem("bill_path");
-      router.push(billPath ?? "/bill");
+      router.push(billPath && billPath !== "null" ? billPath : "/bill");
     }
   };
   const statusColor =
