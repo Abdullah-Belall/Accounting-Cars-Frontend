@@ -383,9 +383,12 @@ const GET_WORKERS_PROFILE_REQ = async ({ id }: { id: string }) => {
     };
   }
 };
-const GET_MY_PROFILE_REQ = async () => {
+const GET_MY_PROFILE_REQ = async ({ domain }: { domain: string }) => {
+  if (domain === "localhost") {
+    domain = "localhost.com";
+  }
   try {
-    const response: any = await axios.get(`${BASE_URL}/workers/profile`, {
+    const response: any = await axios.get(`${BASE_URL}/workers/profile?domain=${domain}`, {
       headers: { Authorization: `Bearer ${getCookie("access_token")}` },
     });
 
