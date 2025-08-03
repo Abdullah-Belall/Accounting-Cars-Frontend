@@ -35,23 +35,8 @@ export default function RootLayout({
   }>();
   const isLoginRoute = pathname === "/log-in";
   useEffect(() => {
-    const lastUsedDomain = window.localStorage.getItem("last_used_domain");
     const currentDomain = window.location.hostname;
-    console.log("lastUsedDomain => ", lastUsedDomain);
-    console.log("currentDomain => ", currentDomain);
-    console.log(currentDomain !== lastUsedDomain);
-    if (!lastUsedDomain) {
-      window.localStorage.setItem("last_used_domain", currentDomain);
-    }
-    if (currentDomain !== lastUsedDomain) {
-      const signOut = async () => {
-        await CLIENT_COLLECTOR_REQ(SIGN_OUT_REQ);
-      };
-      signOut();
-      router.replace("/log-in");
-    }
     const fetchData = async () => {
-      console.log(process.env.NODE_ENV);
       const response = await GET_TENANT_VARS_REQ({
         tenant_domain: process.env.NODE_ENV === "development" ? "localhost.com" : currentDomain,
       });
