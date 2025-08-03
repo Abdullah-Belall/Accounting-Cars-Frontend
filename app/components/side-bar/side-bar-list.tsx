@@ -26,7 +26,7 @@ export default function SideBarList({
   return (
     <List className="w-full !py-0" component="nav" aria-labelledby="nested-list-subheader">
       <ListItemButton
-        className="group !justify-between hover:bg-[red]! !rounded-md !px-mainxs !text-secDark !text-[16px] !font-[500] !py-1 hover:bg-myHover!"
+        className="group !justify-between !rounded-md !px-mainxs !text-[16px] !font-[500] !py-1 hover:bg-myHover!"
         onClick={handleClick}
       >
         <div className="flex !items-center gap-[5px] py-1">
@@ -42,8 +42,8 @@ export default function SideBarList({
             <Link key={e.title} className="w-full" onClick={onClose} href={e.link}>
               <Button
                 className={`${
-                  path === e.link.split("?")[0] ? "!bg-[#f1f1f1]" : ""
-                } w-full group !rounded-md !justify-start !pe-[32px] !text-secDark !text-[16px] !font-[500] !py-1 hover:bg-myHover!`}
+                  path === e.link.split("?")[0] ? "!bg-myHover" : ""
+                } w-full group !rounded-md !justify-start !pe-[32px] !text-[16px] !text-myDark !font-[500] !py-1 hover:bg-myHover!`}
                 variant="text"
                 sx={{ fontFamily: cairo.style.fontFamily }}
               >

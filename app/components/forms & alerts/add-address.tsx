@@ -3,7 +3,6 @@ import { TextField, Button } from "@mui/material";
 import { useState } from "react";
 import SelectList from "../common/select-list";
 import styles from "@/app/styles/drop-down.module.css";
-import { sameTextField } from "@/app/utils/base";
 
 export default function AddAddressForm() {
   const [data, setData] = useState({
@@ -40,7 +39,6 @@ export default function AddAddressForm() {
           placeholder="المنزل,العمل..."
           variant="filled"
           className="w-full"
-          sx={sameTextField}
         />
         <SelectList
           placeHolder="المحافظة"
@@ -54,7 +52,7 @@ export default function AddAddressForm() {
               <ul
                 className={
                   styles.list +
-                  " w-full max-h-[220px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
+                  " w-full max-h-[220px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-mdDark px-mainxs"
                 }
               >
                 {dropDownOpthions}
@@ -63,37 +61,9 @@ export default function AddAddressForm() {
           )}
         </SelectList>
 
-        <TextField
-          id="Glu"
-          dir="rtl"
-          label="الشارع"
-          variant="filled"
-          className="w-full"
-          sx={sameTextField}
-        />
-        <TextField
-          id="Glu"
-          dir="rtl"
-          label="تفاصيل اضافية"
-          variant="filled"
-          sx={{
-            ...sameTextField,
-            "& .MuiFilledInput-root": {
-              fontFamily: "cairo",
-              height: "120px !important",
-              "&:before": {
-                borderBottomColor: "#495057",
-              },
-              "&:hover:not(.Mui-disabled):before": {
-                borderBottomColor: "#495057",
-              },
-              "&:after": {
-                borderBottomColor: "#495057",
-              },
-            },
-          }}
-        />
-        <Button sx={{ fontFamily: "cairo" }} className={"!bg-mdDark"} variant="contained">
+        <TextField id="Glu" dir="rtl" label="الشارع" variant="filled" className="w-full" />
+        <TextField id="Glu" dir="rtl" label="تفاصيل اضافية" variant="filled" multiline rows={4} />
+        <Button className={"!bg-mdDark"} variant="contained">
           اضافة
         </Button>
       </div>

@@ -1,5 +1,4 @@
 "use client";
-import { sameTextField } from "@/app/utils/base";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import {
   ADD_CLIENT_CONTACT_REQ,
@@ -103,7 +102,6 @@ export default function AddPhoneForm({
             label="الرقم"
             variant="filled"
             className="w-full"
-            sx={sameTextField}
             value={data?.phone ?? ""}
             onChange={(e) => handleData("phone", e.target.value.replace(/[^0-9.]/g, ""))}
           />
@@ -113,7 +111,6 @@ export default function AddPhoneForm({
             label="ملاحظات"
             variant="filled"
             className="w-full"
-            sx={sameTextField}
             value={data.note ?? ""}
             onChange={(e) => handleData("note", e.target.value)}
           />

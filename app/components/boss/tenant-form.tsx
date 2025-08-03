@@ -1,4 +1,3 @@
-import { sameTextField } from "@/app/utils/base";
 import { Button, TextField } from "@mui/material";
 import BlackLayer from "../common/black-layer";
 import {
@@ -25,6 +24,8 @@ export default function TenantForm({
     title: string;
     logo: string;
     telegram_chat_id: string;
+    bill_path: string;
+    theme: string;
   };
   id?: string;
   fetchData: () => void;
@@ -47,6 +48,8 @@ export default function TenantForm({
           logo: base.logo,
           title: base.title,
           telegram_chat_id: base.telegram_chat_id,
+          bill_path: base.bill_path,
+          theme: base.theme,
         },
       });
       if (response.done) {
@@ -64,6 +67,7 @@ export default function TenantForm({
       logo: base.logo,
       title: base.title,
       telegram_chat_id: base.telegram_chat_id,
+      theme: base.theme,
     });
     if (response.done) {
       const mioObj: any = addTenant;
@@ -99,7 +103,6 @@ export default function TenantForm({
                 label="الدومين"
                 variant="filled"
                 className="w-full"
-                sx={sameTextField}
                 value={addTenant.tenant_domain}
                 onChange={(e) => handleAddTenant("tenant_domain", e.target.value)}
               />
@@ -109,7 +112,6 @@ export default function TenantForm({
                 label="رقم الهاتف"
                 variant="filled"
                 className="w-full"
-                sx={sameTextField}
                 value={addTenant.phone}
                 onChange={(e) => handleAddTenant("phone", e.target.value)}
               />
@@ -122,7 +124,6 @@ export default function TenantForm({
                     label="اسم المستخدم للمالك"
                     variant="filled"
                     className="w-full"
-                    sx={sameTextField}
                     value={addTenant.user_name}
                     onChange={(e) => handleAddTenant("user_name", e.target.value)}
                   />
@@ -132,7 +133,6 @@ export default function TenantForm({
                     label="كلمة السر"
                     variant="filled"
                     className="w-full"
-                    sx={sameTextField}
                     value={addTenant.password}
                     onChange={(e) => handleAddTenant("password", e.target.value)}
                   />
@@ -144,7 +144,6 @@ export default function TenantForm({
                 label="كود تليجرام"
                 variant="filled"
                 className="w-full"
-                sx={sameTextField}
                 value={addTenant.telegram_chat_id}
                 onChange={(e) => handleAddTenant("telegram_chat_id", e.target.value)}
               />
@@ -154,9 +153,17 @@ export default function TenantForm({
                 label="اسم الشركة"
                 variant="filled"
                 className="w-full"
-                sx={sameTextField}
                 value={addTenant.title}
                 onChange={(e) => handleAddTenant("title", e.target.value)}
+              />
+              <TextField
+                id="Glu"
+                dir="rtl"
+                label="الفاتورة"
+                variant="filled"
+                className="w-full"
+                value={addTenant.bill_path}
+                onChange={(e) => handleAddTenant("bill_path", e.target.value)}
               />
               <TextField
                 id="Glu"
@@ -164,9 +171,17 @@ export default function TenantForm({
                 label="اللوجو"
                 variant="filled"
                 className="w-full"
-                sx={sameTextField}
                 value={addTenant.logo}
                 onChange={(e) => handleAddTenant("logo", e.target.value)}
+              />
+              <TextField
+                id="Glu"
+                dir="rtl"
+                label="الالوان"
+                variant="filled"
+                className="w-full"
+                value={addTenant.theme}
+                onChange={(e) => handleAddTenant("theme", e.target.value)}
               />
               <Button
                 onClick={(e) => handleSend(e)}

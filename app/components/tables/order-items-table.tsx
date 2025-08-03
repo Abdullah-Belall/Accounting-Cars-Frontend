@@ -14,7 +14,7 @@ import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import { useReturns } from "@/app/utils/contexts/returns-contexts";
 import ReturnsPopUp from "../orders/returns-popup";
 import { useBills } from "@/app/utils/contexts/bills-contexts";
-import { getBillHref, getSlug, methodsArray, paidStatusArray } from "@/app/utils/base";
+import { getSlug, methodsArray, paidStatusArray } from "@/app/utils/base";
 import MyLoading from "../common/loading";
 
 export default function OrderItemsTable({
@@ -106,7 +106,8 @@ export default function OrderItemsTable({
         client_depts: data?.client_depts,
       },
     });
-    router.push(getBillHref(window.location.hostname));
+    const billPath = window.localStorage.getItem("bill_path");
+    router.push(billPath ?? "/bill");
   };
 
   return (

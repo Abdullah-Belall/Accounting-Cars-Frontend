@@ -2,7 +2,6 @@
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import { Button, TextField } from "@mui/material";
 import { useState } from "react";
-import { sameTextField } from "../../utils/base";
 import MyLoading from "../common/loading";
 
 export default function AddAdvanceForm({
@@ -51,7 +50,6 @@ export default function AddAdvanceForm({
           label="المبلغ"
           variant="filled"
           className="w-full"
-          sx={sameTextField}
           value={data.amount}
           onChange={(e) => handleData("amount", e.target.value.replace(/[^0-9.]/g, ""))}
         />
@@ -61,7 +59,6 @@ export default function AddAdvanceForm({
           label="ملاحظات"
           variant="filled"
           className="w-full"
-          sx={sameTextField}
           value={data.note ?? ""}
           onChange={(e) => handleData("note", e.target.value)}
         />

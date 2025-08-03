@@ -9,5 +9,5 @@
 
 .list::-webkit-scrollbar-thumb {
   border-radius: 0.5rem;
-  background-color: var(--secLight);
+  background-color: var(--myHover);
 }

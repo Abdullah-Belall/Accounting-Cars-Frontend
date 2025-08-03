@@ -4,7 +4,7 @@ import { CLIENT_COLLECTOR_REQ, GET_ALL_TENANTS_REQ } from "../utils/requests/cli
 import { useRouter } from "next/navigation";
 import NoData from "../components/common/no-data";
 import MainTable from "../components/tables/main-table";
-import { BaseLogosUrl, formatDate } from "../utils/base";
+import { BaseLogosUrl, formatDate, notFoundSlug } from "../utils/base";
 import { Button } from "@mui/material";
 import { CiEdit } from "react-icons/ci";
 import TenantForm from "../components/boss/tenant-form";
@@ -23,6 +23,8 @@ export default function Boss() {
       title: "",
       logo: "",
       telegram_chat_id: "",
+      bill_path: "",
+      theme: "",
     },
   ]);
 
@@ -52,6 +54,8 @@ export default function Boss() {
               title: "",
               logo: "",
               telegram_chat_id: "",
+              bill_path: "",
+              theme: "",
             },
           ])
         }
@@ -64,19 +68,41 @@ export default function Boss() {
       <MainTable
         title="كل المستأجرين"
         headers={[
-          "العمليات",
-          "تاريخ الاضافة",
-          "معرف التليجرام",
-          "رقم هاتف",
-          "اللوجو",
-          "الدومين",
-          "اسم الشركة",
-          "المعرف",
           "#",
+          "المعرف",
+          "اسم الشركة",
+          "الدومين",
+          "الفاتورة",
+          "اللوجو",
+          "الالوان",
+          "رقم هاتف",
+          "معرف التليجرام",
+          "تاريخ الاضافة",
+          "العمليات",
         ]}
       >
         {data?.map((row: any, index) => (
           <tr key={index}>
+            <td className={`px-4 py-2 text-center`}>{index + 1}</td>
+            <td className={`px-4 py-2 text-center`}>{row?.tenant_id}</td>
+            <td className={`px-4 py-2 text-center`}>{row?.company_title}</td>
+            <td className={`px-4 py-2 text-center`}>{row?.domain}</td>
+            <td className={`px-4 py-2 text-center`}>{notFoundSlug(row?.bill_path)}</td>
+            <td className={`px-4 py-2 text-center`}>
+              <a
+                className="hover:underline"
+                href={BaseLogosUrl + row?.company_logo}
+                target="_blank"
+              >
+                {row?.company_logo}
+              </a>
+            </td>
+            <td className={`px-4 py-2 text-center`}>{notFoundSlug(row?.theme)}</td>
+            <td className={`px-4 py-2 text-center`}>
+              {row?.phone?.trim().length > 0 ? row?.phone?.trim() : "لا يوجد"}
+            </td>
+            <td className="px-4 py-2 text-center">{row.telegram_chat_id ?? "لا يوجد"}</td>
+            <td className="px-4 py-2 text-center">{formatDate(row?.created_at)}</td>
             <td className="px-4 py-2 text-center">
               <p
                 onClick={() => {
@@ -90,6 +116,8 @@ export default function Boss() {
                       title: row?.company_title,
                       logo: row?.company_logo,
                       telegram_chat_id: row.telegram_chat_id || "",
+                      bill_path: row.bill_path || "",
+                      theme: row.theme || "",
                     },
                   ]);
                   setTenantId(row?.tenant_id);
@@ -99,28 +127,6 @@ export default function Boss() {
                 <CiEdit />
               </p>
             </td>
-            <td className="px-4 py-2 text-center">{formatDate(row?.created_at)}</td>
-            <td className="px-4 py-2 text-center">{row.telegram_chat_id ?? "لا يوجد"}</td>
-            <td className={`px-4 py-2 text-center`}>
-              {row?.phone?.trim().length > 0 ? row?.phone?.trim() : "لا يوجد"}
-            </td>
-            <td className={`px-4 py-2 text-center`}>
-              <a
-                className="hover:underline"
-                href={BaseLogosUrl + row?.company_logo}
-                target="_blank"
-              >
-                {row?.company_logo}
-              </a>
-            </td>
-            <td className={`px-4 py-2 text-center`}>
-              <a className="hover:underline" href={`https://${row?.domain}`} target="_blank">
-                {row?.domain}
-              </a>
-            </td>
-            <td className={`px-4 py-2 text-center`}>{row?.company_title}</td>
-            <td className={`px-4 py-2 text-center`}>{row?.tenant_id}</td>
-            <td className={`px-4 py-2 text-center`}>{index + 1}</td>
           </tr>
         ))}
       </MainTable>
@@ -139,6 +145,8 @@ export default function Boss() {
                 title: "",
                 logo: "",
                 telegram_chat_id: "",
+                bill_path: "",
+                theme: "",
               },
             ])
           }

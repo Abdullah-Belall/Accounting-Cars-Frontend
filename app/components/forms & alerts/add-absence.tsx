@@ -1,7 +1,6 @@
 "use client";
 import { Button, TextField } from "@mui/material";
 import { useState } from "react";
-import { sameTextField } from "@/app/utils/base";
 import MyLoading from "../common/loading";
 
 export default function AddAbsenceForm({
@@ -32,7 +31,6 @@ export default function AddAbsenceForm({
           label="سبب الغياب"
           variant="filled"
           className="w-full"
-          sx={sameTextField}
           value={reason}
           onChange={(e) => setReason(e.target.value)}
         />

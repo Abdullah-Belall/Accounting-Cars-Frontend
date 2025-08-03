@@ -2,7 +2,7 @@
 import { TextField, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
-import { sameTextField, unCountedMessage } from "@/app/utils/base";
+import { unCountedMessage } from "@/app/utils/base";
 import {
   ADD_SORT_REQ,
   CLIENT_COLLECTOR_REQ,
@@ -168,7 +168,7 @@ export default function AddSortForm({
                   <ul
                     className={
                       styles.list +
-                      " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
+                      " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-mdDark px-mainxs"
                     }
                   >
                     {suppliers.map((e: any) => (
@@ -193,7 +193,6 @@ export default function AddSortForm({
             dir="rtl"
             label="اسم الصنف"
             variant="filled"
-            sx={sameTextField}
             className="w-full"
             value={data.name ?? ""}
             onChange={(e) => handleData("name", e.target.value)}
@@ -204,7 +203,6 @@ export default function AddSortForm({
               dir="rtl"
               label="المقاس"
               variant="filled"
-              sx={sameTextField}
               className="w-full"
               value={data.size ?? ""}
               onChange={(e) => handleData("size", e.target.value)}
@@ -215,7 +213,6 @@ export default function AddSortForm({
               label="اللون"
               className="w-full"
               variant="filled"
-              sx={sameTextField}
               value={data.color ?? ""}
               onChange={(e) => handleData("color", e.target.value)}
             />
@@ -228,7 +225,6 @@ export default function AddSortForm({
                   dir="rtl"
                   label="الكمية"
                   variant="filled"
-                  sx={sameTextField}
                   className="w-full"
                   value={data.qty ?? ""}
                   onChange={(e) => handleData("qty", e.target.value.replace(/[^0-9.]/g, ""))}
@@ -238,7 +234,6 @@ export default function AddSortForm({
                   dir="rtl"
                   label="التكلفة للوحدة"
                   variant="filled"
-                  sx={sameTextField}
                   className="w-full"
                   value={data.cost ?? ""}
                   onChange={(e) => handleData("cost", e.target.value.replace(/[^0-9.]/g, ""))}
@@ -252,7 +247,6 @@ export default function AddSortForm({
               label="سعر البيع للوحدة"
               className="w-full"
               variant="filled"
-              sx={sameTextField}
               value={data.unit_price ?? ""}
               onChange={(e) => handleData("unit_price", e.target.value.replace(/[^0-9.]/g, ""))}
             />
@@ -263,7 +257,6 @@ export default function AddSortForm({
             label="دفعة للمورد"
             variant="filled"
             className="w-full"
-            sx={sameTextField}
             value={data.initial_amount ?? ""}
             onChange={(e) => handleData("initial_amount", e.target.value.replace(/[^0-9.]/g, ""))}
           />
@@ -273,7 +266,6 @@ export default function AddSortForm({
             label="ملحوظة اضافية"
             variant="filled"
             className="w-full"
-            sx={sameTextField}
             value={data.note ?? ""}
             onChange={(e) => handleData("note", e.target.value)}
           />

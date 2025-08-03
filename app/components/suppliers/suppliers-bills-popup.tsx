@@ -9,7 +9,7 @@ import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import { useEffect, useState } from "react";
 import { SuppliersBillsInterface } from "@/app/utils/types/interfaces";
 import { Button, TextField } from "@mui/material";
-import { sameTextField, shortIdGenerator } from "@/app/utils/base";
+import { shortIdGenerator } from "@/app/utils/base";
 import SuppliersBillsTable from "../tables/suppliers-bills-table";
 import { TbCircleXFilled } from "react-icons/tb";
 import MyLoading from "../common/loading";
@@ -82,7 +82,6 @@ export default function SuppliersBillsPopUp() {
               dir="rtl"
               label="الفاتورة"
               variant="filled"
-              sx={sameTextField}
               value={cost?.price ? cost?.price : ""}
               className="w-full"
               disabled
@@ -92,7 +91,6 @@ export default function SuppliersBillsPopUp() {
               dir="rtl"
               label="المسدد حتي الأن"
               variant="filled"
-              sx={sameTextField}
               value={paid}
               className="w-full"
               disabled
@@ -102,7 +100,6 @@ export default function SuppliersBillsPopUp() {
               dir="rtl"
               label="الغير مسدد"
               variant="filled"
-              sx={sameTextField}
               value={due}
               className="w-full"
               disabled
@@ -114,7 +111,6 @@ export default function SuppliersBillsPopUp() {
               label="ملاحظات"
               multiline
               rows={2}
-              sx={sameTextField}
               value={note}
               onChange={(e) => setNote(e.target.value)}
               variant="filled"
@@ -125,7 +121,6 @@ export default function SuppliersBillsPopUp() {
                 dir="rtl"
                 label="المبلغ"
                 variant="filled"
-                sx={sameTextField}
                 onChange={(e) => setInstallment(e.target.value.replace(/[^0-9.]/g, ""))}
                 value={installment}
                 className="w-full"

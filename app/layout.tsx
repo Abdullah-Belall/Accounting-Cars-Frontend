@@ -16,6 +16,7 @@ import { BaseLogosUrl } from "./utils/base";
 import { PiListBold } from "react-icons/pi";
 import { StockChecksProvider } from "./utils/contexts/stock-checks-contexts";
 import { WorkerSalaryProvider } from "./utils/contexts/paying-salaries-context";
+import ThemeProvider from "./components/common/theme-provider";
 
 export default function RootLayout({
   children,
@@ -37,6 +38,26 @@ export default function RootLayout({
       });
       if (response.done) {
         setTenantsVars(response.data);
+        const theme: string = response.data?.theme;
+        console.log(theme);
+        if (theme) {
+          const [myLight, mdDark, myHover, myDark] = theme.split(",");
+          const root = document.documentElement;
+          console.log(myLight, mdDark);
+          if (myLight) {
+            root.style.setProperty("--myLight", myLight);
+          }
+          if (mdDark) {
+            root.style.setProperty("--mdDark", mdDark);
+          }
+          if (myHover) {
+            root.style.setProperty("--myHover", myHover);
+          }
+          if (myDark) {
+            root.style.setProperty("--myDark", myDark);
+          }
+        }
+        window.localStorage.setItem("bill_path", response.data?.bill_path);
       }
     };
     fetchData();
@@ -57,7 +78,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         dir="rtl"
-        className={`${cairo.className} antialiased bg-myLight !text-secDark ${
+        className={`${cairo.className} antialiased bg-myLight !text-myDark ${
           !isLoginRoute && "mr-[0] md:mr-[240px] mt-[80px]"
         }`}
       >
@@ -78,26 +99,28 @@ export default function RootLayout({
           >
             <PiListBold />
           </div>
-          <PopupProvider>
-            <SearchProvider>
-              <UserProvider>
-                <ReturnsProvider>
-                  <BillesProvider>
-                    <StockChecksProvider>
-                      <WorkerSalaryProvider>
-                        <CustomSnackbar />
-                        {!isLoginRoute && (
-                          <SideBar open={openSidebar} onClose={() => setOpenSidebar(false)} />
-                        )}
-                        {!isLoginRoute && <Header logo={tenantsVars?.copmany_logo as string} />}
-                        {children}
-                      </WorkerSalaryProvider>
-                    </StockChecksProvider>
-                  </BillesProvider>
-                </ReturnsProvider>
-              </UserProvider>
-            </SearchProvider>
-          </PopupProvider>
+          <ThemeProvider>
+            <PopupProvider>
+              <SearchProvider>
+                <UserProvider>
+                  <ReturnsProvider>
+                    <BillesProvider>
+                      <StockChecksProvider>
+                        <WorkerSalaryProvider>
+                          <CustomSnackbar />
+                          {!isLoginRoute && (
+                            <SideBar open={openSidebar} onClose={() => setOpenSidebar(false)} />
+                          )}
+                          {!isLoginRoute && <Header logo={tenantsVars?.copmany_logo as string} />}
+                          {children}
+                        </WorkerSalaryProvider>
+                      </StockChecksProvider>
+                    </BillesProvider>
+                  </ReturnsProvider>
+                </UserProvider>
+              </SearchProvider>
+            </PopupProvider>
+          </ThemeProvider>
         </>
       </body>
     </html>

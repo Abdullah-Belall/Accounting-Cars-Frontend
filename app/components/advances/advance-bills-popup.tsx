@@ -8,7 +8,6 @@ import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import { useEffect, useState } from "react";
 import { SuppliersBillsInterface } from "@/app/utils/types/interfaces";
 import { Button, TextField } from "@mui/material";
-import { sameTextField } from "@/app/utils/base";
 import SuppliersBillsTable from "../tables/suppliers-bills-table";
 import { TbCircleXFilled } from "react-icons/tb";
 
@@ -79,7 +78,6 @@ export default function AdvanceBillsPopUp() {
               dir="rtl"
               label="السلفة"
               variant="filled"
-              sx={sameTextField}
               value={delvData?.amount ? Number(delvData?.amount)?.toLocaleString() : ""}
               className="w-full"
               disabled
@@ -89,7 +87,6 @@ export default function AdvanceBillsPopUp() {
               dir="rtl"
               label="المسدد حتي الأن"
               variant="filled"
-              sx={sameTextField}
               value={paid}
               className="w-full"
               disabled
@@ -99,7 +96,6 @@ export default function AdvanceBillsPopUp() {
               dir="rtl"
               label="الغير مسدد"
               variant="filled"
-              sx={sameTextField}
               value={due}
               className="w-full"
               disabled
@@ -111,7 +107,6 @@ export default function AdvanceBillsPopUp() {
               label="ملاحظات"
               multiline
               rows={2}
-              sx={sameTextField}
               value={formData.note}
               onChange={(e) => handleFormData("note", e.target.value)}
               variant="filled"
@@ -122,7 +117,6 @@ export default function AdvanceBillsPopUp() {
                 dir="rtl"
                 label="المبلغ"
                 variant="filled"
-                sx={sameTextField}
                 onChange={(e) => handleFormData("amount", e.target.value.replace(/[^0-9.]/g, ""))}
                 value={formData.amount}
                 className="w-full"

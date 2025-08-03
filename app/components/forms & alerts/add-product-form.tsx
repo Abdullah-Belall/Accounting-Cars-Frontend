@@ -12,7 +12,7 @@ import {
 import { CategoryInterface } from "@/app/utils/types/interfaces";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import { useRouter } from "next/navigation";
-import { sameTextField } from "@/app/utils/base";
+
 import MyLoading from "../common/loading";
 
 export default function AddProductForm({
@@ -138,7 +138,6 @@ export default function AddProductForm({
             label="اسم المنتج"
             variant="filled"
             className="w-full"
-            sx={sameTextField}
             value={data.name}
             onChange={(e) => handleData("name", e.target.value)}
           />
@@ -147,7 +146,6 @@ export default function AddProductForm({
             label="وصف المنتج"
             multiline
             rows={4}
-            sx={sameTextField}
             value={data.desc}
             onChange={(e) => handleData("desc", e.target.value)}
             variant="filled"
@@ -165,7 +163,7 @@ export default function AddProductForm({
                   <ul
                     className={
                       styles.list +
-                      ` w-full shadow-md max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs`
+                      ` w-full shadow-md max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-mdDark px-mainxs`
                     }
                   >
                     {dropDownOpthions}
@@ -181,7 +179,6 @@ export default function AddProductForm({
             label="الخامة"
             variant="filled"
             className="w-full"
-            sx={sameTextField}
             value={data.material}
             onChange={(e) => handleData("material", e.target.value)}
           />
@@ -191,7 +188,6 @@ export default function AddProductForm({
             label="ملحوظة اضافية"
             variant="filled"
             className="w-full"
-            sx={sameTextField}
             value={data.note}
             onChange={(e) => handleData("note", e.target.value)}
           />

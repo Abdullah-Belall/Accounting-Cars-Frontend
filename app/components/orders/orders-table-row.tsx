@@ -1,7 +1,6 @@
 "use client";
 import {
   formatDate,
-  getBillHref,
   getSlug,
   methodsArray,
   paidStatusArray,
@@ -113,7 +112,8 @@ export default function OrdersTableRow({
           client_depts: data?.client_depts,
         },
       });
-      router.push(getBillHref(window.location.hostname));
+      const billPath = window.localStorage.getItem("bill_path");
+      router.push(billPath ?? "/bill");
     }
   };
   const statusColor =

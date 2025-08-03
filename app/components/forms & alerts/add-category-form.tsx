@@ -8,7 +8,6 @@ import {
 } from "@/app/utils/requests/client-side.requests";
 import { Button, TextField } from "@mui/material";
 import { ChangeEvent, useState } from "react";
-import { sameTextField } from "../../utils/base";
 import MyLoading from "../common/loading";
 
 export default function AddCategoryForm({
@@ -89,7 +88,6 @@ export default function AddCategoryForm({
           label="الاسم"
           variant="filled"
           className="w-full"
-          sx={sameTextField}
           value={data.name}
           onChange={(e) => handleData("name", e)}
         />
@@ -99,7 +97,6 @@ export default function AddCategoryForm({
           label="الوصف"
           variant="filled"
           className="w-full"
-          sx={sameTextField}
           value={data.desc ?? ""}
           onChange={(e) => handleData("desc", e)}
         />

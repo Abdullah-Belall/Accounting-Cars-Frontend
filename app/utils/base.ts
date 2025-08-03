@@ -48,43 +48,8 @@ export const formatDate = (input: string | Date) => {
 export const getSlug = (arr: any, value: string) => {
   return arr.find((e: any) => e.value === value)?.label;
 };
-export const sameTextField = {
-  "& .MuiFilledInput-root": {
-    fontFamily: "cairo",
-    "&:before": {
-      borderBottomColor: "#495057",
-    },
-    "&:hover:not(.Mui-disabled):before": {
-      borderBottomColor: "#495057",
-    },
-    "&:after": {
-      borderBottomColor: "#495057",
-    },
-  },
-  "& .MuiInputLabel-root": {
-    color: "#495057",
-    fontFamily: "cairo",
-    right: 16,
-    left: "auto",
-    transformOrigin: "top right",
-  },
-  "& .MuiInputLabel-root.Mui-focused": {
-    color: "#212529",
-    right: 16,
-    left: "auto",
-    transformOrigin: "top right",
-  },
-  "& .MuiInputLabel-root.MuiFormLabel-filled": {
-    right: 16,
-    left: "auto",
-    transformOrigin: "top right",
-  },
-  "& .MuiFilledInput-input": {
-    caretColor: "#212529",
-    textAlign: "right",
-    fontSize: "14px",
-  },
-};
+// تم إزالة sameTextField لأننا نستخدم Material UI Theme بدلاً منه
+// يمكنك الآن استخدام مكونات Material UI مباشرة بدون sx prop إضافي
 export const taxArray = [
   {
     value: "",

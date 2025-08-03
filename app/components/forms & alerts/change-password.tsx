@@ -1,4 +1,3 @@
-import { sameTextField } from "@/app/utils/base";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import {
   CLIENT_COLLECTOR_REQ,
@@ -74,7 +73,6 @@ export default function ChangePassword() {
           variant="filled"
           type={showPass[0] ? "text" : "password"}
           className="w-full"
-          sx={sameTextField}
           value={data.password}
           onChange={(e) => handleData("password", e.target.value)}
         />
@@ -92,7 +90,6 @@ export default function ChangePassword() {
           variant="filled"
           type={showPass[1] ? "text" : "password"}
           className="w-full"
-          sx={sameTextField}
           value={data.new_password}
           onChange={(e) => handleData("new_password", e.target.value)}
         />
@@ -110,7 +107,6 @@ export default function ChangePassword() {
           variant="filled"
           type={showPass[2] ? "text" : "password"}
           className="w-full"
-          sx={sameTextField}
           value={data.confirm_new_password}
           onChange={(e) => handleData("confirm_new_password", e.target.value)}
         />

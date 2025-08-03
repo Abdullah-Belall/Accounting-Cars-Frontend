@@ -9,7 +9,7 @@ import {
   CLIENT_COLLECTOR_REQ,
   EDIT_CLIENT_REQ,
 } from "@/app/utils/requests/client-side.requests";
-import { sameTextField } from "@/app/utils/base";
+
 import MyLoading from "../common/loading";
 
 export default function AddUserForm({
@@ -124,7 +124,6 @@ export default function AddUserForm({
             type="text"
             variant="filled"
             className="w-full"
-            sx={sameTextField}
             value={data.user_name ?? ""}
             onChange={(e) => handleData("user_name", e.target.value)}
           />
@@ -137,7 +136,6 @@ export default function AddUserForm({
                 type="text"
                 variant="filled"
                 className="w-full"
-                sx={sameTextField}
                 value={data.tax_num ?? ""}
                 onChange={(e) => handleData("tax_num", e.target.value)}
               />
@@ -148,7 +146,6 @@ export default function AddUserForm({
                 type="text"
                 variant="filled"
                 className="w-full"
-                sx={sameTextField}
                 value={data.balance ?? ""}
                 onChange={(e) => handleData("balance", e.target.value.replace(/[^0-9.]/g, ""))}
               />
@@ -163,7 +160,6 @@ export default function AddUserForm({
                 variant="filled"
                 className="w-full"
                 type="password"
-                sx={sameTextField}
                 onChange={(e) => handleData("password", e.target.value)}
               />
               <TextField
@@ -172,7 +168,6 @@ export default function AddUserForm({
                 label="الراتب"
                 variant="filled"
                 className="w-full"
-                sx={sameTextField}
                 onChange={(e) => handleData("salary", e.target.value.replace(/[^0-9.]/g, ""))}
               />
               <SelectList
@@ -184,7 +179,7 @@ export default function AddUserForm({
               >
                 {dropDown && (
                   <>
-                    <ul className="w-full z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs">
+                    <ul className="w-full z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-mdDark px-mainxs">
                       <li
                         onClick={() => handleData("role", "admin")}
                         className="p-mainxs text-center border-b border-myLight cursor-pointer"

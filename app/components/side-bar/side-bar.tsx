@@ -36,14 +36,14 @@ export default function SideBar({ open, onClose }: { open: boolean; onClose: () 
         styles.list +
         ` ${
           open ? "right-0" : "right-[-250px]"
-        } duration-[.3s] z-30 md:z-[1] md:right-0 overflow-y-scroll flex flex-col gap-2 px-mainxs pb-[20px] pt-[80px] fixed top-0 w-[240px] h-dvh bg-myLight border-l-3 border-[#eee]`
+        } duration-[.3s] z-30 md:z-[1] md:right-0 overflow-y-scroll flex flex-col gap-2 px-mainxs pb-[20px] pt-[80px] fixed top-0 w-[240px] h-dvh bg-myLight border-l-3 border-myHover`
       }
     >
       <Link className="w-full" onClick={onClose} href={"/"}>
         <Button
           className={`${
-            path === "/" ? "!bg-[#f1f1f1]" : ""
-          } group w-full !rounded-md !text-end !px-mainxs !flex !gap-[5px] !items-center !justify-start !text-secDark !text-[16px] !font-[500] !py-1 hover:bg-myHover!`}
+            path === "/" ? "!bg-myHover" : ""
+          } group w-full !rounded-md !text-end !text-myDark !px-mainxs !flex !gap-[5px] !items-center !justify-start !text-[16px] !font-[500] !py-1 hover:bg-myHover!`}
           variant="text"
           sx={{ fontFamily: cairo.style.fontFamily }}
         >
@@ -54,8 +54,8 @@ export default function SideBar({ open, onClose }: { open: boolean; onClose: () 
       <Link className="w-full" onClick={onClose} href={"/categories"}>
         <Button
           className={`${
-            path === "/categories" ? "!bg-[#f1f1f1]" : ""
-          } group w-full !rounded-md !text-end !px-mainxs !flex !gap-[5px] !items-center !justify-start !text-secDark !text-[16px] !font-[500] !py-1 hover:bg-myHover!`}
+            path === "/categories" ? "!bg-myHover" : ""
+          } group w-full !rounded-md !text-end !text-myDark !px-mainxs !flex !gap-[5px] !items-center !justify-start !text-[16px] !font-[500] !py-1 hover:bg-myHover!`}
           variant="text"
           sx={{ fontFamily: cairo.style.fontFamily }}
         >
@@ -66,8 +66,8 @@ export default function SideBar({ open, onClose }: { open: boolean; onClose: () 
       <Link className="w-full" onClick={onClose} href={"/suppliers?searchin=suppliers"}>
         <Button
           className={`${
-            path === "/suppliers" ? "!bg-[#f1f1f1]" : ""
-          } group w-full !rounded-md !text-end !px-mainxs !flex !gap-[5px] !items-center !justify-start !text-secDark !text-[16px] !font-[500] !py-1 hover:bg-myHover!`}
+            path === "/suppliers" ? "!bg-myHover" : ""
+          } group w-full !rounded-md !text-end !text-myDark !px-mainxs !flex !gap-[5px] !items-center !justify-start !text-[16px] !font-[500] !py-1 hover:bg-myHover!`}
           variant="text"
           sx={{ fontFamily: cairo.style.fontFamily }}
         >
@@ -78,8 +78,8 @@ export default function SideBar({ open, onClose }: { open: boolean; onClose: () 
       <Link className="w-full" onClick={onClose} href={"/equipments?searchin=equipments"}>
         <Button
           className={`${
-            path === "/equipments" ? "!bg-[#f1f1f1]" : ""
-          } group w-full !rounded-md !text-end !px-mainxs !flex !gap-[5px] !items-center !justify-start !text-secDark !text-[16px] !font-[500] !py-1 hover:bg-myHover!`}
+            path === "/equipments" ? "!bg-myHover" : ""
+          } group w-full !rounded-md !text-end !text-myDark !px-mainxs !flex !gap-[5px] !items-center !justify-start !text-[16px] !font-[500] !py-1 hover:bg-myHover!`}
           variant="text"
           sx={{ fontFamily: cairo.style.fontFamily }}
         >

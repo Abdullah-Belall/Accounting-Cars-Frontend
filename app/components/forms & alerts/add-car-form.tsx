@@ -2,7 +2,7 @@
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import { Button, TextField } from "@mui/material";
 import { useState } from "react";
-import { carTypesArray, getSlug, sameTextField } from "../../utils/base";
+import { carTypesArray, getSlug } from "../../utils/base";
 import { CarType } from "@/app/utils/types/interfaces";
 import SelectList from "../common/select-list";
 import styles from "@/app/styles/drop-down.module.css";
@@ -111,7 +111,6 @@ export default function AddCarForm({
             label="العلامة التجارية"
             variant="filled"
             className="w-full"
-            sx={sameTextField}
             value={data.mark}
             onChange={(e) => handleData("mark", e.target.value)}
           />
@@ -127,7 +126,7 @@ export default function AddCarForm({
                 <ul
                   className={
                     styles.list +
-                    " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
+                    " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-mdDark px-mainxs"
                   }
                 >
                   {carTypesArray.map((e) => (
@@ -153,7 +152,6 @@ export default function AddCarForm({
           label="لوحة الترخيص"
           variant="filled"
           className="w-full"
-          sx={sameTextField}
           value={data.plate}
           onChange={(e) => handleData("plate", e.target.value)}
         />
@@ -163,7 +161,6 @@ export default function AddCarForm({
           label="رقم الشاسية"
           variant="filled"
           className="w-full"
-          sx={sameTextField}
           value={data.chassis}
           onChange={(e) => handleData("chassis", e.target.value)}
         />
@@ -174,7 +171,6 @@ export default function AddCarForm({
             label="اللون"
             variant="filled"
             className="w-full"
-            sx={sameTextField}
             value={data.color}
             onChange={(e) => handleData("color", e.target.value)}
           />
@@ -184,7 +180,6 @@ export default function AddCarForm({
             label="الموديل"
             variant="filled"
             className="w-full"
-            sx={sameTextField}
             value={data.model}
             onChange={(e) => handleData("model", e.target.value.replace(/[^0-9.]/g, ""))}
           />
@@ -195,7 +190,6 @@ export default function AddCarForm({
           label="الفئة"
           variant="filled"
           className="w-full"
-          sx={sameTextField}
           value={data.category}
           onChange={(e) => handleData("category", e.target.value.replace(/[^0-9.]/g, ""))}
         />

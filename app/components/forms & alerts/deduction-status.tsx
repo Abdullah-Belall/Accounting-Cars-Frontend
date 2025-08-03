@@ -42,7 +42,7 @@ export default function DeductionStatusForm({
               <ul
                 className={
                   styles.list +
-                  " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
+                  " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-mdDark px-mainxs"
                 }
               >
                 {deductionStatusArr.map((e) => (

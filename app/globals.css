@@ -5,7 +5,6 @@
   --myDark: #212529;
   --mdDark: #495057;
   --myLight: #f8f9fa;
-  --secLight: #e9ecef;
   --myHover: #f1f1f1;
   --myOpacity: #f1f1f1;
 }
@@ -16,7 +15,6 @@
   --font-mono: var(--font-geist-mono);
   --color-myLight: var(--myLight);
   --color-anotherLight: var(--background);
-  --color-secLight: #e9ecef;
   --color-myDark: var(--myDark);
   --color-mdDark: var(--mdDark);
   --color-anotherDark: var(--foreground);
@@ -48,7 +46,6 @@
     --myDark: #212529;
     --mdDark: #495057;
     --myLight: #f8f9fa;
-    --secLight: #e9ecef;
     --myHover: #f1f1f1;
     --transLink: rgba(25, 118, 210, 0.5);
     --link: #1976d2;

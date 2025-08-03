@@ -4,7 +4,7 @@ import { TextField, Button } from "@mui/material";
 import SelectList from "../common/select-list";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import { CLIENT_COLLECTOR_REQ, UPDATE_WORKER_REQ } from "@/app/utils/requests/client-side.requests";
-import { getSlug, rolesArray, sameTextField } from "@/app/utils/base";
+import { getSlug, rolesArray } from "@/app/utils/base";
 import MyLoading from "../common/loading";
 
 export default function UpdateWorkerForm({
@@ -75,7 +75,7 @@ export default function UpdateWorkerForm({
           >
             {dropDown && (
               <>
-                <ul className="w-full z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs">
+                <ul className="w-full z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-mdDark px-mainxs">
                   <li
                     onClick={() => handleData("role", "admin")}
                     className="p-mainxs text-center border-b border-myLight cursor-pointer"
@@ -104,7 +104,6 @@ export default function UpdateWorkerForm({
             label="الراتب"
             variant="filled"
             className="w-full"
-            sx={sameTextField}
             value={data?.salary ?? ""}
             onChange={(e) => handleData("salary", e.target.value.replace(/[^0-9.]/g, ""))}
           />

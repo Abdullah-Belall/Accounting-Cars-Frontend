@@ -10,14 +10,7 @@ import {
   CLIENT_COLLECTOR_REQ,
   GET_ALL_CAR_REQ,
 } from "@/app/utils/requests/client-side.requests";
-import {
-  getBillHref,
-  getSlug,
-  methodsArray,
-  paidStatusArray,
-  periodsArray,
-  sameTextField,
-} from "@/app/utils/base";
+import { getSlug, methodsArray, paidStatusArray, periodsArray } from "@/app/utils/base";
 import { useRouter } from "next/navigation";
 import { useBills } from "@/app/utils/contexts/bills-contexts";
 import { TbCircleXFilled } from "react-icons/tb";
@@ -287,7 +280,8 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
         },
       });
       closeOrderPopup("makeOrderPopup");
-      router.push(getBillHref(window.location.hostname));
+      const billPath = window.localStorage.getItem("bill_path");
+      router.push(billPath ?? "/bill");
     } else {
       openSnakeBar(response.message);
     }
@@ -343,7 +337,7 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
                   <ul
                     className={
                       styles.list +
-                      " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
+                      " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-mdDark px-mainxs"
                     }
                   >
                     {DropDownOptions(methodsArray, "payment_method")}
@@ -367,7 +361,7 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
                   <ul
                     className={
                       styles.list +
-                      " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
+                      " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-mdDark px-mainxs"
                     }
                   >
                     {DropDownOptions(paidStatusArray, "paid_status")}
@@ -399,7 +393,7 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
                   <ul
                     className={
                       styles.list +
-                      " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
+                      " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-mdDark px-mainxs"
                     }
                   >
                     {DropDownOptions(periodsArray, "installment_type")}
@@ -413,7 +407,6 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
                 dir="rtl"
                 label="المقدم"
                 variant="filled"
-                sx={sameTextField}
                 onChange={(e) =>
                   handleFormData("down_payment", e.target.value.replace(/[^0-9.]/g, ""))
                 }
@@ -425,7 +418,6 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
                 dir="rtl"
                 label="عدد الأقساط"
                 variant="filled"
-                sx={sameTextField}
                 onChange={(e) =>
                   handleFormData("installment", e.target.value.replace(/[^0-9.]/g, ""))
                 }
@@ -437,7 +429,6 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
                 dir="rtl"
                 label="قيمة القسط"
                 variant="filled"
-                sx={sameTextField}
                 onChange={(e) =>
                   handleFormData(
                     "installment",
@@ -462,7 +453,6 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
               dir="rtl"
               label="اسم البند المصنعية"
               variant="filled"
-              sx={sameTextField}
               value={formData.additional_band}
               onChange={(e) => handleFormData("additional_band", e.target.value)}
               className="w-full"
@@ -472,7 +462,6 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
               dir="rtl"
               label="قيمة المصنعية"
               variant="filled"
-              sx={sameTextField}
               value={formData.additional_fees}
               onChange={(e) =>
                 handleFormData("additional_fees", e.target.value.replace(/[^0-9.]/g, ""))
@@ -493,7 +482,7 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
                   <ul
                     className={
                       styles.list +
-                      " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
+                      " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-mdDark px-mainxs"
                     }
                   >
                     {DropDownOptions(taxArray, "tax")}
@@ -506,7 +495,6 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
               dir="rtl"
               label="الخصم بالجنية"
               variant="filled"
-              sx={sameTextField}
               value={formData.discount}
               onChange={(e) => handleFormData("discount", e.target.value.replace(/[^0-9.]/g, ""))}
               className="w-full"
@@ -518,7 +506,6 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
               dir="rtl"
               label="اجمالي السعر"
               variant="filled"
-              sx={sameTextField}
               value={Number(totalPrice.toFixed(2)).toLocaleString()}
               className="w-full"
               disabled
@@ -528,7 +515,6 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
               dir="rtl"
               label="اجمالي السعر بعد الضريبة والخصم"
               variant="filled"
-              sx={sameTextField}
               value={Number(totalPriceAfter.toFixed(2)).toLocaleString()}
               className="w-full"
               disabled

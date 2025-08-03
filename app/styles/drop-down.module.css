@@ -4,10 +4,10 @@
 }
 .list::-webkit-scrollbar-track {
   border-radius: 0 0.5rem 0.5rem 0;
-  background-color: var(--background);
+  background-color: var(--myHover);
 }
 
 .list::-webkit-scrollbar-thumb {
   border-radius: 0.5rem;
-  background-color: var(--foreground);
+  background-color: var(--mdDark);
 }

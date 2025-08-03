@@ -9,13 +9,7 @@ import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import { useEffect, useState } from "react";
 import { InstallmentInterface } from "@/app/utils/types/interfaces";
 import { Button, TextField } from "@mui/material";
-import {
-  formatDate,
-  getSlug,
-  periodsArray,
-  sameTextField,
-  shortIdGenerator,
-} from "@/app/utils/base";
+import { formatDate, getSlug, periodsArray, shortIdGenerator } from "@/app/utils/base";
 import { TbCircleXFilled } from "react-icons/tb";
 import MyLoading from "../common/loading";
 
@@ -81,7 +75,6 @@ export default function InstallmentsPopUp() {
                 dir="rtl"
                 label="الفاتورة"
                 variant="filled"
-                sx={sameTextField}
                 value={delvData.totalPriceAfter}
                 className="w-full"
                 disabled
@@ -91,7 +84,6 @@ export default function InstallmentsPopUp() {
                 dir="rtl"
                 label="المسدد حتي الأن"
                 variant="filled"
-                sx={sameTextField}
                 value={paid}
                 className="w-full"
                 disabled
@@ -101,7 +93,6 @@ export default function InstallmentsPopUp() {
                 dir="rtl"
                 label="الغير مسدد"
                 variant="filled"
-                sx={sameTextField}
                 value={due}
                 className="w-full"
                 disabled
@@ -111,7 +102,7 @@ export default function InstallmentsPopUp() {
                 dir="rtl"
                 label="الاقساط المتبقية"
                 variant="filled"
-                sx={sameTextField}
+                
                 value={due && installment ? Math.ceil(due / installment) : "0"}
                 className="w-full"
                 disabled
@@ -123,7 +114,6 @@ export default function InstallmentsPopUp() {
                 dir="rtl"
                 label="نوع القسط"
                 variant="filled"
-                sx={sameTextField}
                 value={getSlug(periodsArray, delvData.installment_type)}
                 className="w-full"
                 disabled
@@ -133,7 +123,6 @@ export default function InstallmentsPopUp() {
                 dir="rtl"
                 label="المقدم"
                 variant="filled"
-                sx={sameTextField}
                 value={delvData.down_payment}
                 className="w-full"
                 disabled
@@ -143,7 +132,6 @@ export default function InstallmentsPopUp() {
                 dir="rtl"
                 label="تاريخ التحصيل القادم"
                 variant="filled"
-                sx={sameTextField}
                 value={
                   installment == "0"
                     ? "مسدد بالكامل"
@@ -162,7 +150,6 @@ export default function InstallmentsPopUp() {
               dir="rtl"
               label="القسط"
               variant="filled"
-              sx={sameTextField}
               onChange={(e) => setInstallment(e.target.value.replace(/[^0-9.]/g, ""))}
               value={installment}
               className="w-full"

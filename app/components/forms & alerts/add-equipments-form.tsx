@@ -1,4 +1,3 @@
-import { sameTextField } from "@/app/utils/base";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import { Button, TextField } from "@mui/material";
 import { useState } from "react";
@@ -49,7 +48,6 @@ export default function AddEquipment({ onDone }: { onDone: (data: any) => Promis
           label="الاسم"
           variant="filled"
           className="w-full"
-          sx={sameTextField}
           value={data.name}
           onChange={(e) => handleData("name", e.target.value)}
         />
@@ -60,7 +58,6 @@ export default function AddEquipment({ onDone }: { onDone: (data: any) => Promis
             label="الكمية"
             variant="filled"
             className="w-full"
-            sx={sameTextField}
             value={data.qty}
             onChange={(e) => handleData("qty", e.target.value)}
           />{" "}
@@ -70,7 +67,6 @@ export default function AddEquipment({ onDone }: { onDone: (data: any) => Promis
             label="تكلفة الوحدة"
             variant="filled"
             className="w-full"
-            sx={sameTextField}
             value={data.unit_price}
             onChange={(e) => handleData("unit_price", e.target.value)}
           />

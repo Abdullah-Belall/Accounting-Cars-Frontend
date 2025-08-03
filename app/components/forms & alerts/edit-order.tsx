@@ -4,7 +4,6 @@ import {
   methodsArray,
   paidStatusArray,
   periodsArray,
-  sameTextField,
   shortIdGenerator,
 } from "@/app/utils/base";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
@@ -133,7 +132,6 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
             label="من حساب العميل"
             variant="filled"
             className="w-full"
-            sx={sameTextField}
             value={data.client_balance}
             onChange={(e) => handleData("client_balance", e.target.value.replace(/[^0-9.]/g, ""))}
           />
@@ -142,7 +140,6 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
             label="الخصم"
             variant="filled"
             className="w-full"
-            sx={sameTextField}
             value={data.discount !== "0" ? data.discount : ""}
             onChange={(e) => handleData("discount", e.target.value.replace(/[^0-9.]/g, ""))}
           />
@@ -159,7 +156,7 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
               <ul
                 className={
                   styles.list +
-                  " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
+                  " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-mdDark px-mainxs"
                 }
               >
                 {taxArray.map((e) => (
@@ -191,7 +188,7 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
                 <ul
                   className={
                     styles.list +
-                    " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
+                    " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-mdDark px-mainxs"
                   }
                 >
                   {methodsArray.map((e) => (
@@ -222,7 +219,7 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
                 <ul
                   className={
                     styles.list +
-                    " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
+                    " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-mdDark px-mainxs"
                   }
                 >
                   {paidStatusArray.map((e) => (
@@ -262,7 +259,7 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
               <ul
                 className={
                   styles.list +
-                  " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
+                  " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-mdDark px-mainxs"
                 }
               >
                 {periodsArray.map((e) => (
@@ -286,7 +283,6 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
           dir="rtl"
           label="اجمالي السعر بعد الضريبة والخصم"
           variant="filled"
-          sx={sameTextField}
           value={totalPriceAfter.toFixed(2).toLocaleString()}
           className="w-full !mb-2"
           disabled

@@ -71,7 +71,7 @@ export default function RabiaBill() {
     setHostName(window.location.hostname);
   }, []);
   return (
-    <div className="print-content min-h-[calc(100dvh)] relative flex flex-col w-full">
+    <div className="print-content min-h-[calc(100dvh)] relative flex flex-col w-full bg-white">
       <Button
         sx={{ fontFamily: "cairo" }}
         className="print-button !bg-mdDark !absolute !right-[10px] !top-0 z-3"

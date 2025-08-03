@@ -1,5 +1,5 @@
 "use client";
-import { getSlug, periodsArray, sameTextField } from "@/app/utils/base";
+import { getSlug, periodsArray } from "@/app/utils/base";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import { Button, TextField } from "@mui/material";
 import { useState } from "react";
@@ -79,7 +79,6 @@ export default function EditPeriodPopup({ OnConfirm }: { OnConfirm: any }) {
             label="الرصيد"
             variant="filled"
             className="w-full"
-            sx={sameTextField}
             value={data.balance}
             onChange={(e) => handleData("balance", e.target.value.replace(/[^0-9.]/g, ""))}
           />
@@ -95,7 +94,7 @@ export default function EditPeriodPopup({ OnConfirm }: { OnConfirm: any }) {
                 <ul
                   className={
                     styles.list +
-                    ` w-full shadow-md max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs`
+                    ` w-full shadow-md max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-mdDark px-mainxs`
                   }
                 >
                   {dropDownOpthions}

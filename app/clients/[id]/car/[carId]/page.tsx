@@ -1,6 +1,6 @@
 "use client";
 import OrdersTable from "@/app/components/tables/orders-table";
-import { getBillHref, getSlug, methodsArray, paidStatusArray } from "@/app/utils/base";
+import { getSlug, methodsArray, paidStatusArray } from "@/app/utils/base";
 import { useBills } from "@/app/utils/contexts/bills-contexts";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import {
@@ -78,7 +78,8 @@ export default function CarsOrders() {
           client_depts: data?.client_depts,
         },
       });
-      router.push(getBillHref(window.location.hostname) + "?collector=true");
+      const billPath = window.localStorage.getItem("bill_path");
+      router.push((billPath ?? "/bill") + "?collector=true");
     } else {
       openPopup("snakeBarPopup", { message: response.message });
     }

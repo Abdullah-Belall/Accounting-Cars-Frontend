@@ -1,5 +1,5 @@
 "use client";
-import { sameTextField } from "@/app/utils/base";
+
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import { Button, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -96,7 +96,6 @@ export default function EditQtyPopup({
               label="الكمية الاجمالية"
               variant="filled"
               className="w-full"
-              sx={sameTextField}
               value={total}
               onChange={(e) => handleData("oldQty", e.target.value)}
               disabled
@@ -107,7 +106,6 @@ export default function EditQtyPopup({
               label="اجمالي التكلفة"
               variant="filled"
               className="w-full"
-              sx={sameTextField}
               value={totalCost.toLocaleString()}
               disabled
             />
@@ -124,7 +122,7 @@ export default function EditQtyPopup({
                 <ul
                   className={
                     styles.list +
-                    " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-anotherLight px-mainxs"
+                    " w-full max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-mdDark px-mainxs"
                   }
                 >
                   {suppliers.map((e: any) => (
@@ -150,7 +148,6 @@ export default function EditQtyPopup({
               label="الكمية الجديدة"
               variant="filled"
               className="w-full"
-              sx={sameTextField}
               value={data.newQty ?? ""}
               onChange={(e) => {
                 const value = e.target.value;
@@ -165,7 +162,6 @@ export default function EditQtyPopup({
               label="التكلفة للوحدة"
               variant="filled"
               className="w-full"
-              sx={sameTextField}
               value={data.costPrice ?? ""}
               onChange={(e) => handleData("costPrice", e.target.value.replace(/[^0-9.]/g, ""))}
             />
@@ -176,7 +172,6 @@ export default function EditQtyPopup({
             label="اخر سعر تكلفة لهذا الصنف"
             variant="filled"
             className="w-full"
-            sx={sameTextField}
             value={latest_cost_unit_price.toString()}
             disabled
           />
@@ -186,7 +181,6 @@ export default function EditQtyPopup({
             label="دفعة مبداية للمورد"
             variant="filled"
             className="w-full"
-            sx={sameTextField}
             value={data.initial_amount}
             onChange={(e) => handleData("initial_amount", e.target.value.replace(/[^0-9.]/g, ""))}
           />

@@ -5,7 +5,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { usePopup } from "../utils/contexts/popup-contexts";
 import { LOGIN_REQ } from "../utils/requests/client-side.requests";
 import { useRouter } from "next/navigation";
-import { sameTextField, unCountedMessage } from "../utils/base";
+import { unCountedMessage } from "../utils/base";
 
 export default function LogIn() {
   const router = useRouter();
@@ -61,7 +61,6 @@ export default function LogIn() {
             label="اسم المستخدم"
             variant="filled"
             className="w-full"
-            sx={sameTextField}
             value={data.user_name}
             onChange={(e) => handleData("user_name", e)}
           />
@@ -72,7 +71,6 @@ export default function LogIn() {
               variant="filled"
               type={showPass ? "text" : "password"}
               className="w-full"
-              sx={sameTextField}
               value={data.password}
               onChange={(e) => handleData("password", e)}
             />

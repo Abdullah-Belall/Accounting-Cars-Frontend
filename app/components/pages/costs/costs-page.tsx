@@ -7,7 +7,7 @@ import { useSearch } from "@/app/utils/contexts/search-results-contexts";
 import { Button } from "@mui/material";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import { useBills } from "@/app/utils/contexts/bills-contexts";
-import { getBillHref, getSlug, methodsArray, paidStatusArray } from "@/app/utils/base";
+import { getSlug, methodsArray, paidStatusArray } from "@/app/utils/base";
 
 export default function CostsPage() {
   const router = useRouter();
@@ -64,7 +64,8 @@ export default function CostsPage() {
       },
     });
     closePopup("costsCollector");
-    router.push(getBillHref(window.location.hostname));
+    const billPath = window.localStorage.getItem("bill_path");
+    router.push(billPath ?? "/bill");
   };
   return (
     <>

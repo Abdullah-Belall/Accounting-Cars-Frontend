@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { TextField, Button } from "@mui/material";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
-import { sameTextField } from "@/app/utils/base";
 import {
   CLIENT_COLLECTOR_REQ,
   CREATE_EXPENSE_REQ,
@@ -84,7 +83,6 @@ export default function ExpenseForm({
           type="text"
           variant="filled"
           className="w-full"
-          sx={sameTextField}
           value={data.name ?? ""}
           onChange={(e) => handleData("name", e.target.value)}
         />
@@ -95,7 +93,6 @@ export default function ExpenseForm({
           type="text"
           variant="filled"
           className="w-full"
-          sx={sameTextField}
           value={data.amount ?? ""}
           onChange={(e) => handleData("amount", e.target.value.replace(/[^0-9.]/g, ""))}
         />
@@ -106,7 +103,6 @@ export default function ExpenseForm({
           type="text"
           variant="filled"
           className="w-full"
-          sx={sameTextField}
           value={data.note ?? ""}
           onChange={(e) => handleData("note", e.target.value)}
         />

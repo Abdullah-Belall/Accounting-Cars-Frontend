@@ -103,7 +103,7 @@ export default function SearchInput({
               <button onBlur={() => setOpenDropDown(false)} className="w-full relative mb-0">
                 <div
                   onClick={() => setOpenDropDown(!openDropDown)}
-                  className={`w-full bg-myHover text-mdDark cursor-pointer flex justify-between items-center p-1 pr-3 border-r-2 border-foreground`}
+                  className={`w-full bg-myHover text-myDark cursor-pointer flex justify-between items-center p-1 pr-3 border-r-2 border-foreground`}
                 >
                   <p className="text-[12px]">{getColumnSlug() ?? "بحث عام"}</p>
                   {openDropDown ? (

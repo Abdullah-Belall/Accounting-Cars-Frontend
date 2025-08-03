@@ -73,9 +73,9 @@ export default function MainTable({
         >
           <table className="w-full text-right border-collapse bg-myHover text-secDark">
             <thead className="select-none">
-              <tr className="text-sm">{header}</tr>
+              <tr className="text-sm text-myDark">{header}</tr>
             </thead>
-            <tbody className="text-sm divide-y divide-mdLight">{children}</tbody>
+            <tbody className="text-sm divide-y divide-mdLight text-myDark">{children}</tbody>
           </table>
         </div>
       </div>

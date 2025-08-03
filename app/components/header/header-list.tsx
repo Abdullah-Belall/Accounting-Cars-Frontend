@@ -29,18 +29,10 @@ export default function BasicList() {
         <ListItem disablePadding>
           <ListItemButton className="hover:text-myDark group">
             <Link href={"/profile"}>
-              <ListItemText
-                sx={{
-                  "& .MuiTypography-root": {
-                    fontFamily: "cairo",
-                  },
-                }}
-                className={"text-start text-nowrap text-secDark"}
-                primary="المعلومات الشخصية"
-              />
+              <ListItemText className={"text-start text-nowrap"} primary="المعلومات الشخصية" />
             </Link>
             <ListItemIcon>
-              <AccountBoxIcon className="mr-auto opacity-50 group-hover:opacity-100 text-secDark" />
+              <AccountBoxIcon className="mr-auto opacity-50 group-hover:opacity-100" />
             </ListItemIcon>
           </ListItemButton>
         </ListItem>

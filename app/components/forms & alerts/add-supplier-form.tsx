@@ -4,7 +4,6 @@ import { usePopup } from "@/app/utils/contexts/popup-contexts";
 import { ADD_SUPPLIER_REQ, CLIENT_COLLECTOR_REQ } from "@/app/utils/requests/client-side.requests";
 import { Button, TextField } from "@mui/material";
 import { ChangeEvent, useState } from "react";
-import { sameTextField } from "../../utils/base";
 import MyLoading from "../common/loading";
 
 export default function AddSupplierForm({
@@ -71,7 +70,6 @@ export default function AddSupplierForm({
           label="الاسم"
           variant="filled"
           className="w-full"
-          sx={sameTextField}
           value={data.name}
           onChange={(e) => handleData("name", e)}
         />
