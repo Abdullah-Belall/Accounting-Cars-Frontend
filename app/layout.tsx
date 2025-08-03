@@ -2,7 +2,7 @@
 import "./globals.css";
 import { cairo } from "./utils/fonts/main.font";
 import SideBar from "./components/side-bar/side-bar";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { PopupProvider } from "./utils/contexts/popup-contexts";
 import CustomSnackbar from "./components/common/custom-snakebar";
 import { UserProvider } from "./utils/contexts/UserContext";
@@ -10,11 +10,7 @@ import { useEffect, useState } from "react";
 import { ReturnsProvider } from "./utils/contexts/returns-contexts";
 import { BillesProvider } from "./utils/contexts/bills-contexts";
 import { SearchProvider } from "./utils/contexts/search-results-contexts";
-import {
-  CLIENT_COLLECTOR_REQ,
-  GET_TENANT_VARS_REQ,
-  SIGN_OUT_REQ,
-} from "./utils/requests/client-side.requests";
+import { GET_TENANT_VARS_REQ } from "./utils/requests/client-side.requests";
 import Header from "./components/header/header";
 import { BaseLogosUrl } from "./utils/base";
 import { PiListBold } from "react-icons/pi";
@@ -26,7 +22,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const router = useRouter();
   const pathname = usePathname();
   const [openSidebar, setOpenSidebar] = useState(false);
   const [tenantsVars, setTenantsVars] = useState<{
