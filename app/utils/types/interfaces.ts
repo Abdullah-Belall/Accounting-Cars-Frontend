@@ -18,6 +18,22 @@ export interface CategoryInterface {
   created_at: Date;
   updated_at: Date;
 }
+export interface CrmInterface {
+  id: string;
+  index: number;
+  car: CarsInterface;
+  crm_dates?: CrmDatesInterface[];
+  name: string;
+  next_call_date: Date;
+  created_at: Date;
+}
+export interface CrmDatesInterface {
+  id: string;
+  index: number;
+  crm?: CrmInterface;
+  note: string;
+  created_at: Date;
+}
 export interface ProductInterface {
   index: number;
   category: {

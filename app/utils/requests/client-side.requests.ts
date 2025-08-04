@@ -2090,6 +2090,182 @@ const DELETE_ORDER_REQ = async ({ id }: { id: string }) => {
     };
   }
 };
+const GET_CAR_CRMS_REQ = async ({ carId }: { carId: string }) => {
+  try {
+    const response: any = await axios.get(`${BASE_URL}/crm/car/${carId}`, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.crm) {
+      return { done: true, data: response?.data };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const CREATE_CAR_CRM_REQ = async ({
+  body,
+  carId,
+}: {
+  body: { name: string; next_call_date: Date };
+  carId: string;
+}) => {
+  console.log(body);
+  try {
+    const response: any = await axios.post(`${BASE_URL}/crm/car/${carId}`, body, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const UPDATE_CAR_CRM_REQ = async ({
+  body,
+  carId,
+  crmId,
+}: {
+  body: { name: string; next_call_date: Date };
+  carId: string;
+  crmId: string;
+}) => {
+  try {
+    const response: any = await axios.patch(`${BASE_URL}/crm/${crmId}/car/${carId}`, body, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const DELETE_CAR_CRM_REQ = async ({ crmId }: { crmId: string }) => {
+  try {
+    const response: any = await axios.delete(`${BASE_URL}/crm/${crmId}`, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const GET_CRM_DATES_REQ = async ({ crmId }: { crmId: string }) => {
+  try {
+    const response: any = await axios.get(`${BASE_URL}/crm/${crmId}/dates`, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.crm_dates) {
+      return { done: true, data: response?.data };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const CREATE_CRM_DATE_REQ = async ({ body, crmId }: { body: { note: string }; crmId: string }) => {
+  try {
+    const response: any = await axios.post(`${BASE_URL}/crm/${crmId}/dates`, body, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const DELETE_CRM_DATE_REQ = async ({ crmDateId }: { crmDateId: string }) => {
+  try {
+    const response: any = await axios.delete(`${BASE_URL}/crm/dates/${crmDateId}`, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
 //* MAIN FUNCTION (USED FOR ALL REQUESTS THAT NEED ACCESS_TOKEN)
 const CLIENT_COLLECTOR_REQ = async (varFunction: any, dataBody?: any) => {
   const access_token = getCookie("access_token");
@@ -2117,6 +2293,13 @@ const getCookie = (keyName: string): string | null => {
 
 export {
   DELETE_ORDER_REQ,
+  DELETE_CRM_DATE_REQ,
+  CREATE_CRM_DATE_REQ,
+  GET_CRM_DATES_REQ,
+  DELETE_CAR_CRM_REQ,
+  UPDATE_CAR_CRM_REQ,
+  CREATE_CAR_CRM_REQ,
+  GET_CAR_CRMS_REQ,
   ORDERS_COLLECTOR_REQ,
   GET_DAILY_REPORT_REQ,
   MAKE_WORKER_DEDUCTION_REQ,

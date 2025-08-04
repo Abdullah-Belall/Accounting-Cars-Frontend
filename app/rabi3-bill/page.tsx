@@ -80,25 +80,27 @@ export default function RabiaBill() {
       >
         طباعة
       </Button>
-      <h1 className="text-[80px] font-bold text-center mx-auto">{getBillData(hostname)?.title}</h1>
+      <h1 className="text-[80px] font-bold text-center mx-auto text-[black]">
+        {getBillData(hostname)?.title}
+      </h1>
       <div className="w-full flex flex-col items-start pr-[30px] gap-1">
-        <p className="font-bold text-[20px] pr-[60px]">
+        <p className="font-bold text-[20px] pr-[60px] text-[black]">
           لجميع انواع السيارات {getBillData(hostname)?.carsType}
         </p>
-        <div className="flex items-center font-semibold gap-2">
+        <div className="flex items-center font-semibold gap-2 text-[black]">
           <p className="px-2 py-2 bg-[#45616c] rounded-md text-white border-2 border-[#9fadb0]">
             <FaLocationDot />
           </p>
           الغردقة منطقة الحرفين امام المجمع الصناعي بالغردقة
         </div>
-        <div className="flex items-center font-semibold gap-2 tracking-widest">
+        <div className="flex items-center font-semibold gap-2 tracking-widest text-[black]">
           <p className="px-2 py-2 bg-[#45616c] rounded-md text-white border-2 border-[#9fadb0]">
             <FaPhoneAlt />
           </p>
           {getBillData(hostname)?.phones}
         </div>
       </div>
-      <div className="flex gap-1 font-semibold mt-[10px] w-[90%] mx-auto">
+      <div className="flex gap-1 font-semibold mt-[10px] w-[90%] mx-auto text-[black]">
         {!isCostBill && (
           <div className="border-3 border-[#9fadb0] rounded-md py-3 text-lg px-1 text-center w-[calc(100%/3)]">
             {formatDate(bills?.totals?.created_at as Date)}
@@ -117,7 +119,7 @@ export default function RabiaBill() {
         )}
       </div>
       {!isCostBill && (
-        <div className="border-3 tracking-widest border-[#9fadb0] rounded-md py-3 text-lg px-1 text-start w-[90%] font-semibold mx-auto mt-1">
+        <div className="border-3 text-[black] tracking-widest border-[#9fadb0] rounded-md py-3 text-lg px-1 text-start w-[90%] font-semibold mx-auto mt-1">
           المطلوب من {bills?.car?.client?.user_name} المحترم لسيارة{" "}
           {bills?.car?.mark && bills?.car?.mark !== "" ? bills?.car?.mark : "__"}{" "}
           {bills?.car?.type && (bills?.car?.type as any) !== ""
@@ -150,7 +152,7 @@ export default function RabiaBill() {
         {[items, masna3aItems].flat()}
       </div>
       <div className="flex flex-col gap-1 w-[90%] mx-auto mt-1 border-3 border-[#9fadb0] rounded-md p-2 text-lg font-bold">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between text-[black]">
           <div className="w-full flex items-center gap-3 flex-row-reverse justify-end">
             الاجمالي
             <div className="bg-[#45616c] border-2 border-[#9fadb0] bg-[#45616c] rounded-md h-[40px] w-[160px] text-white flex justify-center items-center">
@@ -167,7 +169,7 @@ export default function RabiaBill() {
           )}
         </div>
         {!isCostBill && (
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between text-[black]">
             <div className="w-full flex items-center gap-3 flex-row-reverse justify-end">
               الباقي في حساب العميل
               <div className="bg-[#45616c] border-2 border-[#9fadb0] bg-[#45616c] rounded-md h-[40px] w-[160px] text-white flex justify-center items-center">
@@ -184,7 +186,7 @@ export default function RabiaBill() {
         )}
       </div>
       {!isCostBill && (
-        <div className="flex gap-1 w-[90%] mx-auto mt-1 border-3 border-[#9fadb0] rounded-md p-2 text-lg font-bold">
+        <div className="flex gap-1 w-[90%] text-[black] mx-auto mt-1 border-3 border-[#9fadb0] rounded-md p-2 text-lg font-bold">
           <div className="text-sm w-full flex items-center gap-3 justify-start">
             وسيلة الدفع: {bills?.totals?.payment_method}
           </div>

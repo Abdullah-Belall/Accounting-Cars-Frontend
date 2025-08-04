@@ -31,6 +31,12 @@ interface PopupContextState {
   billCollector: PopupState;
   costsCollector: PopupState;
   dailyReport: PopupState;
+  addCrm: PopupState;
+  editCrm: PopupState;
+  deleteCrm: PopupState;
+  crmDates: PopupState;
+  addCrmDate: PopupState;
+  deleteCrmDate: PopupState;
 }
 
 interface PopupContextType {
@@ -75,6 +81,12 @@ export const PopupProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     billCollector: { isOpen: false, data: null },
     costsCollector: { isOpen: false, data: null },
     dailyReport: { isOpen: false, data: null },
+    addCrm: { isOpen: false, data: null },
+    editCrm: { isOpen: false, data: null },
+    deleteCrm: { isOpen: false, data: null },
+    crmDates: { isOpen: false, data: null },
+    addCrmDate: { isOpen: false, data: null },
+    deleteCrmDate: { isOpen: false, data: null },
   });
 
   const openPopup = (popupName: keyof PopupContextState, data: any) => {

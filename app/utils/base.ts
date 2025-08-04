@@ -48,8 +48,6 @@ export const formatDate = (input: string | Date) => {
 export const getSlug = (arr: any, value: string) => {
   return arr.find((e: any) => e.value === value)?.label;
 };
-// تم إزالة sameTextField لأننا نستخدم Material UI Theme بدلاً منه
-// يمكنك الآن استخدام مكونات Material UI مباشرة بدون sx prop إضافي
 export const taxArray = [
   {
     value: "",
