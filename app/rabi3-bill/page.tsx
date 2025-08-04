@@ -6,10 +6,13 @@ import { Button } from "@mui/material";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaPhoneAlt } from "react-icons/fa";
 import { TbBrandToyota } from "react-icons/tb";
+import Image from "next/image";
+import ktmImage from "@/public/ktm.png";
 
 export default function RabiaBill() {
   const { bills } = useBills();
   const [hostname, setHostName] = useState("");
+  const [showKtm, setShowKtm] = useState(true);
   const isCostBill = bills?.type === "cost";
   const handlePrint = () => {
     window.print();
@@ -72,14 +75,24 @@ export default function RabiaBill() {
   }, []);
   return (
     <div className="print-content min-h-[calc(100dvh)] relative flex flex-col w-full bg-white">
-      <Button
-        sx={{ fontFamily: "cairo" }}
-        className="print-button !bg-mdDark !absolute !right-[10px] !top-0 z-3"
-        variant="contained"
-        onClick={handlePrint}
-      >
-        طباعة
-      </Button>
+      <div className="print-button !absolute !right-[10px] !top-0 z-3 flex gap-2">
+        <Button
+          sx={{ fontFamily: "cairo" }}
+          className="!bg-mdDark"
+          variant="contained"
+          onClick={handlePrint}
+        >
+          طباعة
+        </Button>
+        <Button
+          sx={{ fontFamily: "cairo" }}
+          className="!bg-mdDark"
+          variant="contained"
+          onClick={() => setShowKtm(!showKtm)}
+        >
+          {showKtm ? "اخفاء الختم" : "اظهار الختم"}
+        </Button>
+      </div>
       <h1 className="text-[80px] font-bold text-center mx-auto text-[black]">
         {getBillData(hostname)?.title}
       </h1>
@@ -186,7 +199,7 @@ export default function RabiaBill() {
         )}
       </div>
       {!isCostBill && (
-        <div className="flex gap-1 w-[90%] text-[black] mx-auto mt-1 border-3 border-[#9fadb0] rounded-md p-2 text-lg font-bold">
+        <div className="relative flex gap-1 w-[90%] text-[black] mx-auto mt-1 border-3 border-[#9fadb0] rounded-md p-2 text-lg font-bold">
           <div className="text-sm w-full flex items-center gap-3 justify-start">
             وسيلة الدفع: {bills?.totals?.payment_method}
           </div>
@@ -196,6 +209,11 @@ export default function RabiaBill() {
           {bills?.totals?.paid_status === "دفع بالأقساط" && (
             <div className="text-sm w-full flex items-center gap-3 justify-end">
               المقدم: {Number(bills?.totals?.down_payment || 0)}
+            </div>
+          )}
+          {showKtm && (
+            <div className="absolute bottom-[-10px] left-[-20px] rotate-[35deg] opacity-[.7]">
+              <Image src={ktmImage} alt="rabi3-bill" width={150} height={150} />
             </div>
           )}
         </div>
