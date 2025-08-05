@@ -81,7 +81,7 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
             handleOpenDropDown(formDataKeyName, false);
           }
         }}
-        className="p-mainxs text-center border-b border-myLight cursor-pointer"
+        className="p-mainxs text-center border-b border-myLight cursor-pointer text-myLight"
       >
         {e.label}
       </li>

@@ -23,7 +23,7 @@ export default function AddAddressForm() {
     <li
       key={e.govenorate}
       onClick={() => handleData("govenorate", e.govenorate)}
-      className="p-mainxs text-center border-b border-myLight cursor-pointer"
+      className="p-mainxs text-center border-b border-myLight cursor-pointer text-myLight"
     >
       {e.slug}
     </li>

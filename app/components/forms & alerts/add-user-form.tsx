@@ -182,7 +182,7 @@ export default function AddUserForm({
                     <ul className="w-full z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-mdDark px-mainxs">
                       <li
                         onClick={() => handleData("role", "admin")}
-                        className="p-mainxs text-center border-b border-myLight cursor-pointer"
+                        className="p-mainxs text-center border-b border-myLight cursor-pointer text-myLight"
                       >
                         موظف
                       </li>

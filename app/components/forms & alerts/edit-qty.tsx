@@ -132,7 +132,7 @@ export default function EditQtyPopup({
                         handleData("supplier", e.user_name);
                         setDropDown(false);
                       }}
-                      className="p-mainxs text-center border-b border-myLight cursor-pointer"
+                      className="p-mainxs text-center border-b border-myLight cursor-pointer text-myLight"
                     >
                       {e.user_name}
                     </li>

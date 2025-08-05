@@ -166,7 +166,7 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
                       handleData("tax", e.value);
                       handleDropDowns("tax", false);
                     }}
-                    className="p-mainxs text-center border-b border-myLight cursor-pointer"
+                    className="p-mainxs text-center border-b border-myLight cursor-pointer text-myLight"
                   >
                     {e.label}
                   </li>
@@ -198,7 +198,7 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
                         handleData("payment_method", e.value);
                         handleDropDowns("payment_method", false);
                       }}
-                      className="p-mainxs text-center border-b border-myLight cursor-pointer"
+                      className="p-mainxs text-center border-b border-myLight cursor-pointer text-myLight"
                     >
                       {e.label}
                     </li>
@@ -229,7 +229,7 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
                         handleData("paid_status", e.value);
                         handleDropDowns("paid_status", false);
                       }}
-                      className="p-mainxs text-center border-b border-myLight cursor-pointer"
+                      className="p-mainxs text-center border-b border-myLight cursor-pointer text-myLight"
                     >
                       {e.label}
                     </li>
@@ -269,7 +269,7 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
                       handleData("installment_type", e.value);
                       handleDropDowns("installment_type", false);
                     }}
-                    className="p-mainxs text-center border-b border-myLight cursor-pointer"
+                    className="p-mainxs text-center border-b border-myLight cursor-pointer text-myLight"
                   >
                     {e.label}
                   </li>

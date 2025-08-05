@@ -52,7 +52,7 @@ export default function DeductionStatusForm({
                       setStatus(e.value);
                       setDropDown(false);
                     }}
-                    className="p-mainxs text-center border-b border-myLight cursor-pointer"
+                    className="p-mainxs text-center border-b border-myLight cursor-pointer text-myLight"
                   >
                     {e.label}
                   </li>
