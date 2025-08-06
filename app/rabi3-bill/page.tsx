@@ -115,32 +115,41 @@ export default function RabiaBill() {
       </div>
       <div className="flex gap-1 font-semibold mt-[10px] w-[90%] mx-auto text-[black]">
         {!isCostBill && (
-          <div className="border-3 border-[#9fadb0] rounded-md py-3 text-lg px-1 text-center w-[calc(100%/3)]">
+          <div className="border-3 border-[#9fadb0] rounded-md py-1.5 px-1 text-center w-[calc(100%/3)]">
             {formatDate(bills?.totals?.created_at as Date)}
           </div>
         )}
-        <div className="mx-auto border-3 border-[#9fadb0] rounded-md py-3 text-lg px-1 text-center w-[calc(100%/3)]">
+        <div className="mx-auto border-3 border-[#9fadb0] rounded-md py-1.5 px-1 text-center w-[calc(100%/3)]">
           {isCostBill
             ? "فواتير تكاليف"
             : "فاتورة مبيعات - " + shortIdGenerator(Number(bills?.bill_id))}
         </div>
         {!isCostBill && (
-          <div className="border-3 border-[#9fadb0] rounded-md py-3 text-lg px-1 text-center w-[calc(100%/3)]">
+          <div className="border-3 border-[#9fadb0] rounded-md py-1.5 px-1 text-center w-[calc(100%/3)]">
             الرقم/{" "}
-            {bills?.car?.client?.contacts ? bills?.car?.client?.contacts[0].phone : "لا يوجد"}
+            {bills?.car?.client?.contacts && bills?.car?.client?.contacts?.length > 0
+              ? bills?.car?.client?.contacts[0].phone?.slice(1) + "+"
+              : "لا يوجد"}
           </div>
         )}
       </div>
-      {!isCostBill && (
-        <div className="border-3 text-[black] tracking-widest border-[#9fadb0] rounded-md py-3 text-lg px-1 text-start w-[90%] font-semibold mx-auto mt-1">
-          المطلوب من {bills?.car?.client?.user_name} المحترم لسيارة{" "}
-          {bills?.car?.mark && bills?.car?.mark !== "" ? bills?.car?.mark : "__"}{" "}
+
+      <div className="flex gap-1 font-semibold mt-[3px] w-[90%] mx-auto text-[black]">
+        <div className="border-3 border-[#9fadb0] rounded-md py-1.5 px-1 text-center w-[calc(100%/3)]">
+          المطلوب من: {bills?.car?.client?.user_name}
+        </div>
+        <div className="mx-auto border-3 border-[#9fadb0] rounded-md py-1.5 px-1 text-center w-[calc(100%/3)]">
+          السيارة: {bills?.car?.mark && bills?.car?.mark !== "" ? bills?.car?.mark : ""}{" "}
           {bills?.car?.type && (bills?.car?.type as any) !== ""
             ? getSlug(carTypesArray, bills?.car?.type)
-            : "-"}{" "}
-          {bills?.car?.plate && bills?.car?.plate !== "" ? bills?.car?.plate : ""}
+            : ""}{" "}
         </div>
-      )}
+
+        <div className="border-3 border-[#9fadb0] rounded-md py-1.5 px-1 text-center w-[calc(100%/3)]">
+          لوحة الترخيص:{" "}
+          {bills?.car?.plate && bills?.car?.plate !== "" ? bills?.car?.plate : "غير مسجل"}
+        </div>
+      </div>
       <div className="flex flex-col w-[90%] mx-auto mt-1 border-3 border-[#9fadb0] rounded-xl overflow-hidden">
         <ul className="flex bg-[#45616c] border-b-3 border-[#9fadb0] text-white">
           <li className="py-2 flex flex-col justify-center px-4 gap-2 text-center w-[50%]">
@@ -262,109 +271,3 @@ const billParamters: {
 const getBillData = (domain: string) => {
   return billParamters.find((e) => e.domain === domain);
 };
-// "use client";
-
-// import { useMemo } from "react";
-// import { carTypesArray, formatDate, getSlug } from "../utils/base";
-// import { useBills } from "../utils/contexts/bills-contexts";
-// import { Button } from "@mui/material";
-
-// export default function RabiaBill() {
-//   const { bills } = useBills();
-
-//   const handlePrint = () => {
-//     window.print();
-//   };
-//   // {billsData}
-//   const items = useMemo(() => {
-//     return billsData?.map((e: any, i) => (
-//       <ul key={e?.id + i.toString()} className="w-full flex border-b-2 border-[#888]">
-//         <li className="w-[35%] py-3 text-center">
-//           {e?.product?.name} {e?.name} {e?.size}
-//         </li>
-//         <li className="w-[calc(65%/3)] py-3 text-center">{e?.qty}</li>
-//         <li className="w-[calc(65%/3)] py-3 text-center">
-//           {Number(e?.price ?? e?.unit_price).toLocaleString()}
-//         </li>
-//         <li className="w-[calc(65%/3)] py-3 text-center">
-//           {(Number(e?.price ?? e?.unit_price) * Number(e?.qty)).toLocaleString()}
-//         </li>
-//       </ul>
-//     ));
-//   }, [billsData]);
-//   console.log(bills);
-//   return (
-//     <div className="print-content h-[calc(100dvh)] relative flex flex-col w-full">
-//       <Button
-//         sx={{ fontFamily: "cairo" }}
-//         className="print-button !bg-mdDark !absolute !right-[10px] !top-0 z-3"
-//         variant="contained"
-//         onClick={handlePrint}
-//       >
-//         طباعة
-//       </Button>
-//       <div className="relative w-full flex justify-between">
-//         <div className="w-full flex flex-col items-center">
-//           <h1 className="text-[45px] font-bold">مركز الربيع سيرفس</h1>
-//           <p className="font-semibold text-[20px]">لصيانة جميع انواع سيارات الملاكي</p>
-//         </div>
-//         <div className="w-full rounded-s-3xl bg-black text-white font-bold text-[35px] py-[40px] text-center">
-//           فاتورة مشتريات
-//         </div>
-//       </div>
-//       <div className="mt-[40px] flex justify-between w-[85%] pr-[120px]">
-//         <div className="flex flex-col">
-//           <h1 className="text-orange-600 font-semibold text-xl">المبلغ الاجمالي</h1>
-//           <h2 className="text-xl font-semibold mt-3">{bills?.totals?.totalPrice}</h2>
-//           <div className="w-[25px] h-[3px] rounded-md bg-[#888] my-4"></div>
-//           <ul className="flex flex-col font-semibold gap-1">
-//             <li>رقم الفاتورة: {bills?.bill_id}</li>
-//             <li>تاريخ الفاتورة: {formatDate(bills?.totals?.created_at as Date)}</li>
-//           </ul>
-//         </div>
-//         <div className="flex flex-col">
-//           <h1 className="text-orange-600 font-semibold text-xl">اسم المشتري</h1>
-//           <h2 className="text-xl font-semibold mt-3">{bills?.car?.client?.user_name}</h2>
-//           <div className="w-[25px] h-[3px] rounded-md bg-[#888] my-4"></div>
-//           <ul className="flex flex-col font-semibold gap-1">
-//             <li>
-//               رقم الهاتف:{" "}
-//               {bills?.car?.client?.contacts ? bills?.car?.client?.contacts[0].phone : "لا يوجد"}
-//             </li>
-//             <li>
-//               السيارة: {bills?.car?.mark && bills?.car?.mark !== "" ? bills?.car?.mark : "غير مسجل"}
-//             </li>
-//             <li>
-//               رقم السيارة:{" "}
-//               {bills?.car?.plate && bills?.car?.plate !== "" ? bills?.car?.plate : "غير مسجل"}
-//             </li>
-//             <li>
-//               نوع السيارة:{" "}
-//               {bills?.car?.type && (bills?.car?.type as any) !== ""
-//                 ? getSlug(carTypesArray, bills?.car?.type)
-//                 : "غير مسجل"}
-//             </li>
-//           </ul>
-//         </div>
-//       </div>
-//       <div className="relative flex flex-col w-full mt-4 font-semibold">
-//         <ul className="w-full bg-black flex">
-//           <li className="w-[35%] bg-orange-600 text-white py-3 text-center rounded-e-2xl">
-//             اسم المنتج
-//           </li>
-//           <li className="w-[calc(65%/3)] text-white py-3 text-center">الكمية</li>
-//           <li className="w-[calc(65%/3)] text-white py-3 text-center">السعر</li>
-//           <li className="w-[calc(65%/3)] text-white py-3 text-center">الاجمالي</li>
-//         </ul>
-//         {items}
-//         <div className="flex justify-between px-5 w-[240px] bg-orange-600 py-3 text-white mr-auto">
-//           <p>الاجمالي</p>
-//           <p>{bills?.totals?.totalPrice}</p>
-//         </div>
-//       </div>
-//       <div className="absolute bottom-0 left-0 pl-6 mr-auto w-[55%] py-2 bg-black text-white text-end rounded-s-2xl">
-//         01155607133 - 01061254203
-//       </div>
-//     </div>
-//   );
-// }
