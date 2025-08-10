@@ -1,6 +1,6 @@
 "use client";
 import { TextField, Button } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import SelectList from "../common/select-list";
 import styles from "@/app/styles/drop-down.module.css";
 import { usePopup } from "@/app/utils/contexts/popup-contexts";
@@ -9,6 +9,7 @@ import {
   ADD_ORDER_REQ,
   CLIENT_COLLECTOR_REQ,
   GET_ALL_CAR_REQ,
+  SEARCH_REQ,
 } from "@/app/utils/requests/client-side.requests";
 import { getSlug, methodsArray, paidStatusArray, periodsArray } from "@/app/utils/base";
 import { useRouter } from "next/navigation";
@@ -16,11 +17,16 @@ import { useBills } from "@/app/utils/contexts/bills-contexts";
 import { TbCircleXFilled } from "react-icons/tb";
 import CarsTable from "../tables/cars-table";
 import MyLoading from "../common/loading";
+import SearchInput from "../filtaraion/search-input/search-input";
+import { useSearch } from "@/app/utils/contexts/search-results-contexts";
+import { IoSearchOutline } from "react-icons/io5";
 
 export default function AddOrderForm({ closePopup }: { closePopup: () => void }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
+  const [searchWith, setSearchWith] = useState("");
+  const { fillSearch, getSearch } = useSearch();
+  const [debounce, setDebounce] = useState<NodeJS.Timeout | null>(null);
   const { openPopup, popupState, closeOrderPopup } = usePopup();
   const openSnakeBar = (message: string) => {
     openPopup("snakeBarPopup", { message });
@@ -91,7 +97,7 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
   const fetchData = async () => {
     const response = await CLIENT_COLLECTOR_REQ(GET_ALL_CAR_REQ);
     if (response.done) {
-      setData(response.data.cars);
+      fillSearch("cars", { results: response.data.cars, total: response.data.cars.length });
     }
   };
   useEffect(() => {
@@ -287,6 +293,34 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
     }
     setLoading(false);
   };
+
+  useEffect(() => {
+    console.log(debounce);
+    if (debounce) {
+      clearTimeout(debounce);
+    }
+    setDebounce(
+      setTimeout(() => {
+        const fetchData = async () => {
+          const bodyObj: any = {
+            searchin: "cars",
+            searchwith: searchWith,
+          };
+          const response = await CLIENT_COLLECTOR_REQ(SEARCH_REQ, bodyObj);
+          if (response.done) {
+            fillSearch("cars", response.data);
+          }
+        };
+        fetchData();
+      }, 1000)
+    );
+    return () => {
+      if (debounce) {
+        clearTimeout(debounce);
+      }
+    };
+  }, [searchWith]);
+
   const installmentValue = formData.installment
     ? Math.ceil(
         Number(
@@ -312,7 +346,26 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
         >
           <div className="w-full">
             <h2 className="text-lg text-center font-semibold mb-1">انشاء طلب جديد</h2>
-            <CarsTable title={"حدد السيارة"} data={data} order={true} />
+            <div className="mb-[-10px]">
+              <div dir="rtl" className="w-[250px]">
+                <div className="relative">
+                  <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <IoSearchOutline />
+                  </div>
+                  <label htmlFor="default-search" className="relative">
+                    <input
+                      dir="rtl"
+                      type="search"
+                      id="default-search"
+                      className="bg-myHover block w-full px-4 py-2 ps-10 text-sm rounded-lg border border-foreground focus:border-mdDark outline-0"
+                      placeholder="بحث"
+                      onChange={(e) => setSearchWith(e.target.value)}
+                    />
+                  </label>
+                </div>
+              </div>
+            </div>
+            <CarsTable title={""} data={getSearch("cars").results} order={true} />
             {popupState.makeOrderPopup.data?.car?.client?.id && (
               <div className="my-1 font-semibold">
                 ميزانية العميل:{" "}

@@ -25,6 +25,7 @@ interface SearchContextsStateInterface {
   stockChecksItems: { results: [] | null; total: number };
   suppliers: { results: [] | null; total: number };
   equipments: { results: [] | null; total: number };
+  cars: { results: [] | null; total: number };
 }
 
 interface SearchContextInterface {
@@ -58,6 +59,7 @@ export const SearchProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     stockChecksItems: { results: null, total: 0 },
     suppliers: { results: null, total: 0 },
     equipments: { results: null, total: 0 },
+    cars: { results: null, total: 0 },
   });
   const getSearch = (searchContextsName: keyof SearchContextsStateInterface) => {
     return search[searchContextsName];
