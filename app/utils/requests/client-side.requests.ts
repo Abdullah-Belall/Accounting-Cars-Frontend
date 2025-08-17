@@ -2266,6 +2266,33 @@ const DELETE_CRM_DATE_REQ = async ({ crmDateId }: { crmDateId: string }) => {
     };
   }
 };
+const SEND_DAILY_REPORT_REQ = async ({ date }: { date: Date }) => {
+  try {
+    const response: any = await axios.post(
+      `${BASE_URL}/common/telegram-daily-report`,
+      { date },
+      {
+        headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+      }
+    );
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
 //* MAIN FUNCTION (USED FOR ALL REQUESTS THAT NEED ACCESS_TOKEN)
 const CLIENT_COLLECTOR_REQ = async (varFunction: any, dataBody?: any) => {
   const access_token = getCookie("access_token");
@@ -2292,6 +2319,7 @@ const getCookie = (keyName: string): string | null => {
 };
 
 export {
+  SEND_DAILY_REPORT_REQ,
   DELETE_ORDER_REQ,
   DELETE_CRM_DATE_REQ,
   CREATE_CRM_DATE_REQ,

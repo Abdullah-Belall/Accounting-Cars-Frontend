@@ -13,13 +13,17 @@ import ReturnsTable from "../tables/returns-table";
 import ExpensesTable from "../tables/expenses-table";
 import CostsTable from "../tables/costs-table";
 import EquipmentsTable from "../tables/equipments-table";
+import {
+  CLIENT_COLLECTOR_REQ,
+  SEND_DAILY_REPORT_REQ,
+} from "@/app/utils/requests/client-side.requests";
 
 export default function GeneralInfo({ data }: { data: CalcsInterface }) {
   const [editBalance, setEditBalance] = useState(false);
   const [dailyReport, setDailyReport] = useState(false);
-  const { popupState, closePopup } = usePopup();
+  const { popupState, closePopup, openPopup } = usePopup();
   const dailyReportData = popupState.dailyReport?.data;
-
+  const [isSending, setIsSending] = useState(false);
   return popupState.dailyReport.isOpen ? (
     <div className="print-content relative min-h-[calc(100dvh)] relative flex flex-col w-full px-mainxs mt-[20px]">
       <div className="flex items-center gap-1 !absolute !left-mainxs !top-0 z-2">
@@ -40,6 +44,33 @@ export default function GeneralInfo({ data }: { data: CalcsInterface }) {
           variant="contained"
         >
           رجوع
+        </Button>
+        <Button
+          onClick={async () => {
+            if (isSending) return;
+            setIsSending(true);
+            const response = await CLIENT_COLLECTOR_REQ(SEND_DAILY_REPORT_REQ, {
+              date: dailyReportData?.date,
+            });
+            if (response.done) {
+              closePopup("dailyReport");
+              openPopup("snakeBarPopup", {
+                message: "تم ارسال التقرير لتليجرام بنجاح",
+                type: "success",
+              });
+            } else {
+              openPopup("snakeBarPopup", {
+                message: response.message,
+                type: "error",
+              });
+            }
+            setIsSending(false);
+          }}
+          sx={{ fontFamily: "cairo" }}
+          className="print-button !bg-mdDark"
+          variant="contained"
+        >
+          ارسال التقرير لتليجرام
         </Button>
       </div>
       <div>

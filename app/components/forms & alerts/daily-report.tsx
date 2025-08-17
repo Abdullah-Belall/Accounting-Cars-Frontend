@@ -23,7 +23,7 @@ export default function DailyReport({ close }: { close: () => void }) {
     const response = await CLIENT_COLLECTOR_REQ(GET_DAILY_REPORT_REQ, { date });
     console.log(response);
     if (response.done) {
-      openPopup("dailyReport", response.data);
+      openPopup("dailyReport", { ...response.data, date });
       close();
     } else {
       openPopup("snakeBarPopup", {
