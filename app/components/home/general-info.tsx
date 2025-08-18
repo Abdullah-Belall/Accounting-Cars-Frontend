@@ -17,6 +17,7 @@ import {
   CLIENT_COLLECTOR_REQ,
   SEND_DAILY_REPORT_REQ,
 } from "@/app/utils/requests/client-side.requests";
+import MyLoading from "../common/loading";
 
 export default function GeneralInfo({ data }: { data: CalcsInterface }) {
   const [editBalance, setEditBalance] = useState(false);
@@ -70,7 +71,7 @@ export default function GeneralInfo({ data }: { data: CalcsInterface }) {
           className="print-button !bg-mdDark"
           variant="contained"
         >
-          ارسال التقرير لتليجرام
+          {isSending ? <MyLoading /> : "ارسال التقرير لتليجرام"}
         </Button>
       </div>
       <div>
