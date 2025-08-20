@@ -53,7 +53,7 @@ export default function SortsPage() {
             className="bg-mdDark!"
             variant="contained"
           >
-            انشاء طلب
+            انشاء فاتورة
           </Button>
         </div>
       </div>

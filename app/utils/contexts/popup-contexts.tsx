@@ -37,6 +37,10 @@ interface PopupContextState {
   crmDates: PopupState;
   addCrmDate: PopupState;
   deleteCrmDate: PopupState;
+  addTenantChatId: PopupState;
+  editTenantChatId: PopupState;
+  deleteTenantChatId: PopupState;
+  tenantChatIds: PopupState;
 }
 
 interface PopupContextType {
@@ -87,6 +91,10 @@ export const PopupProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     crmDates: { isOpen: false, data: null },
     addCrmDate: { isOpen: false, data: null },
     deleteCrmDate: { isOpen: false, data: null },
+    addTenantChatId: { isOpen: false, data: null },
+    editTenantChatId: { isOpen: false, data: null },
+    deleteTenantChatId: { isOpen: false, data: null },
+    tenantChatIds: { isOpen: false, data: null },
   });
 
   const openPopup = (popupName: keyof PopupContextState, data: any) => {

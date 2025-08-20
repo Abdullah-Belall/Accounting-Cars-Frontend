@@ -23,7 +23,6 @@ export default function TenantForm({
     password: string;
     title: string;
     logo: string;
-    telegram_chat_id: string;
     bill_path: string;
     theme: string;
   };
@@ -47,7 +46,6 @@ export default function TenantForm({
           phone: base.phone,
           logo: base.logo,
           title: base.title,
-          telegram_chat_id: base.telegram_chat_id,
           bill_path: base.bill_path,
           theme: base.theme,
         },
@@ -61,12 +59,12 @@ export default function TenantForm({
       }
       return;
     }
+    console.log(base);
     const response = await CLIENT_COLLECTOR_REQ(CREATE_NEW_TENANT_REQ, {
       tenant_domain: base.tenant_domain,
       phone: base.phone,
       logo: base.logo,
       title: base.title,
-      telegram_chat_id: base.telegram_chat_id,
       theme: base.theme,
     });
     if (response.done) {
@@ -74,7 +72,8 @@ export default function TenantForm({
       delete mioObj.phone;
       delete mioObj.title;
       delete mioObj.logo;
-      delete mioObj.telegram_chat_id;
+      delete mioObj.bill_path;
+      delete mioObj.theme;
       const fuserResponse = await CLIENT_COLLECTOR_REQ(SIGN_FUSER_REQ, mioObj);
       if (fuserResponse.done) {
         fetchData();
@@ -138,15 +137,6 @@ export default function TenantForm({
                   />
                 </div>
               )}
-              <TextField
-                id="Glu"
-                dir="rtl"
-                label="كود تليجرام"
-                variant="filled"
-                className="w-full"
-                value={addTenant.telegram_chat_id}
-                onChange={(e) => handleAddTenant("telegram_chat_id", e.target.value)}
-              />
               <TextField
                 id="Glu"
                 dir="rtl"

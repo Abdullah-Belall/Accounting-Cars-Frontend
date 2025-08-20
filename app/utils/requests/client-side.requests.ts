@@ -2293,6 +2293,77 @@ const SEND_DAILY_REPORT_REQ = async ({ date }: { date: Date }) => {
     };
   }
 };
+
+const ADD_TENANT_CHAT_ID_REQ = async (data: { chat_id: string }) => {
+  try {
+    const response: any = await axios.post(`${BASE_URL}/tenants/chat-id`, data, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const EDIT_TENANT_CHAT_ID_REQ = async ({ id, data }: { id: string; data: { chat_id: string } }) => {
+  try {
+    const response: any = await axios.patch(`${BASE_URL}/tenants/chat-id/${id}`, data, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.done) {
+      return { done: true };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+const GET_TENANT_CHAT_IDS_REQ = async ({ tenant_id }: { tenant_id: string }) => {
+  try {
+    const response: any = await axios.get(`${BASE_URL}/tenants/${tenant_id}/chat-ids`, {
+      headers: { Authorization: `Bearer ${getCookie("access_token")}` },
+    });
+    if (response?.data?.chat_ids) {
+      return { done: true, data: response.data };
+    } else {
+      return { done: false, message: unCountedMessage, status: response.status };
+    }
+  } catch (error: any) {
+    console.log(error);
+    let message = unCountedMessage;
+    if (error?.response?.status !== 400) {
+      message = error?.response?.data?.message;
+    }
+    return {
+      done: false,
+      message: message,
+      status: error.status,
+    };
+  }
+};
+
 //* MAIN FUNCTION (USED FOR ALL REQUESTS THAT NEED ACCESS_TOKEN)
 const CLIENT_COLLECTOR_REQ = async (varFunction: any, dataBody?: any) => {
   const access_token = getCookie("access_token");
@@ -2319,6 +2390,7 @@ const getCookie = (keyName: string): string | null => {
 };
 
 export {
+  GET_TENANT_CHAT_IDS_REQ,
   SEND_DAILY_REPORT_REQ,
   DELETE_ORDER_REQ,
   DELETE_CRM_DATE_REQ,
@@ -2416,4 +2488,6 @@ export {
   GET_ONE_COST_REQ,
   GET_ALL_CAR_REQ,
   ADD_ORDER_NOSORTS_REQ,
+  ADD_TENANT_CHAT_ID_REQ,
+  EDIT_TENANT_CHAT_ID_REQ,
 };

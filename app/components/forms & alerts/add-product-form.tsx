@@ -131,7 +131,7 @@ export default function AddProductForm({
         <h2 className="text-lg text-center font-semibold mb-4">
           {isForEdit ? "تعديل منتج" : "اضافة منتج جديد"}
         </h2>
-        <div className="space-y-4 flex flex-col gap-[15px]">
+        <div className="space-y-4 flex flex-col gap-[8px]">
           <TextField
             id="Glu"
             dir="rtl"
@@ -163,7 +163,7 @@ export default function AddProductForm({
                   <ul
                     className={
                       styles.list +
-                      ` w-full shadow-md max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-mdDark px-mainxs`
+                      ` w-full text-myLight shadow-md max-h-[120px] overflow-y-scroll z-10 rounded-md absolute left-0 top-[calc(100%+6px)] bg-mdDark px-mainxs`
                     }
                   >
                     {dropDownOpthions}

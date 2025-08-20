@@ -64,6 +64,29 @@ export interface ProductItemInterface {
   updated_at?: Date;
   latest_cost_unit_price: number;
 }
+export interface TenantChatIdInterface {
+  id: string;
+  tenant_id: string;
+  tenant?: TenantInterface;
+  chat_id: string;
+  created_at: Date;
+}
+
+export interface TenantInterface {
+  tenant_id: string;
+  domain: string;
+  company_title: string;
+  company_logo: string;
+  balance: number;
+  period: string;
+  telegram_chat_id: string;
+  chat_ids?: TenantChatIdInterface[];
+  bill_path: string;
+  //* myLight,mdDark,myHover,myDark
+  theme: string;
+  phone: string;
+  created_at: Date;
+}
 
 export interface AddSortInterface {
   id?: string;

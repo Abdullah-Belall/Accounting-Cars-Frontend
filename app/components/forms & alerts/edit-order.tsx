@@ -140,7 +140,7 @@ export default function EditOrderPopup({ refetch }: { refetch: any }) {
             label="الخصم"
             variant="filled"
             className="w-full"
-            value={data.discount !== "0" ? data.discount : ""}
+            value={data.discount}
             onChange={(e) => handleData("discount", e.target.value.replace(/[^0-9.]/g, ""))}
           />
         </div>

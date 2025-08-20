@@ -102,16 +102,16 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
   useEffect(() => {
     fetchData();
   }, []);
-  const totalPrice = popupState.makeOrderPopup.data?.product_sorts.reduce(
-    (acc: number, curr: { unit_price: number; qty: number }) =>
-      acc + Number(curr.unit_price) * curr.qty,
-    0
-  );
+  const totalPrice =
+    popupState.makeOrderPopup.data?.product_sorts.reduce(
+      (acc: number, curr: { unit_price: number; qty: number }) =>
+        acc + Number(curr.unit_price) * Number(curr.qty),
+      0
+    ) + (formData.additional_fees === "" ? 0 : Number(formData.additional_fees));
   const totalPriceAfter =
     totalPrice *
       (formData.tax && formData.tax !== "" ? Number(formData.tax.slice(0, 2)) / 100 + 1 : 1) -
-    (formData.discount === "" ? 0 : Number(formData.discount)) +
-    (formData.additional_fees === "" ? 0 : Number(formData.additional_fees));
+    (formData.discount === "" ? 0 : Number(formData.discount));
   const validation = () => {
     const proSorts = popupState.makeOrderPopup.data?.product_sorts;
     if (!popupState.makeOrderPopup.data?.car?.id) {
@@ -344,7 +344,7 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
           }
         >
           <div className="w-full">
-            <h2 className="text-lg text-center font-semibold mb-1">انشاء طلب جديد</h2>
+            <h2 className="text-lg text-center font-semibold mb-1">انشاء فاتورة جديد</h2>
             <div className="mb-[-10px]">
               <div dir="rtl" className="w-[250px]">
                 <div className="relative">
@@ -368,7 +368,9 @@ export default function AddOrderForm({ closePopup }: { closePopup: () => void })
             {popupState.makeOrderPopup.data?.car?.client?.id && (
               <div className="my-1 font-semibold">
                 ميزانية العميل:{" "}
-                {Number(popupState.makeOrderPopup.data?.car?.client?.balance)?.toLocaleString()}
+                {Number(
+                  popupState.makeOrderPopup.data?.car?.client?.balance || 0
+                )?.toLocaleString()}
               </div>
             )}
           </div>
