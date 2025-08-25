@@ -190,6 +190,19 @@ export default function RabiaBill() {
             </div>
           )}
         </div>
+        {!isCostBill &&
+          bills?.totals?.discount &&
+          bills?.totals?.discount != "0" &&
+          bills?.totals?.discount?.toString().length !== 0 && (
+            <div className="flex items-center justify-between text-[black]">
+              <div className="w-full flex items-center gap-3 flex-row-reverse justify-center">
+                الخصم
+                <div className="bg-[#45616c] border-2 border-[#9fadb0] bg-[#45616c] rounded-md h-[40px] w-[160px] text-white flex justify-center items-center">
+                  {Number(bills?.totals?.discount || 0).toLocaleString()}
+                </div>
+              </div>
+            </div>
+          )}
         {!isCostBill && (
           <div className="flex items-center justify-between text-[black]">
             <div className="w-full flex items-center gap-3 flex-row-reverse justify-end">
